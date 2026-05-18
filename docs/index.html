@@ -51,7 +51,7 @@
 
   <main class="max-w-5xl mx-auto px-4 pt-8 pb-16">
     <section class="mb-6">
-      <h2 class="title-display text-2xl sm:text-3xl md:text-4xl text-blue-dark leading-tight">Encontre seu relatório individualizado do seu município</h2>
+      <h2 class="title-display text-2xl sm:text-3xl md:text-4xl text-blue-dark leading-tight">Encontre o relatório individualizado do seu município</h2>
       <p class="text-muted mt-2 max-w-2xl text-sm md:text-base">
         Digite o nome do município ou a UF para filtrar a lista. Cada folheto traz a posição do município no IFEM, a estrutura da receita e a trajetória 2000–2024.
       </p>
@@ -60,7 +60,7 @@
     <section class="bg-white rounded-2xl border border-rule p-4 md:p-5 mb-5 flex flex-col md:flex-row gap-3 items-stretch md:items-end">
       <label class="flex-1">
         <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">Busca</span>
-        <input id="q" type="search" placeholder="Ex.: Fortaleza, Sao Paulo, Sobral, CE..."
+        <input id="q" type="search" placeholder="Ex.: Sao Paulo, Fortaleza, Belo Horizonte..."
                autocomplete="off" autocorrect="off" spellcheck="false"
                enterkeyhint="search" inputmode="search"
                class="w-full px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
@@ -213,6 +213,27 @@
   });
   $('#uf').addEventListener('change', aplicar);
   $('#sort').addEventListener('change', aplicar);
+
+  // Placeholder rotativo: uma capital por UF (27 estados), troca a cada 2.2s
+  // enquanto o campo está vazio e desfocado. Dá ao usuário a pista de que
+  // qualquer município do país está disponível, não só os do exemplo estático.
+  const CAPITAIS_POR_UF = [
+    'Rio Branco, AC',  'Maceio, AL',          'Manaus, AM',         'Macapa, AP',
+    'Salvador, BA',    'Fortaleza, CE',       'Brasilia, DF',       'Vitoria, ES',
+    'Goiania, GO',     'Sao Luis, MA',        'Belo Horizonte, MG', 'Campo Grande, MS',
+    'Cuiaba, MT',      'Belem, PA',           'Joao Pessoa, PB',    'Recife, PE',
+    'Teresina, PI',    'Curitiba, PR',        'Rio de Janeiro, RJ', 'Natal, RN',
+    'Porto Velho, RO', 'Boa Vista, RR',       'Porto Alegre, RS',   'Florianopolis, SC',
+    'Aracaju, SE',     'Sao Paulo, SP',       'Palmas, TO',
+  ];
+  const inputBusca = $('#q');
+  let idxCap = Math.floor(Math.random() * CAPITAIS_POR_UF.length);
+  setInterval(() => {
+    if (inputBusca.value) return;
+    if (document.activeElement === inputBusca) return;
+    idxCap = (idxCap + 1) % CAPITAIS_POR_UF.length;
+    inputBusca.placeholder = 'Ex.: ' + CAPITAIS_POR_UF[idxCap];
+  }, 2200);
 
   aplicar();
 })();
