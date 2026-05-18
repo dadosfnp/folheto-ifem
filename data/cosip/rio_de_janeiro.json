@@ -1,0 +1,33 @@
+{
+  "nome": "Rio de Janeiro",
+  "uf": "RJ",
+  "cod_ibge": 3304557,
+  "url": "https://radarppp.com/fnp",
+  "rankings": {
+    "nacional_pos": 1896, "nacional_total": 5478,
+    "uf_pos": 42,         "uf_total": 91,
+    "porte_pos": 35,      "porte_total": 47
+  },
+  "arrecadacao_serie": [
+    {"ano": 2015, "total_mi": 406.6, "per_capita": 62.9},
+    {"ano": 2016, "total_mi": 386.3, "per_capita": 59.5},
+    {"ano": 2017, "total_mi": 380.2, "per_capita": 58.3},
+    {"ano": 2018, "total_mi": 434.1, "per_capita": 66.3},
+    {"ano": 2019, "total_mi": 603.3, "per_capita": 91.7},
+    {"ano": 2020, "total_mi": 476.1, "per_capita": 72.0},
+    {"ano": 2021, "total_mi": 477.6, "per_capita": 71.9},
+    {"ano": 2022, "total_mi": 596.2, "per_capita": 89.4},
+    {"ano": 2023, "total_mi": 534.5, "per_capita": 79.8},
+    {"ano": 2024, "total_mi": 443.8, "per_capita": 65.9}
+  ],
+  "medias_per_capita_2024": {
+    "nacional": 83.0,
+    "porte_acima_500mil": 87.0,
+    "uf": 74.0
+  },
+  "oportunidades": {
+    "vs_nacional": "+ R$ 114,6 mi/ano",
+    "vs_porte":    "+ R$ 141,8 mi/ano",
+    "vs_uf":       "+ R$ 54,0 mi/ano"
+  }
+}

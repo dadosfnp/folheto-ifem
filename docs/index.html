@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFEM — Folhetos Municipais</title>
+<meta name="description" content="Baixe o folheto IFEM (Indicadores de Financiamento e Equidade Municipal) do seu município.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      "#0F1B2D",
+          paper:    "#FBF7EE",
+          rule:     "#E5E0D2",
+          'blue-dark': "#0A2A6B",
+          muted:    "#6E6B5E",
+          'q1':"#A81C21",'q2':"#E47326",'q3':"#F4D01D",'q4':"#6AC074",'q5':"#1C9148",
+        },
+        fontFamily: {
+          sans: ['Inter','ui-sans-serif','system-ui','sans-serif'],
+          display: ['"Barlow Condensed"','Inter','sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { background: #FBF7EE; }
+  body { font-family: 'Inter', sans-serif; color: #0F1B2D; }
+  .title-display { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+  /* Quintil chip */
+  .chip-q { display:inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; }
+</style>
+</head>
+<body class="min-h-screen">
+  <header class="border-b border-rule bg-white/60 backdrop-blur sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-3 md:py-4 flex items-center gap-3">
+      <img src="ifem-logo.png" alt="IFEM — Indicadores de Financiamento e Equidade Municipal"
+           class="h-10 md:h-14 w-auto shrink-0" />
+      <p class="hidden sm:block text-xs md:text-sm text-muted leading-tight min-w-0">
+        Indicadores de Financiamento e Equidade Municipal
+      </p>
+      <span class="ml-auto text-xs text-muted hidden md:inline" id="meta"></span>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 pt-8 pb-16">
+    <section class="mb-6">
+      <h2 class="title-display text-2xl sm:text-3xl md:text-4xl text-blue-dark leading-tight">Encontre seu relatório individualizado do seu município</h2>
+      <p class="text-muted mt-2 max-w-2xl text-sm md:text-base">
+        Digite o nome do município ou a UF para filtrar a lista. Cada folheto traz a posição do município no IFEM, a estrutura da receita e a trajetória 2000–2024.
+      </p>
+    </section>
+
+    <section class="bg-white rounded-2xl border border-rule p-4 md:p-5 mb-5 flex flex-col md:flex-row gap-3 items-stretch md:items-end">
+      <label class="flex-1">
+        <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">Busca</span>
+        <input id="q" type="search" placeholder="Ex.: Fortaleza, São Paulo, Sobral, CE..."
+               class="w-full px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+      </label>
+      <label>
+        <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">UF</span>
+        <select id="uf" class="px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+          <option value="">Todas</option>
+        </select>
+      </label>
+      <label>
+        <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">Ordenar por</span>
+        <select id="sort" class="px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+          <option value="pop_desc">População ↓</option>
+          <option value="pop_asc">População ↑</option>
+          <option value="nome">Nome A→Z</option>
+          <option value="rk_rec_asc">Melhor ranking receita p/ hab.</option>
+          <option value="rk_rec_desc">Pior ranking receita p/ hab.</option>
+        </select>
+      </label>
+    </section>
+
+    <p id="contador" class="text-sm text-muted mb-3"></p>
+
+    <ul id="lista" class="grid gap-2"></ul>
+
+    <p id="vazio" class="hidden text-muted text-center py-12">
+      Nenhum município encontrado para esta busca.
+    </p>
+  </main>
+
+  <footer class="border-t border-rule mt-4">
+    <div class="max-w-5xl mx-auto px-4 py-5 text-xs text-muted flex flex-col md:flex-row gap-2 md:justify-between">
+      <span>IFEM · Frente Nacional de Prefeitas e Prefeitos</span>
+      <span>Dados: 2024. Folhetos atualizados periodicamente.</span>
+    </div>
+  </footer>
+
+<script>
+(async function() {
+  const $ = (s) => document.querySelector(s);
+  const norm = (s) => (s || '').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const fmtPop = (n) => {
+    if (n >= 1e6) return (n/1e6).toFixed(1).replace('.', ',') + ' mi';
+    if (n >= 1e3) return Math.round(n/1e3) + ' mil';
+    return String(n);
+  };
+  const corQuintil = (q) => {
+    const m = (q || '').match(/(\d)/);
+    return m ? `q${m[1]}` : 'rule';
+  };
+
+  let indice;
+  try {
+    const r = await fetch('folhetos.json', { cache: 'no-cache' });
+    indice = await r.json();
+  } catch (e) {
+    $('#lista').innerHTML = '<li class="text-red-700">Erro ao carregar folhetos.json</li>';
+    return;
+  }
+
+  const todos = indice.municipios || [];
+  $('#meta').textContent = `${indice.total} municípios disponíveis`;
+
+  // popula UFs ordenadas
+  const ufs = [...new Set(todos.map(m => m.uf))].sort();
+  const ufSel = $('#uf');
+  ufs.forEach(uf => {
+    const o = document.createElement('option');
+    o.value = uf; o.textContent = uf;
+    ufSel.appendChild(o);
+  });
+
+  function aplicar() {
+    const termo = norm($('#q').value);
+    const uf = $('#uf').value;
+    const sort = $('#sort').value;
+
+    let lista = todos.filter(m => {
+      if (uf && m.uf !== uf) return false;
+      if (!termo) return true;
+      return norm(m.municipio).includes(termo)
+          || norm(m.uf).includes(termo)
+          || norm(m.regiao).includes(termo);
+    });
+
+    const ord = {
+      pop_desc:    (a,b) => b.populacao - a.populacao,
+      pop_asc:     (a,b) => a.populacao - b.populacao,
+      nome:        (a,b) => a.municipio.localeCompare(b.municipio, 'pt-BR'),
+      rk_rec_asc:  (a,b) => a.rk_rec - b.rk_rec,
+      rk_rec_desc: (a,b) => b.rk_rec - a.rk_rec,
+    };
+    lista.sort(ord[sort] || ord.pop_desc);
+
+    $('#contador').textContent = `Mostrando ${lista.length} de ${todos.length} municípios.`;
+    $('#vazio').classList.toggle('hidden', lista.length > 0);
+
+    const ul = $('#lista');
+    ul.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    for (const m of lista) {
+      const li = document.createElement('li');
+      li.className = 'bg-white rounded-xl border border-rule px-4 py-3 flex flex-col md:flex-row md:items-center gap-3 hover:border-blue-dark/50 transition';
+      li.innerHTML = `
+        <div class="flex-1 min-w-0">
+          <div class="flex items-baseline gap-2">
+            <span class="chip-q bg-${corQuintil(m.quintil)}" title="Quintil: ${m.quintil || 'n/d'}"></span>
+            <h3 class="title-display text-lg text-blue-dark truncate">${m.municipio} <span class="text-muted font-normal text-base">— ${m.uf}</span></h3>
+          </div>
+          <p class="text-xs text-muted mt-1">
+            População <strong class="text-ink">${fmtPop(m.populacao)}</strong> ·
+            Ranking receita p/ hab. <strong class="text-ink">${m.rk_rec.toLocaleString('pt-BR')}º</strong> ·
+            ${m.porte || ''}
+          </p>
+        </div>
+        <a href="${m.pdf}" download="${m.pdf_filename}"
+           class="shrink-0 inline-flex items-center justify-center gap-2 px-4 py-2.5 md:py-2 rounded-lg bg-blue-dark text-white text-sm font-semibold hover:bg-blue-dark/90 transition w-full md:w-auto"
+           aria-label="Baixar folheto de ${m.municipio} - ${m.uf}">
+          Baixar PDF
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v14"/><path d="m6 11 6 6 6-6"/><path d="M5 21h14"/>
+          </svg>
+        </a>
+      `;
+      frag.appendChild(li);
+    }
+    ul.appendChild(frag);
+  }
+
+  $('#q').addEventListener('input', aplicar);
+  $('#uf').addEventListener('change', aplicar);
+  $('#sort').addEventListener('change', aplicar);
+
+  aplicar();
+})();
+</script>
+</body>
+</html>

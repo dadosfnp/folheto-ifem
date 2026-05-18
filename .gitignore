@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Output
+output/*.pdf
+!output/.gitkeep
+
+# Dados de entrada exportados pelo Subfinanciados (5.5k arquivos, ~94MB)
+# Regeneráveis via Subfinanciados/export_folheto_municipios.py
+data/ifem/dados-ifem/export_folheto/
+
+# Harness Claude Code (local)
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Fontes (binárias — usuário baixa local)
+fonts/*.ttf
+fonts/*.otf
+!fonts/README.md

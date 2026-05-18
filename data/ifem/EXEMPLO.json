@@ -1,0 +1,56 @@
+{
+  "nome": "Rio de Janeiro",
+  "uf": "RJ",
+  "cod_ibge": 3304557,
+  "url": "https://ifem.fnp.org.br/rio-de-janeiro",
+
+  "populacao": 6747815,
+  "porte": "Capital",
+  "faixa": "Acima de 500 mil",
+
+  "rankings": {
+    "populacao_pos": 2, "populacao_total": 5570,
+    "receita_pos":   2, "receita_total":   5570,
+    "porte_pos":     2, "porte_total":     27,
+    "faixa_pos":     2, "faixa_total":     49
+  },
+
+  "indicadores": {
+    "receita_total_bi":   38.5,
+    "receita_per_capita": 5705,
+    "sus_per_capita":     1240,
+    "cad_unico_pct":      21.4,
+    "idh":                0.799,
+    "ifem":               0.682,
+    "percentil":          87
+  },
+
+  "receita_estrutura": [
+    { "categoria": "Tributária Própria", "valor_bi": 16.2, "pct": 42.1 },
+    { "categoria": "Transferências",     "valor_bi": 12.4, "pct": 32.2 },
+    { "categoria": "Capital",            "valor_bi":  5.1, "pct": 13.2 },
+    { "categoria": "Outras Correntes",   "valor_bi":  4.8, "pct": 12.5 }
+  ],
+
+  "receita_detalhe": [
+    { "rubrica": "ISS",               "mun": 1480, "uf":  920, "porte": 1050, "nacional":  760 },
+    { "rubrica": "IPTU",              "mun":  890, "uf":  410, "porte":  580, "nacional":  290 },
+    { "rubrica": "FPM",               "mun":  120, "uf":  340, "porte":  280, "nacional":  680 },
+    { "rubrica": "ICMS (cota-parte)", "mun":  610, "uf":  780, "porte":  720, "nacional":  840 },
+    { "rubrica": "Outras Correntes",  "mun":  205, "uf":  180, "porte":  195, "nacional":  170 }
+  ],
+
+  "sintese": {
+    "destaque": "Capital com alta autonomia tributária e desafio redistributivo.",
+    "pontos_fortes": [
+      "Receita tributária própria acima da média de porte",
+      "Investimento em saúde supera referência nacional",
+      "Estrutura de arrecadação diversificada"
+    ],
+    "pontos_atencao": [
+      "FPM per capita muito abaixo da média",
+      "Alta vulnerabilidade (CadÚnico) apesar da receita robusta",
+      "Dependência de ISS exige monitoramento de ciclos econômicos"
+    ]
+  }
+}
