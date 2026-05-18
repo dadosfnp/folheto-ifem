@@ -1,9 +1,9 @@
 {
-  "total": 605,
+  "total": 612,
   "release_tag": "v1",
   "owner": "dadosfnp",
   "repo": "folheto-ifem",
-  "atualizado": "2026-05-18T16:52:30Z",
+  "atualizado": "2026-05-18T16:59:53Z",
   "municipios": [
     {
       "cod_ibge": "3550308",
@@ -2268,6 +2268,19 @@
       "pdf_filename": "FolhetoIFEM_Angra_dos_Reis_RJ.pdf"
     },
     {
+      "cod_ibge": "3302858",
+      "municipio": "Mesquita",
+      "uf": "RJ",
+      "regiao": "Sudeste",
+      "porte": "100 mil a 200 mil",
+      "populacao": 178803,
+      "rk_pop": 175,
+      "rk_rec": 5373,
+      "quintil": "1º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Mesquita_RJ.pdf",
+      "pdf_filename": "FolhetoIFEM_Mesquita_RJ.pdf"
+    },
+    {
       "cod_ibge": "3129806",
       "municipio": "Ibirité",
       "uf": "MG",
@@ -2580,6 +2593,19 @@
       "pdf_filename": "FolhetoIFEM_Mogi_Guacu_SP.pdf"
     },
     {
+      "cod_ibge": "2513703",
+      "municipio": "Santa Rita",
+      "uf": "PB",
+      "regiao": "Nordeste",
+      "porte": "100 mil a 200 mil",
+      "populacao": 159121,
+      "rk_pop": 201,
+      "rk_rec": 5438,
+      "quintil": "1º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Santa_Rita_PB.pdf",
+      "pdf_filename": "FolhetoIFEM_Santa_Rita_PB.pdf"
+    },
+    {
       "cod_ibge": "4127700",
       "municipio": "Toledo",
       "uf": "PR",
@@ -2747,6 +2773,19 @@
       "quintil": "5º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Balneario_Camboriu_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Balneario_Camboriu_SC.pdf"
+    },
+    {
+      "cod_ibge": "1502103",
+      "municipio": "Cametá",
+      "uf": "PA",
+      "regiao": "Norte",
+      "porte": "100 mil a 200 mil",
+      "populacao": 143837,
+      "rk_pop": 215,
+      "rk_rec": 5417,
+      "quintil": "1º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Cameta_PA.pdf",
+      "pdf_filename": "FolhetoIFEM_Cameta_PA.pdf"
     },
     {
       "cod_ibge": "2616407",
@@ -3046,6 +3085,19 @@
       "quintil": "1º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Sabara_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Sabara_MG.pdf"
+    },
+    {
+      "cod_ibge": "1503606",
+      "municipio": "Itaituba",
+      "uf": "PA",
+      "regiao": "Norte",
+      "porte": "100 mil a 200 mil",
+      "populacao": 133684,
+      "rk_pop": 240,
+      "rk_rec": 4951,
+      "quintil": "1º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Itaituba_PA.pdf",
+      "pdf_filename": "FolhetoIFEM_Itaituba_PA.pdf"
     },
     {
       "cod_ibge": "3204906",
@@ -3605,6 +3657,19 @@
       "quintil": "2º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Itanhaem_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itanhaem_SP.pdf"
+    },
+    {
+      "cod_ibge": "2919553",
+      "municipio": "Luís Eduardo Magalhães",
+      "uf": "BA",
+      "regiao": "Nordeste",
+      "porte": "100 mil a 200 mil",
+      "populacao": 116662,
+      "rk_pop": 284,
+      "rk_rec": 2088,
+      "quintil": "4º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Luis_Eduardo_Magalhaes_BA.pdf",
+      "pdf_filename": "FolhetoIFEM_Luis_Eduardo_Magalhaes_BA.pdf"
     },
     {
       "cod_ibge": "3147907",
@@ -4959,6 +5024,19 @@
       "pdf_filename": "FolhetoIFEM_Jacobina_BA.pdf"
     },
     {
+      "cod_ibge": "1502152",
+      "municipio": "Canaã Dos Carajás",
+      "uf": "PA",
+      "regiao": "Norte",
+      "porte": "50 mil a 100 mil",
+      "populacao": 86629,
+      "rk_pop": 389,
+      "rk_rec": 28,
+      "quintil": "5º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Canaa_dos_Carajas_PA.pdf",
+      "pdf_filename": "FolhetoIFEM_Canaa_dos_Carajas_PA.pdf"
+    },
+    {
       "cod_ibge": "2407104",
       "municipio": "Macaíba",
       "uf": "RN",
@@ -6088,6 +6166,19 @@
       "quintil": "2º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Janauba_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Janauba_MG.pdf"
+    },
+    {
+      "cod_ibge": "5101803",
+      "municipio": "Barra Do Garças",
+      "uf": "MT",
+      "regiao": "Centro Oeste",
+      "porte": "50 mil a 100 mil",
+      "populacao": 72694,
+      "rk_pop": 477,
+      "rk_rec": 3941,
+      "quintil": "2º quintil",
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v1/FolhetoIFEM_Barra_do_Garcas_MT.pdf",
+      "pdf_filename": "FolhetoIFEM_Barra_do_Garcas_MT.pdf"
     },
     {
       "cod_ibge": "4307906",

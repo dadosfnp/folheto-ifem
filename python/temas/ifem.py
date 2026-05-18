@@ -1733,11 +1733,20 @@ class FolhetoIFEM(FolhetoFNP):
         pop_mun = s["delta_populacao_pct"]
         pop_nac = s["media_nacional_delta_populacao_pct"]
 
+        # Verbo de população depende do sinal — pra municípios sem dado de 2000
+        # (emancipações pós-1999), usar "variou" como fallback neutro.
+        if pop_mun is None:
+            verbo_pop = "variou"
+        elif pop_mun >= 0:
+            verbo_pop = "aumentou"
+        else:
+            verbo_pop = "caiu"
+
         blocos = [
             {
                 "icone":       self._icone_receita_circ,
                 "destaque":    "Receita por Habitante",
-                "verbo":       "cresceu",
+                "verbo":       "cresceu" if rec_mun is not None else "variou",
                 "tail":        "entre 2000 e 2024.",
                 "var_mun":     rec_mun,
                 "var_nac":     rec_nac,
@@ -1748,7 +1757,7 @@ class FolhetoIFEM(FolhetoFNP):
             {
                 "icone":       self._icone_populacao_circ,
                 "destaque":    "População",
-                "verbo":       "aumentou" if pop_mun >= 0 else "caiu",
+                "verbo":       verbo_pop,
                 "tail":        "neste intervalo de tempo.",
                 "var_mun":     pop_mun,
                 "var_nac":     pop_nac,
@@ -1764,9 +1773,15 @@ class FolhetoIFEM(FolhetoFNP):
         icone_sz = 26       # diâmetro do círculo do ícone
         text_x   = x + icone_sz + 12
 
+        # Pílula cinza pra valores indisponíveis (município sem dado em 2000).
+        PILL_ND_BG   = colors.HexColor("#ECEAE0")
+        PILL_ND_TEXT = colors.HexColor("#6E6B5E")
+
         for bl in blocos:
-            sinal_m = "+" if bl["var_mun"] >= 0 else ""
-            sinal_n = "+" if bl["var_nac"] >= 0 else ""
+            var_mun_ok = bl["var_mun"] is not None
+            var_nac_ok = bl["var_nac"] is not None
+            sinal_m = "+" if var_mun_ok and bl["var_mun"] >= 0 else ""
+            sinal_n = "+" if var_nac_ok and bl["var_nac"] >= 0 else ""
 
             # Ícone circular azul à esquerda (centro alinhado à 1ª linha)
             bl["icone"](c, x + icone_sz/2, y + 2, size=icone_sz)
@@ -1787,13 +1802,20 @@ class FolhetoIFEM(FolhetoFNP):
             c.drawString(cur, y, verbo_str)
             cur += c.stringWidth(verbo_str, F(FONT_TEXTO), body_fs)
 
-            # Pílula município
-            var_str = f"{sinal_m}{_br(bl['var_mun'])}%"
+            # Pílula município — cinza com "n/d" se não houver dado de 2000.
+            if var_mun_ok:
+                var_str   = f"{sinal_m}{_br(bl['var_mun'])}%"
+                pill_bg   = bl["pill_bg"]
+                pill_text = bl["pill_text"]
+            else:
+                var_str   = "n/d"
+                pill_bg   = PILL_ND_BG
+                pill_text = PILL_ND_TEXT
             pill_w = c.stringWidth(var_str, F(FONT_TEXTO_BOLD), pill_fs) + 16
             pill_h = 18
-            c.setFillColor(bl["pill_bg"])
+            c.setFillColor(pill_bg)
             c.roundRect(cur, y - 4, pill_w, pill_h, pill_h/2, fill=1, stroke=0)
-            c.setFillColor(bl["pill_text"])
+            c.setFillColor(pill_text)
             c.setFont(F(FONT_TEXTO_BOLD), pill_fs)
             c.drawCentredString(cur + pill_w/2, y + 1, var_str)
             cur += pill_w + 6
@@ -1809,7 +1831,7 @@ class FolhetoIFEM(FolhetoFNP):
             c.setFont(F(FONT_TEXTO), comp_fs)
             c.drawString(text_x, y, bl["comp_tpl"])
             wp = c.stringWidth(bl["comp_tpl"], F(FONT_TEXTO), comp_fs)
-            media_str = f"{sinal_n}{_br(bl['var_nac'])}%"
+            media_str = f"{sinal_n}{_br(bl['var_nac'])}%" if var_nac_ok else "n/d"
             c.setFillColor(BLUE_DARK)
             c.setFont(F(FONT_TEXTO_BOLD), comp_fs + 0.5)
             c.drawString(text_x + wp, y, media_str)
@@ -1820,8 +1842,8 @@ class FolhetoIFEM(FolhetoFNP):
             y -= 14
 
             # Gap explícito (sugestão 2): "Município cresceu X× menos/mais"
-            # Só faz sentido com sinais iguais e magnitudes positivas.
-            if (bl["var_mun"] * bl["var_nac"]) > 0 and abs(bl["var_mun"]) > 0.5 and abs(bl["var_nac"]) > 0.5:
+            # Só faz sentido com sinais iguais, magnitudes positivas e ambos os dados disponíveis.
+            if var_mun_ok and var_nac_ok and (bl["var_mun"] * bl["var_nac"]) > 0 and abs(bl["var_mun"]) > 0.5 and abs(bl["var_nac"]) > 0.5:
                 fator = bl["var_nac"] / bl["var_mun"]
                 if abs(fator) >= 1.5:   # só destaca quando o gap é relevante
                     direcao = "menos" if abs(fator) > 1 else "mais"
@@ -2178,6 +2200,18 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 7)
         c.drawString(x + 14, y + h - 16, titulo)
+
+        # Sem dado do município (ex.: emancipações pós-2000) — mostra mensagem
+        # no centro do card e pula o gráfico.
+        if valor_mun is None or valor_nac is None:
+            c.setFillColor(MUTED)
+            c.setFont(F(FONT_TEXTO), 10.5)
+            c.drawCentredString(x + w/2, y + h/2 + 6, "Sem dados de 2000 para este município")
+            c.setFillColor(colors.HexColor("#A09D90"))
+            c.setFont(F(FONT_TEXTO), 8.5)
+            c.drawCentredString(x + w/2, y + h/2 - 8,
+                                "(município emancipado ou sem registro fiscal naquele ano)")
+            return
 
         # Área do gráfico
         chart_x = x + 50
