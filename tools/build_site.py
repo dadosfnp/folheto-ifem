@@ -51,10 +51,23 @@ def _title_case_br(s: str) -> str:
     return " ".join(out)
 
 
-def _slug(s: str) -> str:
-    """Reproduz o filename gerado por `core/base_folheto.py` + `_title_case_br`
-    do tema IFEM: title case com palavras de ligação minúsculas, depois
-    troca espaço por '_'. Ex.: 'Juazeiro Do Norte' → 'Juazeiro_do_Norte'."""
+def _strip_acentos(s: str) -> str:
+    """Remove diacríticos (NFD + filtra combining marks). GitHub Releases
+    descarta acentos do nome do asset no upload, então o folhetos.json
+    precisa apontar pro nome ASCII pra evitar 404."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", s)
+        if unicodedata.category(c) != "Mn"
+    )
+
+
+def _slug_release(s: str) -> str:
+    """Filename SEM acento — o que o GitHub Releases efetivamente armazena."""
+    return _strip_acentos(_title_case_br(s or "folheto")).replace(" ", "_")
+
+
+def _slug_local(s: str) -> str:
+    """Filename COM acento — o que o gerador local escreve em output/."""
     return _title_case_br(s or "folheto").replace(" ", "_")
 
 
@@ -102,9 +115,14 @@ def _carregar_indice_municipios() -> dict[str, dict]:
     return idx
 
 
-def _pdf_filename_para_municipio(municipio: str, uf: str) -> str:
-    """Reproduz o padrão usado pelo gerador: FolhetoIFEM_{Slug}_{UF}.pdf."""
-    return f"FolhetoIFEM_{_slug(municipio)}_{uf}.pdf"
+def _pdf_filename_local(municipio: str, uf: str) -> str:
+    """Filename como o gerador escreve em output/ — com acentos."""
+    return f"FolhetoIFEM_{_slug_local(municipio)}_{uf}.pdf"
+
+
+def _pdf_filename_release(municipio: str, uf: str) -> str:
+    """Filename como o GitHub Releases armazena — sem acentos."""
+    return f"FolhetoIFEM_{_slug_release(municipio)}_{uf}.pdf"
 
 
 def _agora_iso() -> str:
@@ -129,13 +147,16 @@ def build(release_tag: str, owner: str, repo: str) -> None:
 
     items = []
     for cod, meta in municipios_meta.items():
-        fname = _pdf_filename_para_municipio(meta["municipio"], meta["uf"])
-        if fname not in pdfs_disponiveis:
+        fname_local   = _pdf_filename_local(meta["municipio"], meta["uf"])
+        fname_release = _pdf_filename_release(meta["municipio"], meta["uf"])
+        # Confere disponibilidade pelo arquivo local (que tem acento), mas
+        # aponta a URL pro nome sem acento (forma como o GitHub Releases guarda).
+        if fname_local not in pdfs_disponiveis:
             continue
         items.append({
             **meta,
-            "pdf":          base_release_url + fname,
-            "pdf_filename": fname,
+            "pdf":          base_release_url + fname_release,
+            "pdf_filename": fname_release,
         })
 
     # Cidades grandes primeiro — são as mais procuradas.
