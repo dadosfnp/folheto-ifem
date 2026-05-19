@@ -2041,50 +2041,67 @@ class FolhetoIFEM(FolhetoFNP):
             marker_info.append((ano, pos, cor, mx))
 
         marker_info.sort(key=lambda mi: mi[3])
-        # Quando os dois marcadores estão próximos no eixo X, o layout
-        # horizontal "POS (ANO)" sobrepõe os labels — quebra em duas linhas
-        # (posição em cima, ano em parênteses embaixo).
-        proximos = abs(marker_info[0][3] - marker_info[1][3]) < 90
+
+        # Quando os dois marcadores estão muito próximos no eixo X, o layout
+        # horizontal "POS (ANO)" sobrepõe os labels. Em vez de empilhar ambos
+        # do mesmo lado (que continua sobrepondo se a distância for ~zero),
+        # separamos verticalmente: o 1º marker vai ACIMA da barra, o 2º ABAIXO.
+        # Pra estimar largura do label "POS (ANO)" usamos uma medição rápida.
+        c.setFont(F(FONT_NUM_BOLD), 11.5)
+        largura_max_label = max(
+            c.stringWidth(f"{m[1]:,}º (ANO)".replace(",", "."), F(FONT_NUM_BOLD), 11.5)
+            for m in marker_info
+        )
+        # Se a distância entre os centros for menor que a metade da soma das
+        # larguras dos dois labels (+ folga), eles colidem se ficarem do mesmo lado.
+        sobrepoem = abs(marker_info[0][3] - marker_info[1][3]) < (largura_max_label + 12)
 
         for i, (ano, pos, cor, mx) in enumerate(marker_info):
             pos_str = f"{pos:,}º".replace(",", ".")
             ano_str = f"({ano})"
 
-            if proximos:
-                # Layout empilhado: POS em cima, (ANO) embaixo, ambos centrados.
-                label_y_pos = bar_y + bar_h + 28
-                label_y_ano = bar_y + bar_h + 16
-                c.setFillColor(cor)
-                c.setFont(F(FONT_NUM_BOLD), 11.5)
-                c.drawCentredString(mx, label_y_pos, pos_str)
-                c.setFillColor(MUTED)
-                c.setFont(F(FONT_TEXTO), 9)
-                c.drawCentredString(mx, label_y_ano, ano_str)
-                chev_top = label_y_ano - 4
-            else:
-                # Layout normal: "POS (ANO)" na mesma linha.
-                c.setFont(F(FONT_NUM_BOLD), 11.5)
-                w_pos = c.stringWidth(pos_str, F(FONT_NUM_BOLD), 11.5)
-                c.setFont(F(FONT_TEXTO), 9)
-                w_ano = c.stringWidth(" " + ano_str, F(FONT_TEXTO), 9)
-                total_w = w_pos + w_ano
-                label_y = bar_y + bar_h + 18
-                text_start_x = mx - total_w / 2
-                c.setFillColor(cor)
-                c.setFont(F(FONT_NUM_BOLD), 11.5)
-                c.drawString(text_start_x, label_y, pos_str)
-                c.setFillColor(MUTED)
-                c.setFont(F(FONT_TEXTO), 9)
-                c.drawString(text_start_x + w_pos, label_y + 1, " " + ano_str)
-                chev_top = label_y - 4
+            # Quando colidem: 1º marker (mais à esquerda) embaixo, 2º em cima.
+            # Quando não colidem: ambos embaixo, como antes (layout padrão).
+            label_acima = sobrepoem and i == 1
 
-            # Chevron logo abaixo do label, apontando pra baixo (para a barra).
+            c.setFont(F(FONT_NUM_BOLD), 11.5)
+            w_pos = c.stringWidth(pos_str, F(FONT_NUM_BOLD), 11.5)
+            c.setFont(F(FONT_TEXTO), 9)
+            w_ano = c.stringWidth(" " + ano_str, F(FONT_TEXTO), 9)
+            total_w = w_pos + w_ano
+            text_start_x = mx - total_w / 2
+
+            if label_acima:
+                label_y = bar_y + bar_h + 12   # acima da barra
+                chev_top = bar_y + bar_h       # base do chevron grudado na barra
+                chev_bot = label_y - 2         # ponta do chevron sob o label
+                chev_aponta_baixo = False      # aponta pra CIMA aqui? Não, aponta da barra ao label
+            else:
+                label_y = bar_y - 14           # embaixo da barra (padrão)
+                chev_top = label_y + 10        # topo do chevron logo acima do label
+                chev_bot = bar_y               # ponta do chevron na barra
+                chev_aponta_baixo = True
+
+            c.setFillColor(cor)
+            c.setFont(F(FONT_NUM_BOLD), 11.5)
+            c.drawString(text_start_x, label_y, pos_str)
+            c.setFillColor(MUTED)
+            c.setFont(F(FONT_TEXTO), 9)
+            c.drawString(text_start_x + w_pos, label_y + 1, " " + ano_str)
+
+            # Chevron triangular ligando label e barra.
             c.setFillColor(BLUE_DARK)
-            chev_bot = bar_y + bar_h + 1
             p = c.beginPath()
-            p.moveTo(mx,     chev_bot)
-            p.lineTo(mx - 4, chev_top)
-            p.lineTo(mx + 4, chev_top)
+            if chev_aponta_baixo:
+                # Triângulo apontando pra baixo: base em cima, ponta na barra.
+                p.moveTo(mx,     chev_bot)
+                p.lineTo(mx - 4, chev_top)
+                p.lineTo(mx + 4, chev_top)
+            else:
+                # Triângulo apontando pra cima: base embaixo, ponta no label.
+                p.moveTo(mx,     chev_bot)
+                p.lineTo(mx - 4, chev_top)
+                p.lineTo(mx + 4, chev_top)
             p.close()
             c.drawPath(p, fill=1, stroke=0)
 
