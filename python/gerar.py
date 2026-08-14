@@ -22,6 +22,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from temas import TEMAS  # noqa: E402
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
 
 def carregar_json(path: str) -> dict:
     """Carrega arquivo de dados validando o JSON."""
@@ -32,13 +34,27 @@ def carregar_json(path: str) -> dict:
         return json.load(f)
 
 
-def _carregar_companheiro(dados_path: str, nome_arquivo: str) -> dict | None:
-    """Carrega um JSON irmão na mesma pasta do --dados (ex.: _metodologia.json)."""
-    p = Path(dados_path).resolve().parent / nome_arquivo
-    if not p.exists():
-        return None
-    with p.open(encoding="utf-8") as f:
-        return json.load(f)
+def _carregar_companheiro(dados_path: str, nome_arquivo: str, tema: str) -> dict | None:
+    """
+    Carrega um JSON compartilhado entre municípios (ex.: _metodologia.json).
+
+    Procura em duas camadas, nesta ordem:
+      1. Pasta do próprio --dados — é onde caem os companheiros gerados pelos
+         exports do Subfinanciados (_metodologia, _medias_receitas).
+      2. `data/<tema>/` — fallback versionado no repo, para companheiros que são
+         conteúdo editorial e não saem de nenhum export (_problema.json). Sem
+         este fallback, quem regenera os dados numa pasta limpa perde a página
+         "O Problema" silenciosamente.
+    """
+    candidatos = [
+        Path(dados_path).resolve().parent / nome_arquivo,
+        ROOT_DIR / "data" / tema / nome_arquivo,
+    ]
+    for p in candidatos:
+        if p.exists():
+            with p.open(encoding="utf-8") as f:
+                return json.load(f)
+    return None
 
 
 def gerar_um(tema: str, dados_path: str) -> Path:
@@ -49,12 +65,16 @@ def gerar_um(tema: str, dados_path: str) -> Path:
     Cls = TEMAS[tema]
     dados = carregar_json(dados_path)
 
-    # Companheiros compartilhados entre municípios (mesma pasta).
+    # Companheiros compartilhados entre municípios.
     for nome in ("_metodologia.json", "_problema.json", "_medias_receitas.json"):
-        extra = _carregar_companheiro(dados_path, nome)
+        extra = _carregar_companheiro(dados_path, nome, tema)
         if extra is not None:
             chave = nome.removesuffix(".json")  # "_metodologia"
             dados[chave] = extra
+        else:
+            # Página correspondente sai vazia — avisa em vez de degradar calado.
+            print(f"[aviso] {nome} não encontrado; a seção que depende dele sairá vazia.",
+                  file=sys.stderr)
 
     folheto = Cls(dados)
     out = folheto.gerar()
