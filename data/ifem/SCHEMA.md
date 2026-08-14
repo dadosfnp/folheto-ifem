@@ -2,18 +2,22 @@
 
 Contrato entre o **sistema externo** (`export_folheto_municipios.py` no projeto
 Subfinanciados) e o **gerador de folhetos**. O sistema gera 1 JSON por município
-+ 2 arquivos compartilhados (`_metodologia.json` e `_problema.json`).
++ arquivos compartilhados (`_metodologia.json`, `_medias_receitas.json`).
 
 > **Identidade fixa em todo folheto FNP**: capa, última página e padrão modular
 > não dependem deste schema. Só o miolo é específico do IFEM.
 
 ## Localização
 
-O export fica em `C:\Users\pedro.ivo\Documents\Projetos-Git\Subfinanciados\export_folheto\`:
+Os exports do Subfinanciados escrevem em `<Subfinanciados>/export_folheto/`.
+Dentro deste repo, o lote fica em `data/ifem/dados-ifem/export_folheto/` —
+a cópia entre os dois é feita por `python tools/sync_dados.py`
+(passo a passo em [`docs/PASSO_A_PASSO.md`](../../docs/PASSO_A_PASSO.md)).
 
 ```
 export_folheto/
 ├── _metodologia.json                       ← compartilhado (texto da metodologia)
+├── _medias_receitas.json                   ← compartilhado (médias/medianas por rubrica)
 ├── _problema.json                          ← compartilhado (página "O Problema")
 ├── 1100015_alta-floresta-d-oeste-ro.json   ← 1 por município
 ├── 3304557_rio-de-janeiro-rj.json
@@ -22,10 +26,19 @@ export_folheto/
 
 Nome do arquivo: `<cod_ibge>_<slug-uf>.json`.
 
+### Origem de cada compartilhado
+
+| Arquivo | Gerado por |
+|---|---|
+| `_metodologia.json` | `export_folheto_municipios.py` |
+| `_medias_receitas.json` | `export_folheto_complementares.py` |
+| `_problema.json` | **ninguém** — é editorial, versionado em `data/ifem/_problema.json` |
+
 ## Como gerar o folheto
 
-`_metodologia.json` e `_problema.json` são carregados automaticamente da mesma
-pasta do `--dados`:
+Os compartilhados são carregados automaticamente: primeiro da pasta do `--dados`,
+e como fallback de `data/<tema>/` (é assim que o `_problema.json` versionado
+chega ao folheto mesmo num lote recém-exportado):
 
 ```powershell
 # 1 município
