@@ -6,13 +6,18 @@ __pycache__/
 venv/
 .env
 
-# Output
+# Output — PDFs gerados e lotes arquivados por ano. Nada aqui vai pro git:
+# os PDFs são distribuídos por GitHub Releases (ver tools/build_site.py).
 output/*.pdf
+output/_pdfs_*/
+output/_preview_*/
 !output/.gitkeep
 
-# Dados de entrada exportados pelo Subfinanciados (5.5k arquivos, ~94MB)
-# Regeneráveis via Subfinanciados/export_folheto_municipios.py
-data/ifem/dados-ifem/export_folheto/
+# Dados de entrada dos municípios (5.4k arquivos, ~94MB por lote).
+# Regeneráveis a qualquer momento com `python tools/planilhas_para_json.py`.
+# A pasta inteira é ignorada — inclui os lotes de backup por ano, que são
+# cópias do mesmo dado e não devem entrar no histórico.
+data/ifem/dados-ifem/
 
 # Harness Claude Code (local)
 .claude/
