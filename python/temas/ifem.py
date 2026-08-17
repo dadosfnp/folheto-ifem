@@ -24,6 +24,7 @@ from core.tokens import (
     FNP_Q1, FNP_Q2, FNP_Q3, FNP_Q4, FNP_Q5, FNP_QUINTIS,
     FONT_NUM_BOLD, FONT_NUM_SEMIBOLD, FONT_NUM_REGULAR,
     FONT_TEXTO, FONT_TEXTO_SEMIBOLD, FONT_TEXTO_BOLD,
+    ANO_REF, ANO_BASE, PERIODO, PERIODO_HIFEN,
 )
 from core.fonts import F
 from core.components import (
@@ -500,7 +501,7 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO_SEMIBOLD), 9)
         c.drawCentredString(x_2000, plot_y - 12, "2000")
-        c.drawCentredString(x_2024, plot_y - 12, "2024")
+        c.drawCentredString(x_2024, plot_y - 12, str(ANO_REF))
 
         # Legenda na parte inferior do card (não no topo, evita sobrepor título)
         leg_y = y_bot + 14
@@ -616,7 +617,7 @@ class FolhetoIFEM(FolhetoFNP):
         b2_y = cy + 14
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 6.5)
-        c.drawString(x + 10, b2_y + 1, "2024")
+        c.drawString(x + 10, b2_y + 1, str(ANO_REF))
         c.setFillColor(cor_bar)
         bw2 = bar_w_max * (v2024 / maximo)
         c.rect(bar_x, b2_y, bw2, bar_h, fill=1, stroke=0)
@@ -1716,10 +1717,10 @@ class FolhetoIFEM(FolhetoFNP):
 
         lado = self._moldura_pagina(c, n)
         x = self._content_x(lado)
-        y = self._draw_cabecalho(c, x, SAFE_TOP, secao="Síntese Fiscal 2000–2024")
+        y = self._draw_cabecalho(c, x, SAFE_TOP, secao=f"Síntese Fiscal {PERIODO}")
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 9.5)
-        c.drawString(x, y, "Trajetória entre 2000 e 2024 (valores corrigidos pela inflação).")
+        c.drawString(x, y, f"Trajetória entre {ANO_BASE} e {ANO_REF} (valores corrigidos pela inflação).")
         y -= 24
 
         # 2 blocos de variação no formato exato da landing IFEM:
@@ -1747,7 +1748,7 @@ class FolhetoIFEM(FolhetoFNP):
                 "icone":       self._icone_receita_circ,
                 "destaque":    "Receita por Habitante",
                 "verbo":       "cresceu" if rec_mun is not None else "variou",
-                "tail":        "entre 2000 e 2024.",
+                "tail":        f"entre {ANO_BASE} e {ANO_REF}.",
                 "var_mun":     rec_mun,
                 "var_nac":     rec_nac,
                 "pill_bg":     colors.HexColor("#D1F2DC"),   # verde claro pastel
@@ -1961,7 +1962,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Bolinhas com label "ANO" acima em fonte SemiBold
         for ano, pos, cx, cy, cor in [
             ("2000", pos2000, x_2000, y_circ_2000, cor2000),
-            ("2024", pos2024, x_2024, y_circ_2024, cor2024),
+            (str(ANO_REF), pos2024, x_2024, y_circ_2024, cor2024),
         ]:
             # Label ano acima
             c.setFillColor(MUTED)
@@ -1990,7 +1991,7 @@ class FolhetoIFEM(FolhetoFNP):
             (verbo,           cor_verbo,  F(FONT_TEXTO_SEMIBOLD), 10.5),
             (" para a posição ", INK,     F(FONT_TEXTO),  10),
             (f"{_br_int(pos2024)}º", cor_verbo, F(FONT_TEXTO_SEMIBOLD), 10),
-            (f" de {_br_int(tot2024)} no ano de 2024, em termos de receita por habitante.", INK, F(FONT_TEXTO), 10),
+            (f" de {_br_int(tot2024)} no ano de {ANO_REF}, em termos de receita por habitante.", INK, F(FONT_TEXTO), 10),
         ]
         sub_x = x + 14
         sub_w = w - 28
@@ -2035,7 +2036,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Markers: pequena seta cinza sutil + label "POS (ANO)" embaixo
         marker_info = []
         for ano, pos, tot, cor in [("2000", pos2000, tot2000, cor2000),
-                                    ("2024", pos2024, tot2024, cor2024)]:
+                                    (str(ANO_REF), pos2024, tot2024, cor2024)]:
             frac = max(0.0, min(1.0, (tot - pos) / tot)) if tot else 0
             mx = bar_x + frac * bar_w
             marker_info.append((ano, pos, cor, mx))
@@ -2174,7 +2175,7 @@ class FolhetoIFEM(FolhetoFNP):
 
         lado = self._moldura_pagina(c, n)
         x = self._content_x(lado)
-        y = self._draw_cabecalho(c, x, SAFE_TOP, secao="Variações 2000–2024")
+        y = self._draw_cabecalho(c, x, SAFE_TOP, secao=f"Variações {PERIODO}")
 
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 8)
@@ -2186,7 +2187,7 @@ class FolhetoIFEM(FolhetoFNP):
         gap = 14
         self._draw_card_variacao(
             c, x, y - card_h, CONTENT_W, card_h,
-            titulo="VARIAÇÃO DA RECEITA POR HABITANTE (2000-2024)",
+            titulo=f"VARIAÇÃO DA RECEITA POR HABITANTE ({PERIODO_HIFEN})",
             valor_mun=s["delta_receita_per_capita_pct"],
             valor_nac=s["media_nacional_delta_receita_per_capita_pct"],
             cor_mun=BLUE_DARK,
@@ -2196,7 +2197,7 @@ class FolhetoIFEM(FolhetoFNP):
 
         self._draw_card_variacao(
             c, x, y - card_h, CONTENT_W, card_h,
-            titulo="VARIAÇÃO DA POPULAÇÃO (2000-2024)",
+            titulo=f"VARIAÇÃO DA POPULAÇÃO ({PERIODO_HIFEN})",
             valor_mun=s["delta_populacao_pct"],
             valor_nac=s["media_nacional_delta_populacao_pct"],
             cor_mun=YELLOW_DARK,

@@ -82,11 +82,34 @@ def gerar_um(tema: str, dados_path: str) -> Path:
     return out
 
 
+def _filtra_por_populacao(arquivos: list[str], minimo: int) -> list[str]:
+    """
+    Mantém só os municípios acima de `minimo` habitantes.
+
+    Lê `populacao.valor` de cada JSON. Arquivo sem esse campo é descartado com
+    aviso: melhor faltar no lote do que gerar um folheto de município que não
+    deveria entrar no recorte.
+    """
+    selecionados = []
+    for arq in arquivos:
+        try:
+            with open(arq, encoding="utf-8") as f:
+                pop = (json.load(f).get("populacao") or {}).get("valor")
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"[aviso] ignorando {Path(arq).name}: {e}", file=sys.stderr)
+            continue
+        if pop and pop > minimo:
+            selecionados.append(arq)
+    return selecionados
+
+
 def main():
     parser = argparse.ArgumentParser(description="Gerador de folhetos FNP unificado")
     parser.add_argument("--tema",   type=str, help=f"Tema do folheto: {', '.join(TEMAS.keys())}")
     parser.add_argument("--dados",  type=str, help="Caminho do JSON de dados")
     parser.add_argument("--lote",   type=str, help="Glob de JSONs (ex.: 'data/ifem/*.json')")
+    parser.add_argument("--pop-minima", type=int, default=None, metavar="N",
+                        help="no lote, só municípios com população acima de N")
     parser.add_argument("--listar", action="store_true", help="Lista temas registrados")
     args = parser.parse_args()
 
@@ -101,13 +124,29 @@ def main():
 
     if args.lote:
         arquivos = sorted(glob.glob(args.lote))
+        # Companheiros compartilhados (_metodologia, _problema…) não são municípios.
+        arquivos = [a for a in arquivos if not Path(a).name.startswith("_")]
         if not arquivos:
             sys.exit(f"Nenhum arquivo casou com o padrão: {args.lote}")
-        for arq in arquivos:
+
+        if args.pop_minima:
+            arquivos = _filtra_por_populacao(arquivos, args.pop_minima)
+            if not arquivos:
+                sys.exit(f"Nenhum município acima de {args.pop_minima:,} habitantes.")
+            print(f"{len(arquivos)} município(s) acima de {args.pop_minima:,} habitantes.\n")
+
+        total, falhas = len(arquivos), 0
+        for i, arq in enumerate(arquivos, 1):
             try:
                 gerar_um(args.tema, arq)
             except Exception as e:
+                falhas += 1
                 print(f"✗ Erro em {arq}: {e}", file=sys.stderr)
+            if total > 20 and i % 50 == 0:
+                print(f"    ... {i}/{total}", file=sys.stderr)
+        if total > 1:
+            print(f"\nConcluído: {total - falhas}/{total} folhetos"
+                  + (f" ({falhas} falha(s))" if falhas else ""))
     elif args.dados:
         gerar_um(args.tema, args.dados)
     else:

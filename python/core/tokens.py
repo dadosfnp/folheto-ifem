@@ -17,6 +17,39 @@ FONTS_DIR  = ROOT_DIR / "fonts"
 OUTPUT_DIR = ROOT_DIR / "output"
 DATA_DIR   = ROOT_DIR / "data"
 
+# ─── Ano de referência dos dados ─────────────────────────────────────────────
+# Ano impresso no folheto (eixos de gráfico, títulos de seção, texto corrido).
+#
+# Vem do .env porque muda a cada atualização anual da base, enquanto as CHAVES
+# dos JSONs de entrada continuam com o sufixo legado `_2024`
+# (`sintese_fiscal_2000_2024`, `posicao_historica.ano_2024`) — o Subfinanciados
+# nunca as renomeou. Nunca derive o ano dessas chaves: elas mentem de propósito,
+# para não quebrar o contrato de dados. Ver data/ifem/PROVENIENCIA.md.
+
+def _ano_ref_do_env(padrao: int = 2025) -> int:
+    """Lê ANO_REF do .env da raiz. Sem o arquivo ou com valor inválido, usa o padrão."""
+    import os
+
+    bruto = os.getenv("ANO_REF")
+    if not bruto:
+        env_file = ROOT_DIR / ".env"
+        if env_file.exists():
+            for linha in env_file.read_text(encoding="utf-8").splitlines():
+                linha = linha.strip()
+                if linha.startswith("ANO_REF") and "=" in linha:
+                    bruto = linha.split("=", 1)[1].strip()
+                    break
+    try:
+        return int(bruto)
+    except (TypeError, ValueError):
+        return padrao
+
+
+ANO_REF = _ano_ref_do_env()
+ANO_BASE = 2000                       # início da série histórica
+PERIODO = f"{ANO_BASE}–{ANO_REF}"     # travessão, para títulos de seção
+PERIODO_HIFEN = f"{ANO_BASE}-{ANO_REF}"  # hífen, para títulos em caixa alta
+
 # ─── Página ──────────────────────────────────────────────────────────────────
 
 PAGE_SIZE = (20 * cm, 20 * cm)   # 20×20 cm — formato canônico FNP
