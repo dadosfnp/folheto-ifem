@@ -24,6 +24,7 @@ from core.tokens import (
     FNP_Q1, FNP_Q2, FNP_Q3, FNP_Q4, FNP_Q5, FNP_QUINTIS,
     FONT_NUM_BOLD, FONT_NUM_SEMIBOLD, FONT_NUM_REGULAR,
     FONT_TEXTO, FONT_TEXTO_SEMIBOLD, FONT_TEXTO_BOLD,
+    ANO_REF, ANO_BASE, PERIODO, PERIODO_HIFEN,
 )
 from core.fonts import F
 from core.components import (
@@ -194,7 +195,27 @@ class FolhetoIFEM(FolhetoFNP):
         draw_page_number(c, self.W, n - 1, lado, lettermark="IFEM")
         draw_header(c, self.H, self.titulo_publicacao)
         draw_footer(c, self.W, footer_label or f"{self.nome} · {self.uf}")
+        self._draw_aviso_dados(c, lado)
         return lado
+
+    def _draw_aviso_dados(self, c, lado: str):
+        """
+        Tarja de ressalva quando o folheto não usa a base do ano corrente.
+
+        Aparece em TODAS as páginas internas de propósito: o folheto circula
+        impresso e em recortes, e uma ressalva só na capa se perde. Ocupa a
+        faixa entre o footer (y=16) e o SAFE_BOTTOM (y=56), que é livre.
+
+        O texto vem do JSON (`aviso_dados`), não do código — quem monta o lote
+        decide o que ressalvar.
+        """
+        aviso = self.d.get("aviso_dados")
+        if not aviso:
+            return
+        x = (STRIPE_W + MARGIN) if lado == "esq" else MARGIN
+        c.setFillColor(RED_BURNT)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 6.2)
+        c.drawString(x, 34, str(aviso).upper())
 
     def _content_x(self, lado: str) -> float:
         """X inicial do conteúdo, evitando o stripe."""
@@ -500,7 +521,7 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO_SEMIBOLD), 9)
         c.drawCentredString(x_2000, plot_y - 12, "2000")
-        c.drawCentredString(x_2024, plot_y - 12, "2024")
+        c.drawCentredString(x_2024, plot_y - 12, str(ANO_REF))
 
         # Legenda na parte inferior do card (não no topo, evita sobrepor título)
         leg_y = y_bot + 14
@@ -616,7 +637,7 @@ class FolhetoIFEM(FolhetoFNP):
         b2_y = cy + 14
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 6.5)
-        c.drawString(x + 10, b2_y + 1, "2024")
+        c.drawString(x + 10, b2_y + 1, str(ANO_REF))
         c.setFillColor(cor_bar)
         bw2 = bar_w_max * (v2024 / maximo)
         c.rect(bar_x, b2_y, bw2, bar_h, fill=1, stroke=0)
@@ -1716,10 +1737,10 @@ class FolhetoIFEM(FolhetoFNP):
 
         lado = self._moldura_pagina(c, n)
         x = self._content_x(lado)
-        y = self._draw_cabecalho(c, x, SAFE_TOP, secao="Síntese Fiscal 2000–2024")
+        y = self._draw_cabecalho(c, x, SAFE_TOP, secao=f"Síntese Fiscal {PERIODO}")
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 9.5)
-        c.drawString(x, y, "Trajetória entre 2000 e 2024 (valores corrigidos pela inflação).")
+        c.drawString(x, y, f"Trajetória entre {ANO_BASE} e {ANO_REF} (valores corrigidos pela inflação).")
         y -= 24
 
         # 2 blocos de variação no formato exato da landing IFEM:
@@ -1747,7 +1768,7 @@ class FolhetoIFEM(FolhetoFNP):
                 "icone":       self._icone_receita_circ,
                 "destaque":    "Receita por Habitante",
                 "verbo":       "cresceu" if rec_mun is not None else "variou",
-                "tail":        "entre 2000 e 2024.",
+                "tail":        f"entre {ANO_BASE} e {ANO_REF}.",
                 "var_mun":     rec_mun,
                 "var_nac":     rec_nac,
                 "pill_bg":     colors.HexColor("#D1F2DC"),   # verde claro pastel
@@ -1862,6 +1883,28 @@ class FolhetoIFEM(FolhetoFNP):
         self._draw_evolucao_percentil(c, x, y - card_h, CONTENT_W, card_h,
                                        h2000, h2024, self.nome)
 
+    def _draw_evolucao_indisponivel(self, c, x, y, w, h):
+        """
+        Card de fallback quando o município não tem série histórica de 2000.
+
+        Preenche o espaço com uma explicação em vez de deixar um buraco branco:
+        o leitor precisa saber que o dado falta, não achar que houve erro de
+        diagramação. O card externo já foi desenhado pelo chamador.
+        """
+        cx = x + w / 2
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 10)
+        c.drawCentredString(cx, y + h / 2 + 6, "Série histórica indisponível")
+        c.setFont(F(FONT_TEXTO), 8.5)
+        c.drawCentredString(
+            cx, y + h / 2 - 8,
+            f"Este município não possui receita declarada em {ANO_BASE}."
+        )
+        c.drawCentredString(
+            cx, y + h / 2 - 20,
+            "A comparação de posição no ranking não pôde ser calculada."
+        )
+
     # ─── Ícones circulares (Síntese Fiscal — estilo landing) ────────────────
 
     def _icone_receita_circ(self, c, cx, cy, size=26):
@@ -1909,11 +1952,20 @@ class FolhetoIFEM(FolhetoFNP):
         c.setLineWidth(0.5)
         c.roundRect(x, y, w, h, 6, fill=0, stroke=1)
 
-        # Dados base
-        pos2000 = h2000["ranking_nacional"]["posicao"]
-        tot2000 = h2000["ranking_nacional"]["total"]
-        pos2024 = h2024["ranking_nacional"]["posicao"]
-        tot2024 = h2024["ranking_nacional"]["total"]
+        # Dados base. A série de 2000 cobre menos municípios que a atual
+        # (5.305 contra 5.440): quem não declarou receita naquele ano não tem
+        # ranking histórico. Sem esta guarda o folheto inteiro estourava com
+        # TypeError, derrubando 14 páginas válidas por causa de um card.
+        rk2000 = (h2000 or {}).get("ranking_nacional")
+        rk2024 = (h2024 or {}).get("ranking_nacional")
+        if not rk2000 or not rk2024:
+            self._draw_evolucao_indisponivel(c, x, y, w, h)
+            return
+
+        pos2000 = rk2000["posicao"]
+        tot2000 = rk2000["total"]
+        pos2024 = rk2024["posicao"]
+        tot2024 = rk2024["total"]
         cor2000 = cor_por_quintil(h2000["quintil"])
         cor2024 = cor_por_quintil(h2024["quintil"])
         tot_max = max(tot2000, tot2024)
@@ -1961,7 +2013,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Bolinhas com label "ANO" acima em fonte SemiBold
         for ano, pos, cx, cy, cor in [
             ("2000", pos2000, x_2000, y_circ_2000, cor2000),
-            ("2024", pos2024, x_2024, y_circ_2024, cor2024),
+            (str(ANO_REF), pos2024, x_2024, y_circ_2024, cor2024),
         ]:
             # Label ano acima
             c.setFillColor(MUTED)
@@ -1990,7 +2042,7 @@ class FolhetoIFEM(FolhetoFNP):
             (verbo,           cor_verbo,  F(FONT_TEXTO_SEMIBOLD), 10.5),
             (" para a posição ", INK,     F(FONT_TEXTO),  10),
             (f"{_br_int(pos2024)}º", cor_verbo, F(FONT_TEXTO_SEMIBOLD), 10),
-            (f" de {_br_int(tot2024)} no ano de 2024, em termos de receita por habitante.", INK, F(FONT_TEXTO), 10),
+            (f" de {_br_int(tot2024)} no ano de {ANO_REF}, em termos de receita por habitante.", INK, F(FONT_TEXTO), 10),
         ]
         sub_x = x + 14
         sub_w = w - 28
@@ -2035,7 +2087,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Markers: pequena seta cinza sutil + label "POS (ANO)" embaixo
         marker_info = []
         for ano, pos, tot, cor in [("2000", pos2000, tot2000, cor2000),
-                                    ("2024", pos2024, tot2024, cor2024)]:
+                                    (str(ANO_REF), pos2024, tot2024, cor2024)]:
             frac = max(0.0, min(1.0, (tot - pos) / tot)) if tot else 0
             mx = bar_x + frac * bar_w
             marker_info.append((ano, pos, cor, mx))
@@ -2174,7 +2226,7 @@ class FolhetoIFEM(FolhetoFNP):
 
         lado = self._moldura_pagina(c, n)
         x = self._content_x(lado)
-        y = self._draw_cabecalho(c, x, SAFE_TOP, secao="Variações 2000–2024")
+        y = self._draw_cabecalho(c, x, SAFE_TOP, secao=f"Variações {PERIODO}")
 
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 8)
@@ -2186,7 +2238,7 @@ class FolhetoIFEM(FolhetoFNP):
         gap = 14
         self._draw_card_variacao(
             c, x, y - card_h, CONTENT_W, card_h,
-            titulo="VARIAÇÃO DA RECEITA POR HABITANTE (2000-2024)",
+            titulo=f"VARIAÇÃO DA RECEITA POR HABITANTE ({PERIODO_HIFEN})",
             valor_mun=s["delta_receita_per_capita_pct"],
             valor_nac=s["media_nacional_delta_receita_per_capita_pct"],
             cor_mun=BLUE_DARK,
@@ -2196,7 +2248,7 @@ class FolhetoIFEM(FolhetoFNP):
 
         self._draw_card_variacao(
             c, x, y - card_h, CONTENT_W, card_h,
-            titulo="VARIAÇÃO DA POPULAÇÃO (2000-2024)",
+            titulo=f"VARIAÇÃO DA POPULAÇÃO ({PERIODO_HIFEN})",
             valor_mun=s["delta_populacao_pct"],
             valor_nac=s["media_nacional_delta_populacao_pct"],
             cor_mun=YELLOW_DARK,

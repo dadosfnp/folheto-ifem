@@ -1,0 +1,73 @@
+{
+  "titulo": "O Problema: o dinheiro na contramão",
+  "resumo": "O sistema de transferência para municípios brasileiros apoia-se em regras da década de 60. O Brasil mudou, o contexto das cidades mudou, mas as regras de financiamento não acompanharam essas mudanças.",
+  "composicao_receita_municipal": {
+    "transferencias_pct": 64,
+    "arrecadacao_propria_pct": 36,
+    "notas": {
+      "transferencias": "Recursos oriundos da União e dos Estados.",
+      "arrecadacao_propria": "Recursos que o município arrecada diretamente."
+    }
+  },
+  "diagnostico": [
+    "Parte da distorção está ligada ao desenho do sistema de transferências, baseado em regras criadas na década de 1960, quando o contexto urbano, econômico e demográfico do Brasil era completamente diferente.",
+    "Desde então, o país passou por um intenso processo de urbanização, com crescimento acelerado de cidades médias e grandes. Entre 2000 e 2025, esses municípios cresceram acima da média nacional, mas passaram a receber menos receita por habitante.",
+    "Enquanto isso, uma parcela relevante dos recursos — especialmente das transferências — continua concentrada em localidades com pouca população ou até em declínio demográfico. Na prática, o dinheiro passou a seguir na direção oposta à população.",
+    "Municípios com menos de 20 mil habitantes cresceram abaixo da média do país; aqueles com até cinco mil habitantes registraram, em média, decréscimo populacional ao longo dos últimos 25 anos.",
+    "Em 2000, os 20% de municípios com menor receita por habitante concentravam cerca de 40,5 milhões de pessoas. Em 2025, esse contingente chegou a 93 milhões. No sentido oposto, os 20% de municípios com maior receita per capita viram sua população cair de 43,2 milhões para 12,9 milhões. Cada vez mais brasileiros vivem hoje em municípios estruturalmente subfinanciados."
+  ],
+  "populacao_por_quintil_de_receita": {
+    "menor_renda_1q": {
+      "descricao": "1º Quintil — 20% dos municípios com menor receita corrente por habitante.",
+      "ano_2000_milhoes": 40.5,
+      "ano_2024_milhoes": 93.0,
+      "variacao_pct": 129.63
+    },
+    "maior_renda_5q": {
+      "descricao": "5º Quintil — 20% dos municípios com maior receita corrente por habitante.",
+      "ano_2000_milhoes": 43.2,
+      "ano_2024_milhoes": 12.9,
+      "variacao_pct": -70.14
+    }
+  },
+  "descompasso": "As regras de transferências, praticamente estáticas há décadas, já não refletem a situação do país. Cidades mais populosas passaram a receber menos recursos por habitante, enquanto parte relevante das transferências segue concentrada em municípios menores. O dinheiro passou a caminhar na direção oposta à população, ampliando desigualdades fiscais e comprometendo a oferta de serviços públicos onde vive a maioria dos brasileiros.",
+  "raiz_da_distorcao": {
+    "decada_1960": "Na década de 1960 era verdade que cidades pequenas tinham menos recursos e cidades populosas mais recursos por habitante. O sistema de repasses foi desenhado para aquele tempo.",
+    "cenario_atual": "As regras que orientam o financiamento das cidades, praticamente as mesmas desde a década de 1960, já não correspondem à situação demográfica e social do país. Ao desconsiderar as novas demandas dos municípios e da população, o sistema acaba reforçando as desigualdades entre as cidades."
+  },
+  "crescimento_populacional_por_porte_2000_2024_pct": {
+    "ate_5_mil": -1.3,
+    "5_a_10_mil": 4.4,
+    "10_a_30_mil": 12.4,
+    "30_a_100_mil": 27.1,
+    "100_a_500_mil": 37.0,
+    "acima_500_mil": 17.4
+  },
+  "crescimento_receita_per_capita_vs_media_nacional_2000_2024_pct": {
+    "descricao": "Variação real (descontada a inflação) da Receita Corrente por habitante, acumulada entre 2000 e 2024, em relação ao crescimento médio nacional, por faixa populacional.",
+    "ate_5_mil": 34.2,
+    "5_a_10_mil": 44.1,
+    "10_a_30_mil": 54.0,
+    "30_a_100_mil": 10.1,
+    "100_a_500_mil": -3.8,
+    "acima_500_mil": -25.2
+  },
+  "participacao_populacao_por_porte_pct": {
+    "descricao": "Proporção de habitantes vivendo em cidades acima vs abaixo de 80 mil habitantes.",
+    "ano_2000": {
+      "acima_80_mil": 55.2,
+      "abaixo_80_mil": 44.8
+    },
+    "ano_2024": {
+      "acima_80_mil": 61.9,
+      "abaixo_80_mil": 38.1
+    }
+  },
+  "paradoxo_do_crescimento": [
+    "O modelo atual aumenta a receita per capita onde a população estagna e pune onde ela cresce.",
+    "Cidades com até 30 mil habitantes tiveram ganhos reais de receita acima de 30%; cidades acima de 100 mil habitantes, que absorveram a população e as demandas por serviços públicos, viram seus recursos disponíveis diminuírem.",
+    "Cada vez mais pessoas vivem em municípios com mais de 80 mil habitantes ao passo em que há menos gente vivendo nos municípios menores; no entanto, os recursos públicos estão indo no lado oposto desse movimento populacional.",
+    "Hoje, quase 62% da população brasileira reside em municípios com mais de 80 mil habitantes — exatamente o segmento mais punido pela defasagem das transferências."
+  ],
+  "ano_referencia": 2025
+}

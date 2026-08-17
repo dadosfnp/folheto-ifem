@@ -62,8 +62,21 @@ def _strip_acentos(s: str) -> str:
 
 
 def _slug_release(s: str) -> str:
-    """Filename SEM acento — o que o GitHub Releases efetivamente armazena."""
-    return _strip_acentos(_title_case_br(s or "folheto")).replace(" ", "_")
+    """
+    Filename como o GitHub Releases efetivamente armazena o asset.
+
+    Duas transformações que o GitHub aplica no upload, e que precisam ser
+    replicadas aqui ou o link da landing dá 404:
+
+      1. diacríticos são removidos      — "Bagé"      -> "Bage"
+      2. o que sobra fora de [A-Za-z0-9._-] vira ponto — "Sant'ana" -> "Sant.ana"
+
+    A segunda pegou dois municípios (Sant'ana do Livramento/RS e Santa Bárbara
+    D'Oeste/SP): o apóstrofo virava ponto no release enquanto o índice seguia
+    apontando para o apóstrofo.
+    """
+    base = _strip_acentos(_title_case_br(s or "folheto")).replace(" ", "_")
+    return re.sub(r"[^A-Za-z0-9._-]", ".", base)
 
 
 def _slug_local(s: str) -> str:
@@ -89,29 +102,49 @@ def _detectar_owner_repo() -> tuple[str | None, str | None]:
 
 
 def _carregar_indice_municipios() -> dict[str, dict]:
-    """Lê os JSONs do export_folheto/ e devolve {cod_ibge: meta}."""
+    """
+    Lê os JSONs dos municípios e devolve {cod_ibge: meta}.
+
+    Duas origens: o lote do ano corrente e `_sem_declaracao/`, que guarda os
+    municípios que não declararam receita no ano e cujo folheto foi gerado com a
+    base anterior + ressalva (ver tools/gerar_sem_declaracao.py). Sem a segunda,
+    essas cidades sumiriam da landing mesmo tendo PDF publicado.
+    """
     idx: dict[str, dict] = {}
-    for jpath in EXPORT_DIR.glob("*.json"):
-        nome = jpath.name
-        if nome.startswith("_") or "_sintese" in nome:
-            continue
-        try:
-            with jpath.open(encoding="utf-8") as f:
-                d = json.load(f)
-            ident = d["identificacao"]
-            idx[ident["cod_ibge"]] = {
-                "cod_ibge":  ident["cod_ibge"],
-                "municipio": ident["municipio"],
-                "uf":        ident["uf"],
-                "regiao":    ident.get("regiao", ""),
-                "porte":     ident.get("porte", ""),
-                "populacao": d["populacao"]["valor"],
-                "rk_pop":    d["populacao"]["ranking_nacional"]["posicao"],
-                "rk_rec":    d["receita_corrente"]["ranking_por_per_capita"]["nacional"]["posicao"],
-                "quintil":   d.get("percentil", {}).get("quintil", ""),
-            }
-        except Exception as e:
-            print(f"[skip] {nome}: {e}", file=sys.stderr)
+    fontes = [EXPORT_DIR]
+    sem_decl = EXPORT_DIR.parent / "_sem_declaracao"
+    if sem_decl.is_dir():
+        fontes.append(sem_decl)
+
+    for pasta in fontes:
+        for jpath in sorted(pasta.glob("*.json")):
+            nome = jpath.name
+            if nome.startswith("_") or "_sintese" in nome:
+                continue
+            try:
+                with jpath.open(encoding="utf-8") as f:
+                    d = json.load(f)
+                ident = d["identificacao"]
+                meta = {
+                    "cod_ibge":  ident["cod_ibge"],
+                    "municipio": ident["municipio"],
+                    "uf":        ident["uf"],
+                    "regiao":    ident.get("regiao", ""),
+                    "porte":     ident.get("porte", ""),
+                    "populacao": d["populacao"]["valor"],
+                    "rk_pop":    (d["populacao"].get("ranking_nacional") or {}).get("posicao"),
+                    "rk_rec":    ((d["receita_corrente"].get("ranking_por_per_capita") or {})
+                                  .get("nacional") or {}).get("posicao"),
+                    "quintil":   d.get("percentil", {}).get("quintil", ""),
+                }
+                # Ressalva viaja para a landing: quem baixa precisa saber que o
+                # folheto é do ano anterior antes de abrir o PDF.
+                if d.get("aviso_dados"):
+                    meta["aviso"] = d["aviso_dados"]
+                    meta["ano_dados"] = (d.get("receita_corrente") or {}).get("ano")
+                idx[ident["cod_ibge"]] = meta
+            except Exception as e:
+                print(f"[skip] {nome}: {e}", file=sys.stderr)
     return idx
 
 
