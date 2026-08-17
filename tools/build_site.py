@@ -136,12 +136,15 @@ def _carregar_indice_municipios() -> dict[str, dict]:
                     "rk_rec":    ((d["receita_corrente"].get("ranking_por_per_capita") or {})
                                   .get("nacional") or {}).get("posicao"),
                     "quintil":   d.get("percentil", {}).get("quintil", ""),
+                    # Ano do dado de CADA município — não só dos que têm ressalva.
+                    # É daqui que sai o ano_ref do índice; se só os ressalvados o
+                    # trouxessem, o índice anunciaria o ano antigo.
+                    "ano_dados": (d.get("receita_corrente") or {}).get("ano"),
                 }
                 # Ressalva viaja para a landing: quem baixa precisa saber que o
                 # folheto é do ano anterior antes de abrir o PDF.
                 if d.get("aviso_dados"):
                     meta["aviso"] = d["aviso_dados"]
-                    meta["ano_dados"] = (d.get("receita_corrente") or {}).get("ano")
                 idx[ident["cod_ibge"]] = meta
             except Exception as e:
                 print(f"[skip] {nome}: {e}", file=sys.stderr)
@@ -195,8 +198,16 @@ def build(release_tag: str, owner: str, repo: str) -> None:
     # Cidades grandes primeiro — são as mais procuradas.
     items.sort(key=lambda x: -x["populacao"])
 
+    # Ano de referência publicado no índice para a landing preencher os textos.
+    # Antes o "2000–2024" estava escrito à mão no HTML e ficou para trás quando a
+    # base virou 2025 — a página anunciava um ano e entregava PDFs de outro.
+    anos = [a for a in (m.get("ano_dados") for m in items) if a]
+    ano_ref = max(anos) if anos else None
+
     indice = {
         "total":       len(items),
+        "ano_ref":     ano_ref,
+        "ano_base":    2000,
         "release_tag": release_tag,
         "owner":       owner,
         "repo":        repo,

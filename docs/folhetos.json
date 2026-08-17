@@ -1,9 +1,11 @@
 {
   "total": 424,
+  "ano_ref": 2025,
+  "ano_base": 2000,
   "release_tag": "v2",
   "owner": "dadosfnp",
   "repo": "folheto-ifem",
-  "atualizado": "2026-08-17T21:25:05Z",
+  "atualizado": "2026-08-17T21:41:07Z",
   "municipios": [
     {
       "cod_ibge": "3550308",
@@ -15,6 +17,7 @@
       "rk_pop": 1,
       "rk_rec": 1845,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Paulo_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Paulo_SP.pdf"
     },
@@ -28,6 +31,7 @@
       "rk_pop": 2,
       "rk_rec": 4513,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_de_Janeiro_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_de_Janeiro_RJ.pdf"
     },
@@ -41,6 +45,7 @@
       "rk_pop": 3,
       "rk_rec": 561,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Brasilia_DF.pdf",
       "pdf_filename": "FolhetoIFEM_Brasilia_DF.pdf"
     },
@@ -54,6 +59,7 @@
       "rk_pop": 4,
       "rk_rec": 4986,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Fortaleza_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Fortaleza_CE.pdf"
     },
@@ -67,6 +73,7 @@
       "rk_pop": 5,
       "rk_rec": 5221,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Salvador_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Salvador_BA.pdf"
     },
@@ -80,6 +87,7 @@
       "rk_pop": 6,
       "rk_rec": 2379,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Belo_Horizonte_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Belo_Horizonte_MG.pdf"
     },
@@ -93,6 +101,7 @@
       "rk_pop": 7,
       "rk_rec": 5236,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Manaus_AM.pdf",
       "pdf_filename": "FolhetoIFEM_Manaus_AM.pdf"
     },
@@ -106,6 +115,7 @@
       "rk_pop": 8,
       "rk_rec": 2727,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Curitiba_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Curitiba_PR.pdf"
     },
@@ -119,6 +129,7 @@
       "rk_pop": 9,
       "rk_rec": 4818,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Recife_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Recife_PE.pdf"
     },
@@ -132,6 +143,7 @@
       "rk_pop": 10,
       "rk_rec": 3915,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Goiania_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Goiania_GO.pdf"
     },
@@ -145,6 +157,7 @@
       "rk_pop": 11,
       "rk_rec": 5377,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Belem_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Belem_PA.pdf"
     },
@@ -158,6 +171,7 @@
       "rk_pop": 12,
       "rk_rec": 2669,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Porto_Alegre_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Porto_Alegre_RS.pdf"
     },
@@ -171,6 +185,7 @@
       "rk_pop": 13,
       "rk_rec": 4950,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guarulhos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Guarulhos_SP.pdf"
     },
@@ -184,6 +199,7 @@
       "rk_pop": 14,
       "rk_rec": 2176,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campinas_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Campinas_SP.pdf"
     },
@@ -197,6 +213,7 @@
       "rk_pop": 15,
       "rk_rec": 4185,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Luis_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Luis_MA.pdf"
     },
@@ -210,6 +227,7 @@
       "rk_pop": 16,
       "rk_rec": 5217,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maceio_AL.pdf",
       "pdf_filename": "FolhetoIFEM_Maceio_AL.pdf"
     },
@@ -223,6 +241,7 @@
       "rk_pop": 17,
       "rk_rec": 4245,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campo_Grande_MS.pdf",
       "pdf_filename": "FolhetoIFEM_Campo_Grande_MS.pdf"
     },
@@ -236,6 +255,7 @@
       "rk_pop": 18,
       "rk_rec": 5437,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Goncalo_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Goncalo_RJ.pdf"
     },
@@ -249,6 +269,7 @@
       "rk_pop": 19,
       "rk_rec": 4408,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Teresina_PI.pdf",
       "pdf_filename": "FolhetoIFEM_Teresina_PI.pdf"
     },
@@ -262,6 +283,7 @@
       "rk_pop": 20,
       "rk_rec": 4820,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Joao_Pessoa_PB.pdf",
       "pdf_filename": "FolhetoIFEM_Joao_Pessoa_PB.pdf"
     },
@@ -275,6 +297,7 @@
       "rk_pop": 21,
       "rk_rec": 4327,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Duque_de_Caxias_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Duque_de_Caxias_RJ.pdf"
     },
@@ -288,6 +311,7 @@
       "rk_pop": 22,
       "rk_rec": 5434,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nova_Iguacu_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Nova_Iguacu_RJ.pdf"
     },
@@ -301,6 +325,7 @@
       "rk_pop": 23,
       "rk_rec": 2836,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Bernardo_do_Campo_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Bernardo_do_Campo_SP.pdf"
     },
@@ -314,6 +339,7 @@
       "rk_pop": 24,
       "rk_rec": 4673,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Natal_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Natal_RN.pdf"
     },
@@ -327,6 +353,7 @@
       "rk_pop": 25,
       "rk_rec": 4836,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santo_Andre_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Santo_Andre_SP.pdf"
     },
@@ -340,6 +367,7 @@
       "rk_pop": 26,
       "rk_rec": 3430,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sorocaba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sorocaba_SP.pdf"
     },
@@ -353,6 +381,7 @@
       "rk_pop": 27,
       "rk_rec": 4161,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Uberlandia_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Uberlandia_MG.pdf"
     },
@@ -366,6 +395,7 @@
       "rk_pop": 28,
       "rk_rec": 3346,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Osasco_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Osasco_SP.pdf"
     },
@@ -379,6 +409,7 @@
       "rk_pop": 29,
       "rk_rec": 3634,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ribeirao_Preto_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Ribeirao_Preto_SP.pdf"
     },
@@ -392,6 +423,7 @@
       "rk_pop": 30,
       "rk_rec": 3471,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Jose_dos_Campos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Jose_dos_Campos_SP.pdf"
     },
@@ -405,6 +437,7 @@
       "rk_pop": 31,
       "rk_rec": 3497,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cuiaba_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Cuiaba_MT.pdf"
     },
@@ -418,6 +451,7 @@
       "rk_pop": 32,
       "rk_rec": 5428,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jaboatao_dos_Guararapes_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Jaboatao_dos_Guararapes_PE.pdf"
     },
@@ -431,6 +465,7 @@
       "rk_pop": 33,
       "rk_rec": 3466,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Joinville_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Joinville_SC.pdf"
     },
@@ -444,6 +479,7 @@
       "rk_pop": 34,
       "rk_rec": 5425,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Feira_de_Santana_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Feira_de_Santana_BA.pdf"
     },
@@ -457,6 +493,7 @@
       "rk_pop": 35,
       "rk_rec": 4259,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Contagem_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Contagem_MG.pdf"
     },
@@ -470,6 +507,7 @@
       "rk_pop": 36,
       "rk_rec": 4460,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aracaju_SE.pdf",
       "pdf_filename": "FolhetoIFEM_Aracaju_SE.pdf"
     },
@@ -483,6 +521,7 @@
       "rk_pop": 37,
       "rk_rec": 3408,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Florianopolis_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Florianopolis_SC.pdf"
     },
@@ -496,6 +535,7 @@
       "rk_pop": 38,
       "rk_rec": 3759,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Londrina_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Londrina_PR.pdf"
     },
@@ -509,6 +549,7 @@
       "rk_pop": 39,
       "rk_rec": 5193,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Serra_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Serra_ES.pdf"
     },
@@ -522,6 +563,7 @@
       "rk_pop": 40,
       "rk_rec": 4734,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Juiz_de_Fora_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Juiz_de_Fora_MG.pdf"
     },
@@ -535,6 +577,7 @@
       "rk_pop": 41,
       "rk_rec": 5312,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aparecida_de_Goiania_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Aparecida_de_Goiania_GO.pdf"
     },
@@ -548,6 +591,7 @@
       "rk_pop": 42,
       "rk_rec": 4186,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campos_dos_Goytacazes_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Campos_dos_Goytacazes_RJ.pdf"
     },
@@ -561,6 +605,7 @@
       "rk_pop": 43,
       "rk_rec": 5435,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Belford_Roxo_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Belford_Roxo_RJ.pdf"
     },
@@ -574,6 +619,7 @@
       "rk_pop": 44,
       "rk_rec": 4933,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Porto_Velho_RO.pdf",
       "pdf_filename": "FolhetoIFEM_Porto_Velho_RO.pdf"
     },
@@ -587,6 +633,7 @@
       "rk_pop": 45,
       "rk_rec": 675,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Niteroi_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Niteroi_RJ.pdf"
     },
@@ -600,6 +647,7 @@
       "rk_pop": 46,
       "rk_rec": 5433,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ananindeua_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Ananindeua_PA.pdf"
     },
@@ -613,6 +661,7 @@
       "rk_pop": 47,
       "rk_rec": 5233,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vila_Velha_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Vila_Velha_ES.pdf"
     },
@@ -626,6 +675,7 @@
       "rk_pop": 48,
       "rk_rec": 3683,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Jose_do_Rio_Preto_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Jose_do_Rio_Preto_SP.pdf"
     },
@@ -639,6 +689,7 @@
       "rk_pop": 49,
       "rk_rec": 5345,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Macapa_AP.pdf",
       "pdf_filename": "FolhetoIFEM_Macapa_AP.pdf"
     },
@@ -652,6 +703,7 @@
       "rk_pop": 50,
       "rk_rec": 3730,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Boa_Vista_RR.pdf",
       "pdf_filename": "FolhetoIFEM_Boa_Vista_RR.pdf"
     },
@@ -665,6 +717,7 @@
       "rk_pop": 51,
       "rk_rec": 3054,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caxias_do_Sul_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Caxias_do_Sul_RS.pdf"
     },
@@ -678,6 +731,7 @@
       "rk_pop": 52,
       "rk_rec": 4448,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mogi_das_Cruzes_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Mogi_das_Cruzes_SP.pdf"
     },
@@ -691,6 +745,7 @@
       "rk_pop": 53,
       "rk_rec": 5436,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Joao_de_Meriti_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Joao_de_Meriti_RJ.pdf"
     },
@@ -704,6 +759,7 @@
       "rk_pop": 54,
       "rk_rec": 1811,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jundiai_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Jundiai_SP.pdf"
     },
@@ -717,6 +773,7 @@
       "rk_pop": 55,
       "rk_rec": 5335,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campina_Grande_PB.pdf",
       "pdf_filename": "FolhetoIFEM_Campina_Grande_PB.pdf"
     },
@@ -730,6 +787,7 @@
       "rk_pop": 56,
       "rk_rec": 2622,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Piracicaba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Piracicaba_SP.pdf"
     },
@@ -743,6 +801,7 @@
       "rk_pop": 57,
       "rk_rec": 5128,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Montes_Claros_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Montes_Claros_MG.pdf"
     },
@@ -756,6 +815,7 @@
       "rk_pop": 58,
       "rk_rec": 2648,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Betim_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Betim_MG.pdf"
     },
@@ -769,6 +829,7 @@
       "rk_pop": 59,
       "rk_rec": 2850,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maringa_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Maringa_PR.pdf"
     },
@@ -782,6 +843,7 @@
       "rk_pop": 60,
       "rk_rec": 858,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Santos_SP.pdf"
     },
@@ -795,6 +857,7 @@
       "rk_pop": 61,
       "rk_rec": 5347,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maua_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Maua_SP.pdf"
     },
@@ -808,6 +871,7 @@
       "rk_pop": 62,
       "rk_rec": 5250,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Anapolis_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Anapolis_GO.pdf"
     },
@@ -821,6 +885,7 @@
       "rk_pop": 63,
       "rk_rec": 5372,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Petrolina_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Petrolina_PE.pdf"
     },
@@ -834,6 +899,7 @@
       "rk_pop": 64,
       "rk_rec": 5404,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caruaru_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Caruaru_PE.pdf"
     },
@@ -847,6 +913,7 @@
       "rk_pop": 65,
       "rk_rec": 5095,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Diadema_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Diadema_SP.pdf"
     },
@@ -860,6 +927,7 @@
       "rk_pop": 66,
       "rk_rec": 5439,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Carapicuiba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Carapicuiba_SP.pdf"
     },
@@ -873,6 +941,7 @@
       "rk_pop": 67,
       "rk_rec": 5409,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vitoria_da_Conquista_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Vitoria_da_Conquista_BA.pdf"
     },
@@ -886,6 +955,7 @@
       "rk_pop": 68,
       "rk_rec": 4839,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Bauru_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Bauru_SP.pdf"
     },
@@ -899,6 +969,7 @@
       "rk_pop": 69,
       "rk_rec": 4774,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_Branco_AC.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_Branco_AC.pdf"
     },
@@ -912,6 +983,7 @@
       "rk_pop": 70,
       "rk_rec": 2566,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Blumenau_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Blumenau_SC.pdf"
     },
@@ -925,6 +997,7 @@
       "rk_pop": 71,
       "rk_rec": 5421,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itaquaquecetuba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itaquaquecetuba_SP.pdf"
     },
@@ -938,6 +1011,7 @@
       "rk_pop": 72,
       "rk_rec": 5310,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caucaia_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Caucaia_CE.pdf"
     },
@@ -951,6 +1025,7 @@
       "rk_pop": 73,
       "rk_rec": 5222,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cariacica_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Cariacica_ES.pdf"
     },
@@ -964,6 +1039,7 @@
       "rk_pop": 74,
       "rk_rec": 5228,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ponta_Grossa_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Ponta_Grossa_PR.pdf"
     },
@@ -977,6 +1053,7 @@
       "rk_pop": 75,
       "rk_rec": 2832,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Praia_Grande_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Praia_Grande_SP.pdf"
     },
@@ -990,6 +1067,7 @@
       "rk_pop": 76,
       "rk_rec": 4682,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cascavel_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Cascavel_PR.pdf"
     },
@@ -1003,6 +1081,7 @@
       "rk_pop": 77,
       "rk_rec": 5382,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Franca_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Franca_SP.pdf"
     },
@@ -1016,6 +1095,7 @@
       "rk_pop": 78,
       "rk_rec": 5438,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paulista_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Paulista_PE.pdf"
     },
@@ -1029,6 +1109,7 @@
       "rk_pop": 79,
       "rk_rec": 5432,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Olinda_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Olinda_PE.pdf"
     },
@@ -1042,6 +1123,7 @@
       "rk_pop": 80,
       "rk_rec": 5297,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santarem_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Santarem_PA.pdf"
     },
@@ -1055,6 +1137,7 @@
       "rk_pop": 81,
       "rk_rec": 2975,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Canoas_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Canoas_RS.pdf"
     },
@@ -1068,6 +1151,7 @@
       "rk_pop": 82,
       "rk_rec": 3217,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Uberaba_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Uberaba_MG.pdf"
     },
@@ -1081,6 +1165,7 @@
       "rk_pop": 83,
       "rk_rec": 3543,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Jose_dos_Pinhais_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Jose_dos_Pinhais_PR.pdf"
     },
@@ -1094,6 +1179,7 @@
       "rk_pop": 84,
       "rk_rec": 5430,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ribeirao_das_Neves_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Ribeirao_das_Neves_MG.pdf"
     },
@@ -1107,6 +1193,7 @@
       "rk_pop": 85,
       "rk_rec": 1142,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vitoria_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Vitoria_ES.pdf"
     },
@@ -1120,6 +1207,7 @@
       "rk_pop": 86,
       "rk_rec": 5089,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Vicente_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Vicente_SP.pdf"
     },
@@ -1133,6 +1221,7 @@
       "rk_pop": 87,
       "rk_rec": 4799,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pelotas_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Pelotas_RS.pdf"
     },
@@ -1146,6 +1235,7 @@
       "rk_pop": 88,
       "rk_rec": 175,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barueri_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Barueri_SP.pdf"
     },
@@ -1159,6 +1249,7 @@
       "rk_pop": 89,
       "rk_rec": 3004,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Palmas_TO.pdf",
       "pdf_filename": "FolhetoIFEM_Palmas_TO.pdf"
     },
@@ -1172,6 +1263,7 @@
       "rk_pop": 90,
       "rk_rec": 3559,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Taubate_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Taubate_SP.pdf"
     },
@@ -1185,6 +1277,7 @@
       "rk_pop": 91,
       "rk_rec": 3357,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Camacari_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Camacari_BA.pdf"
     },
@@ -1198,6 +1291,7 @@
       "rk_pop": 92,
       "rk_rec": 5220,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Suzano_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Suzano_SP.pdf"
     },
@@ -1211,6 +1305,7 @@
       "rk_pop": 93,
       "rk_rec": 5307,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Varzea_Grande_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Varzea_Grande_MT.pdf"
     },
@@ -1224,6 +1319,7 @@
       "rk_pop": 94,
       "rk_rec": 2062,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Parauapebas_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Parauapebas_PA.pdf"
     },
@@ -1237,6 +1333,7 @@
       "rk_pop": 95,
       "rk_rec": 5408,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Juazeiro_do_Norte_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Juazeiro_do_Norte_CE.pdf"
     },
@@ -1250,6 +1347,7 @@
       "rk_pop": 96,
       "rk_rec": 3507,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Limeira_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Limeira_SP.pdf"
     },
@@ -1263,6 +1361,7 @@
       "rk_pop": 97,
       "rk_rec": 2918,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Foz_do_Iguacu_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Foz_do_Iguacu_PR.pdf"
     },
@@ -1276,6 +1375,7 @@
       "rk_pop": 98,
       "rk_rec": 5029,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Jose_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Jose_SC.pdf"
     },
@@ -1289,6 +1389,7 @@
       "rk_pop": 99,
       "rk_rec": 4400,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Petropolis_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Petropolis_RJ.pdf"
     },
@@ -1302,6 +1403,7 @@
       "rk_pop": 100,
       "rk_rec": 1779,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guaruja_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Guaruja_SP.pdf"
     },
@@ -1315,6 +1417,7 @@
       "rk_pop": 101,
       "rk_rec": 1023,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itajai_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Itajai_SC.pdf"
     },
@@ -1328,6 +1431,7 @@
       "rk_pop": 102,
       "rk_rec": 5232,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sumare_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sumare_SP.pdf"
     },
@@ -1341,6 +1445,7 @@
       "rk_pop": 103,
       "rk_rec": 3355,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maraba_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Maraba_PA.pdf"
     },
@@ -1354,6 +1459,7 @@
       "rk_pop": 104,
       "rk_rec": 4039,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cotia_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Cotia_SP.pdf"
     },
@@ -1367,6 +1473,7 @@
       "rk_pop": 105,
       "rk_rec": 5022,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Imperatriz_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Imperatriz_MA.pdf"
     },
@@ -1380,6 +1487,7 @@
       "rk_pop": 106,
       "rk_rec": 5188,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Taboao_da_Serra_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Taboao_da_Serra_SP.pdf"
     },
@@ -1393,6 +1501,7 @@
       "rk_pop": 107,
       "rk_rec": 4451,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Chapeco_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Chapeco_SC.pdf"
     },
@@ -1406,6 +1515,7 @@
       "rk_pop": 108,
       "rk_rec": 5352,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Maria_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Maria_RS.pdf"
     },
@@ -1419,8 +1529,8 @@
       "rk_pop": 108,
       "rk_rec": 3039,
       "quintil": "3º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Volta_Redonda_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Volta_Redonda_RJ.pdf"
     },
@@ -1434,6 +1544,7 @@
       "rk_pop": 110,
       "rk_rec": 5163,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mossoro_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Mossoro_RN.pdf"
     },
@@ -1447,6 +1558,7 @@
       "rk_pop": 111,
       "rk_rec": 5083,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Gravatai_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Gravatai_RS.pdf"
     },
@@ -1460,6 +1572,7 @@
       "rk_pop": 112,
       "rk_rec": 5420,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Parnamirim_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Parnamirim_RN.pdf"
     },
@@ -1473,6 +1586,7 @@
       "rk_pop": 113,
       "rk_rec": 1482,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Indaiatuba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Indaiatuba_SP.pdf"
     },
@@ -1486,6 +1600,7 @@
       "rk_pop": 114,
       "rk_rec": 3514,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Governador_Valadares_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Governador_Valadares_MG.pdf"
     },
@@ -1499,6 +1614,7 @@
       "rk_pop": 115,
       "rk_rec": 4022,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Carlos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Carlos_SP.pdf"
     },
@@ -1512,6 +1628,7 @@
       "rk_pop": 116,
       "rk_rec": 155,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Macae_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Macae_RJ.pdf"
     },
@@ -1525,6 +1642,7 @@
       "rk_pop": 117,
       "rk_rec": 3518,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Dourados_MS.pdf",
       "pdf_filename": "FolhetoIFEM_Dourados_MS.pdf"
     },
@@ -1538,6 +1656,7 @@
       "rk_pop": 118,
       "rk_rec": 2841,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rondonopolis_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Rondonopolis_MT.pdf"
     },
@@ -1551,6 +1670,7 @@
       "rk_pop": 119,
       "rk_rec": 4751,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Embu_das_Artes_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Embu_das_Artes_SP.pdf"
     },
@@ -1564,6 +1684,7 @@
       "rk_pop": 120,
       "rk_rec": 5365,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Jose_de_Ribamar_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Jose_de_Ribamar_MA.pdf"
     },
@@ -1577,6 +1698,7 @@
       "rk_pop": 121,
       "rk_rec": 4693,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Juazeiro_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Juazeiro_BA.pdf"
     },
@@ -1590,6 +1712,7 @@
       "rk_pop": 122,
       "rk_rec": 3761,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araraquara_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Araraquara_SP.pdf"
     },
@@ -1603,6 +1726,7 @@
       "rk_pop": 123,
       "rk_rec": 5206,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Palhoca_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Palhoca_SC.pdf"
     },
@@ -1616,6 +1740,7 @@
       "rk_pop": 124,
       "rk_rec": 3981,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maracanau_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Maracanau_CE.pdf"
     },
@@ -1629,6 +1754,7 @@
       "rk_pop": 125,
       "rk_rec": 3964,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jacarei_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Jacarei_SP.pdf"
     },
@@ -1642,6 +1768,7 @@
       "rk_pop": 126,
       "rk_rec": 3642,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Hortolandia_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Hortolandia_SP.pdf"
     },
@@ -1655,6 +1782,7 @@
       "rk_pop": 127,
       "rk_rec": 4034,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Americana_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Americana_SP.pdf"
     },
@@ -1668,6 +1796,7 @@
       "rk_pop": 128,
       "rk_rec": 4109,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Marilia_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Marilia_SP.pdf"
     },
@@ -1681,6 +1810,7 @@
       "rk_pop": 129,
       "rk_rec": 5431,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aguas_Lindas_de_Goias_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Aguas_Lindas_de_Goias_GO.pdf"
     },
@@ -1694,8 +1824,8 @@
       "rk_pop": 129,
       "rk_rec": 4803,
       "quintil": "1º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mage_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Mage_RJ.pdf"
     },
@@ -1709,6 +1839,7 @@
       "rk_pop": 131,
       "rk_rec": 4918,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Arapiraca_AL.pdf",
       "pdf_filename": "FolhetoIFEM_Arapiraca_AL.pdf"
     },
@@ -1722,6 +1853,7 @@
       "rk_pop": 132,
       "rk_rec": 4786,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Divinopolis_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Divinopolis_MG.pdf"
     },
@@ -1735,6 +1867,7 @@
       "rk_pop": 133,
       "rk_rec": 5122,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapevi_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itapevi_SP.pdf"
     },
@@ -1748,6 +1881,7 @@
       "rk_pop": 134,
       "rk_rec": 5398,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Colombo_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Colombo_PR.pdf"
     },
@@ -1761,6 +1895,7 @@
       "rk_pop": 135,
       "rk_rec": 1417,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_Verde_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_Verde_GO.pdf"
     },
@@ -1774,6 +1909,7 @@
       "rk_pop": 136,
       "rk_rec": 5225,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itaborai_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Itaborai_RJ.pdf"
     },
@@ -1787,6 +1923,7 @@
       "rk_pop": 137,
       "rk_rec": 4007,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sete_Lagoas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Sete_Lagoas_MG.pdf"
     },
@@ -1800,6 +1937,7 @@
       "rk_pop": 138,
       "rk_rec": 3290,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cabo_Frio_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Cabo_Frio_RJ.pdf"
     },
@@ -1813,6 +1951,7 @@
       "rk_pop": 139,
       "rk_rec": 3278,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Novo_Hamburgo_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Novo_Hamburgo_RS.pdf"
     },
@@ -1826,6 +1965,7 @@
       "rk_pop": 140,
       "rk_rec": 3768,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ipatinga_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Ipatinga_MG.pdf"
     },
@@ -1839,6 +1979,7 @@
       "rk_pop": 141,
       "rk_rec": 4765,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Presidente_Prudente_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Presidente_Prudente_SP.pdf"
     },
@@ -1852,6 +1993,7 @@
       "rk_pop": 142,
       "rk_rec": 5370,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Viamao_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Viamao_RS.pdf"
     },
@@ -1865,6 +2007,7 @@
       "rk_pop": 143,
       "rk_rec": 5397,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Luzia_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Luzia_MG.pdf"
     },
@@ -1878,6 +2021,7 @@
       "rk_pop": 144,
       "rk_rec": 4315,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Criciuma_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Criciuma_SC.pdf"
     },
@@ -1891,6 +2035,7 @@
       "rk_pop": 145,
       "rk_rec": 3821,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Leopoldo_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Leopoldo_RS.pdf"
     },
@@ -1904,6 +2049,7 @@
       "rk_pop": 146,
       "rk_rec": 3954,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sinop_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Sinop_MT.pdf"
     },
@@ -1917,6 +2063,7 @@
       "rk_pop": 147,
       "rk_rec": 5366,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Luziania_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Luziania_GO.pdf"
     },
@@ -1930,6 +2077,7 @@
       "rk_pop": 148,
       "rk_rec": 4927,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lauro_de_Freitas_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Lauro_de_Freitas_BA.pdf"
     },
@@ -1943,6 +2091,7 @@
       "rk_pop": 149,
       "rk_rec": 5400,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Valparaiso_de_Goias_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Valparaiso_de_Goias_GO.pdf"
     },
@@ -1956,6 +2105,7 @@
       "rk_pop": 150,
       "rk_rec": 3619,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cabo_de_Santo_Agostinho_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Cabo_de_Santo_Agostinho_PE.pdf"
     },
@@ -1969,6 +2119,7 @@
       "rk_pop": 151,
       "rk_rec": 3614,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sobral_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Sobral_CE.pdf"
     },
@@ -1982,6 +2133,7 @@
       "rk_pop": 152,
       "rk_rec": 4378,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Passo_Fundo_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Passo_Fundo_RS.pdf"
     },
@@ -1995,6 +2147,7 @@
       "rk_pop": 153,
       "rk_rec": 5,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Marica_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Marica_RJ.pdf"
     },
@@ -2008,6 +2161,7 @@
       "rk_pop": 154,
       "rk_rec": 3446,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_Claro_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_Claro_SP.pdf"
     },
@@ -2021,6 +2175,7 @@
       "rk_pop": 155,
       "rk_rec": 5329,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Castanhal_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Castanhal_PA.pdf"
     },
@@ -2034,6 +2189,7 @@
       "rk_pop": 156,
       "rk_rec": 5049,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aracatuba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Aracatuba_SP.pdf"
     },
@@ -2047,6 +2203,7 @@
       "rk_pop": 157,
       "rk_rec": 5419,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nossa_Senhora_do_Socorro_SE.pdf",
       "pdf_filename": "FolhetoIFEM_Nossa_Senhora_do_Socorro_SE.pdf"
     },
@@ -2060,6 +2217,7 @@
       "rk_pop": 158,
       "rk_rec": 5313,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nova_Friburgo_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Nova_Friburgo_RJ.pdf"
     },
@@ -2073,6 +2231,7 @@
       "rk_pop": 159,
       "rk_rec": 2519,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jaragua_do_Sul_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Jaragua_do_Sul_SC.pdf"
     },
@@ -2086,6 +2245,7 @@
       "rk_pop": 160,
       "rk_rec": 4125,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_Grande_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_Grande_RS.pdf"
     },
@@ -2099,6 +2259,7 @@
       "rk_pop": 161,
       "rk_rec": 4981,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cachoeiro_de_Itapemirim_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Cachoeiro_de_Itapemirim_ES.pdf"
     },
@@ -2112,6 +2273,7 @@
       "rk_pop": 162,
       "rk_rec": 4928,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itabuna_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Itabuna_BA.pdf"
     },
@@ -2125,6 +2287,7 @@
       "rk_pop": 163,
       "rk_rec": 5388,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Alvorada_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Alvorada_RS.pdf"
     },
@@ -2138,6 +2301,7 @@
       "rk_pop": 164,
       "rk_rec": 4542,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guarapuava_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Guarapuava_PR.pdf"
     },
@@ -2151,6 +2315,7 @@
       "rk_pop": 165,
       "rk_rec": 4926,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Barbara_D.oeste_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Barbara_D.oeste_SP.pdf"
     },
@@ -2164,6 +2329,7 @@
       "rk_pop": 166,
       "rk_rec": 5289,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ilheus_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Ilheus_BA.pdf"
     },
@@ -2177,6 +2343,7 @@
       "rk_pop": 167,
       "rk_rec": 5393,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ferraz_de_Vasconcelos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Ferraz_de_Vasconcelos_SP.pdf"
     },
@@ -2190,6 +2357,7 @@
       "rk_pop": 168,
       "rk_rec": 3950,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Braganca_Paulista_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Braganca_Paulista_SP.pdf"
     },
@@ -2203,6 +2371,7 @@
       "rk_pop": 169,
       "rk_rec": 3443,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Linhares_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Linhares_ES.pdf"
     },
@@ -2216,6 +2385,7 @@
       "rk_pop": 170,
       "rk_rec": 4062,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araguaina_TO.pdf",
       "pdf_filename": "FolhetoIFEM_Araguaina_TO.pdf"
     },
@@ -2229,6 +2399,7 @@
       "rk_pop": 171,
       "rk_rec": 5296,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Timon_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Timon_MA.pdf"
     },
@@ -2242,6 +2413,7 @@
       "rk_pop": 172,
       "rk_rec": 4337,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Porto_Seguro_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Porto_Seguro_BA.pdf"
     },
@@ -2255,6 +2427,7 @@
       "rk_pop": 173,
       "rk_rec": 4597,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barra_Mansa_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Barra_Mansa_RJ.pdf"
     },
@@ -2268,6 +2441,7 @@
       "rk_pop": 174,
       "rk_rec": 5361,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ibirite_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Ibirite_MG.pdf"
     },
@@ -2281,6 +2455,7 @@
       "rk_pop": 175,
       "rk_rec": 436,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Angra_dos_Reis_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Angra_dos_Reis_RJ.pdf"
     },
@@ -2294,6 +2469,7 @@
       "rk_pop": 176,
       "rk_rec": 5427,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mesquita_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Mesquita_RJ.pdf"
     },
@@ -2307,6 +2483,7 @@
       "rk_pop": 177,
       "rk_rec": 4827,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Teresopolis_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Teresopolis_RJ.pdf"
     },
@@ -2320,6 +2497,7 @@
       "rk_pop": 178,
       "rk_rec": 2260,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itu_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itu_SP.pdf"
     },
@@ -2333,6 +2511,7 @@
       "rk_pop": 179,
       "rk_rec": 2892,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Senador_Canedo_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Senador_Canedo_GO.pdf"
     },
@@ -2346,6 +2525,7 @@
       "rk_pop": 180,
       "rk_rec": 384,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Caetano_do_Sul_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Caetano_do_Sul_SP.pdf"
     },
@@ -2359,6 +2539,7 @@
       "rk_pop": 181,
       "rk_rec": 4401,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pindamonhangaba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Pindamonhangaba_SP.pdf"
     },
@@ -2372,6 +2553,7 @@
       "rk_pop": 182,
       "rk_rec": 3919,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lages_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Lages_SC.pdf"
     },
@@ -2385,6 +2567,7 @@
       "rk_pop": 183,
       "rk_rec": 5403,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Abaetetuba_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Abaetetuba_PA.pdf"
     },
@@ -2398,6 +2581,7 @@
       "rk_pop": 184,
       "rk_rec": 2952,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pocos_de_Caldas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Pocos_de_Caldas_MG.pdf"
     },
@@ -2411,6 +2595,7 @@
       "rk_pop": 185,
       "rk_rec": 4299,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barreiras_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Barreiras_BA.pdf"
     },
@@ -2424,6 +2609,7 @@
       "rk_pop": 186,
       "rk_rec": 5410,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Francisco_Morato_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Francisco_Morato_SP.pdf"
     },
@@ -2437,6 +2623,7 @@
       "rk_pop": 187,
       "rk_rec": 5116,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Parnaiba_PI.pdf",
       "pdf_filename": "FolhetoIFEM_Parnaiba_PI.pdf"
     },
@@ -2450,6 +2637,7 @@
       "rk_pop": 188,
       "rk_rec": 5278,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jequie_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Jequie_BA.pdf"
     },
@@ -2463,6 +2651,7 @@
       "rk_pop": 189,
       "rk_rec": 4391,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Patos_de_Minas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Patos_de_Minas_MG.pdf"
     },
@@ -2476,6 +2665,7 @@
       "rk_pop": 190,
       "rk_rec": 2810,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_das_Ostras_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_das_Ostras_RJ.pdf"
     },
@@ -2489,6 +2679,7 @@
       "rk_pop": 191,
       "rk_rec": 2560,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Atibaia_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Atibaia_SP.pdf"
     },
@@ -2502,6 +2693,7 @@
       "rk_pop": 192,
       "rk_rec": 5287,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Fazenda_Rio_Grande_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Fazenda_Rio_Grande_PR.pdf"
     },
@@ -2515,6 +2707,7 @@
       "rk_pop": 193,
       "rk_rec": 4826,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapetininga_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itapetininga_SP.pdf"
     },
@@ -2528,6 +2721,7 @@
       "rk_pop": 194,
       "rk_rec": 742,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santana_de_Parnaiba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Santana_de_Parnaiba_SP.pdf"
     },
@@ -2541,6 +2735,7 @@
       "rk_pop": 195,
       "rk_rec": 4341,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caxias_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Caxias_MA.pdf"
     },
@@ -2554,6 +2749,7 @@
       "rk_pop": 196,
       "rk_rec": 5045,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapecerica_da_Serra_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itapecerica_da_Serra_SP.pdf"
     },
@@ -2567,6 +2763,7 @@
       "rk_pop": 197,
       "rk_rec": 781,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araucaria_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Araucaria_PR.pdf"
     },
@@ -2580,6 +2777,7 @@
       "rk_pop": 198,
       "rk_rec": 2031,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pouso_Alegre_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Pouso_Alegre_MG.pdf"
     },
@@ -2593,6 +2791,7 @@
       "rk_pop": 199,
       "rk_rec": 5229,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Alagoinhas_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Alagoinhas_BA.pdf"
     },
@@ -2606,6 +2805,7 @@
       "rk_pop": 200,
       "rk_rec": 5378,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Rita_PB.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Rita_PB.pdf"
     },
@@ -2619,6 +2819,7 @@
       "rk_pop": 201,
       "rk_rec": 2960,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Toledo_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Toledo_PR.pdf"
     },
@@ -2632,6 +2833,7 @@
       "rk_pop": 202,
       "rk_rec": 4167,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mogi_Guacu_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Mogi_Guacu_SP.pdf"
     },
@@ -2645,6 +2847,7 @@
       "rk_pop": 203,
       "rk_rec": 5383,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Camaragibe_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Camaragibe_PE.pdf"
     },
@@ -2658,6 +2861,7 @@
       "rk_pop": 204,
       "rk_rec": 5339,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nilopolis_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Nilopolis_RJ.pdf"
     },
@@ -2671,6 +2875,7 @@
       "rk_pop": 205,
       "rk_rec": 2972,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Brusque_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Brusque_SC.pdf"
     },
@@ -2684,6 +2889,7 @@
       "rk_pop": 206,
       "rk_rec": 5262,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Teixeira_de_Freitas_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Teixeira_de_Freitas_BA.pdf"
     },
@@ -2697,6 +2903,7 @@
       "rk_pop": 207,
       "rk_rec": 5415,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Trindade_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Trindade_GO.pdf"
     },
@@ -2710,6 +2917,7 @@
       "rk_pop": 208,
       "rk_rec": 5141,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paco_do_Lumiar_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Paco_do_Lumiar_MA.pdf"
     },
@@ -2723,6 +2931,7 @@
       "rk_pop": 209,
       "rk_rec": 5315,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Garanhuns_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Garanhuns_PE.pdf"
     },
@@ -2736,6 +2945,7 @@
       "rk_pop": 210,
       "rk_rec": 815,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Balneario_Camboriu_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Balneario_Camboriu_SC.pdf"
     },
@@ -2749,6 +2959,7 @@
       "rk_pop": 211,
       "rk_rec": 4717,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Botucatu_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Botucatu_SP.pdf"
     },
@@ -2762,6 +2973,7 @@
       "rk_pop": 212,
       "rk_rec": 5195,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Franco_da_Rocha_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Franco_da_Rocha_SP.pdf"
     },
@@ -2775,6 +2987,7 @@
       "rk_pop": 213,
       "rk_rec": 2252,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paranagua_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Paranagua_PR.pdf"
     },
@@ -2788,6 +3001,7 @@
       "rk_pop": 214,
       "rk_rec": 5394,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Queimados_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Queimados_RJ.pdf"
     },
@@ -2801,6 +3015,7 @@
       "rk_pop": 215,
       "rk_rec": 5242,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cameta_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Cameta_PA.pdf"
     },
@@ -2814,6 +3029,7 @@
       "rk_pop": 216,
       "rk_rec": 4494,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campo_Largo_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Campo_Largo_PR.pdf"
     },
@@ -2827,6 +3043,7 @@
       "rk_pop": 217,
       "rk_rec": 5294,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vitoria_de_Santo_Antao_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Vitoria_de_Santo_Antao_PE.pdf"
     },
@@ -2840,6 +3057,7 @@
       "rk_pop": 218,
       "rk_rec": 2166,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Varginha_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Varginha_MG.pdf"
     },
@@ -2853,6 +3071,7 @@
       "rk_pop": 219,
       "rk_rec": 1993,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tres_Lagoas_MS.pdf",
       "pdf_filename": "FolhetoIFEM_Tres_Lagoas_MS.pdf"
     },
@@ -2866,6 +3085,7 @@
       "rk_pop": 220,
       "rk_rec": 4643,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Teofilo_Otoni_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Teofilo_Otoni_MG.pdf"
     },
@@ -2879,6 +3099,7 @@
       "rk_pop": 221,
       "rk_rec": 1258,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caraguatatuba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Caraguatatuba_SP.pdf"
     },
@@ -2892,6 +3113,7 @@
       "rk_pop": 222,
       "rk_rec": 3946,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cachoeirinha_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Cachoeirinha_RS.pdf"
     },
@@ -2905,6 +3127,7 @@
       "rk_pop": 223,
       "rk_rec": 4561,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Salto_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Salto_SP.pdf"
     },
@@ -2918,6 +3141,7 @@
       "rk_pop": 224,
       "rk_rec": 5256,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ji-parana_RO.pdf",
       "pdf_filename": "FolhetoIFEM_Ji-parana_RO.pdf"
     },
@@ -2931,6 +3155,7 @@
       "rk_pop": 226,
       "rk_rec": 5039,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Crato_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Crato_CE.pdf"
     },
@@ -2944,6 +3169,7 @@
       "rk_pop": 227,
       "rk_rec": 3601,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapipoca_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Itapipoca_CE.pdf"
     },
@@ -2957,6 +3183,7 @@
       "rk_pop": 228,
       "rk_rec": 5373,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Conselheiro_Lafaiete_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Conselheiro_Lafaiete_MG.pdf"
     },
@@ -2970,6 +3197,7 @@
       "rk_pop": 229,
       "rk_rec": 4710,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Altamira_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Altamira_PA.pdf"
     },
@@ -2983,6 +3211,7 @@
       "rk_pop": 230,
       "rk_rec": 5317,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vespasiano_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Vespasiano_MG.pdf"
     },
@@ -2996,6 +3225,7 @@
       "rk_pop": 231,
       "rk_rec": 3782,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Cruz_do_Sul_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Cruz_do_Sul_RS.pdf"
     },
@@ -3009,6 +3239,7 @@
       "rk_pop": 232,
       "rk_rec": 659,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araruama_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Araruama_RJ.pdf"
     },
@@ -3022,6 +3253,7 @@
       "rk_pop": 233,
       "rk_rec": 2238,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Resende_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Resende_RJ.pdf"
     },
@@ -3035,6 +3267,7 @@
       "rk_pop": 234,
       "rk_rec": 4722,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jau_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Jau_SP.pdf"
     },
@@ -3048,8 +3281,8 @@
       "rk_pop": 231,
       "rk_rec": 1917,
       "quintil": "4º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barcarena_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Barcarena_PA.pdf"
     },
@@ -3063,6 +3296,7 @@
       "rk_pop": 235,
       "rk_rec": 5011,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sapucaia_do_Sul_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Sapucaia_do_Sul_RS.pdf"
     },
@@ -3076,6 +3310,7 @@
       "rk_pop": 236,
       "rk_rec": 4973,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guarapari_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Guarapari_ES.pdf"
     },
@@ -3089,6 +3324,7 @@
       "rk_pop": 237,
       "rk_rec": 2848,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araras_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Araras_SP.pdf"
     },
@@ -3102,6 +3338,7 @@
       "rk_pop": 238,
       "rk_rec": 4978,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itaituba_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Itaituba_PA.pdf"
     },
@@ -3115,6 +3352,7 @@
       "rk_pop": 239,
       "rk_rec": 4956,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Apucarana_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Apucarana_PR.pdf"
     },
@@ -3128,6 +3366,7 @@
       "rk_pop": 240,
       "rk_rec": 5328,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sabara_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Sabara_MG.pdf"
     },
@@ -3141,6 +3380,7 @@
       "rk_pop": 242,
       "rk_rec": 4976,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Votorantim_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Votorantim_SP.pdf"
     },
@@ -3154,8 +3394,8 @@
       "rk_pop": 241,
       "rk_rec": 5149,
       "quintil": "1º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Mateus_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Mateus_ES.pdf"
     },
@@ -3169,6 +3409,7 @@
       "rk_pop": 243,
       "rk_rec": 5416,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Braganca_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Braganca_PA.pdf"
     },
@@ -3182,6 +3423,7 @@
       "rk_pop": 244,
       "rk_rec": 2096,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Valinhos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Valinhos_SP.pdf"
     },
@@ -3195,6 +3437,7 @@
       "rk_pop": 245,
       "rk_rec": 2935,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sertaozinho_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sertaozinho_SP.pdf"
     },
@@ -3208,6 +3451,7 @@
       "rk_pop": 246,
       "rk_rec": 3577,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pinhais_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Pinhais_PR.pdf"
     },
@@ -3221,6 +3465,7 @@
       "rk_pop": 247,
       "rk_rec": 4638,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barbacena_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Barbacena_MG.pdf"
     },
@@ -3234,6 +3479,7 @@
       "rk_pop": 248,
       "rk_rec": 3334,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Colatina_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Colatina_ES.pdf"
     },
@@ -3247,6 +3493,7 @@
       "rk_pop": 249,
       "rk_rec": 4757,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tatui_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Tatui_SP.pdf"
     },
@@ -3260,6 +3507,7 @@
       "rk_pop": 250,
       "rk_rec": 5316,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sarandi_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Sarandi_PR.pdf"
     },
@@ -3273,6 +3521,7 @@
       "rk_pop": 251,
       "rk_rec": 3725,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Bento_Goncalves_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Bento_Goncalves_RS.pdf"
     },
@@ -3286,6 +3535,7 @@
       "rk_pop": 252,
       "rk_rec": 5341,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Piraquara_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Piraquara_PR.pdf"
     },
@@ -3299,6 +3549,7 @@
       "rk_pop": 253,
       "rk_rec": 3369,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itatiba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itatiba_SP.pdf"
     },
@@ -3312,6 +3563,7 @@
       "rk_pop": 254,
       "rk_rec": 1661,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barretos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Barretos_SP.pdf"
     },
@@ -3325,6 +3577,7 @@
       "rk_pop": 256,
       "rk_rec": 4577,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Arapongas_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Arapongas_PR.pdf"
     },
@@ -3338,8 +3591,8 @@
       "rk_pop": 255,
       "rk_rec": 5452,
       "quintil": "1º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Almirante_Tamandare_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Almirante_Tamandare_PR.pdf"
     },
@@ -3353,6 +3606,7 @@
       "rk_pop": 257,
       "rk_rec": 1997,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sorriso_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Sorriso_MT.pdf"
     },
@@ -3366,6 +3620,7 @@
       "rk_pop": 258,
       "rk_rec": 5288,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Goncalo_do_Amarante_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Goncalo_do_Amarante_RN.pdf"
     },
@@ -3379,6 +3634,7 @@
       "rk_pop": 259,
       "rk_rec": 1498,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itaguai_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Itaguai_RJ.pdf"
     },
@@ -3392,6 +3648,7 @@
       "rk_pop": 260,
       "rk_rec": 2334,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araguari_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Araguari_MG.pdf"
     },
@@ -3405,6 +3662,7 @@
       "rk_pop": 261,
       "rk_rec": 4348,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Birigui_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Birigui_SP.pdf"
     },
@@ -3418,6 +3676,7 @@
       "rk_pop": 262,
       "rk_rec": 3902,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Umuarama_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Umuarama_PR.pdf"
     },
@@ -3431,6 +3690,7 @@
       "rk_pop": 263,
       "rk_rec": 5385,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Igarassu_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Igarassu_PE.pdf"
     },
@@ -3444,6 +3704,7 @@
       "rk_pop": 264,
       "rk_rec": 3119,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Catalao_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Catalao_GO.pdf"
     },
@@ -3457,6 +3718,7 @@
       "rk_pop": 265,
       "rk_rec": 4901,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Bage_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Bage_RS.pdf"
     },
@@ -3470,6 +3732,7 @@
       "rk_pop": 266,
       "rk_rec": 4813,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guaratingueta_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Guaratingueta_SP.pdf"
     },
@@ -3483,6 +3746,7 @@
       "rk_pop": 267,
       "rk_rec": 5274,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Formosa_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Formosa_GO.pdf"
     },
@@ -3496,6 +3760,7 @@
       "rk_pop": 268,
       "rk_rec": 5182,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jandira_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Jandira_SP.pdf"
     },
@@ -3509,6 +3774,7 @@
       "rk_pop": 269,
       "rk_rec": 5248,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Eunapolis_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Eunapolis_BA.pdf"
     },
@@ -3522,6 +3788,7 @@
       "rk_pop": 270,
       "rk_rec": 663,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nova_Lima_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Nova_Lima_MG.pdf"
     },
@@ -3535,6 +3802,7 @@
       "rk_pop": 271,
       "rk_rec": 5319,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Uruguaiana_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Uruguaiana_RS.pdf"
     },
@@ -3548,6 +3816,7 @@
       "rk_pop": 272,
       "rk_rec": 3990,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Simoes_Filho_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Simoes_Filho_BA.pdf"
     },
@@ -3561,6 +3830,7 @@
       "rk_pop": 273,
       "rk_rec": 5356,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Varzea_Paulista_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Varzea_Paulista_SP.pdf"
     },
@@ -3574,6 +3844,7 @@
       "rk_pop": 275,
       "rk_rec": 5179,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paulo_Afonso_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Paulo_Afonso_BA.pdf"
     },
@@ -3587,6 +3858,7 @@
       "rk_pop": 276,
       "rk_rec": 3671,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Catanduva_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Catanduva_SP.pdf"
     },
@@ -3600,8 +3872,8 @@
       "rk_pop": 276,
       "rk_rec": 5130,
       "quintil": "1º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Marituba_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Marituba_PA.pdf"
     },
@@ -3615,6 +3887,7 @@
       "rk_pop": 277,
       "rk_rec": 5142,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ribeirao_Pires_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Ribeirao_Pires_SP.pdf"
     },
@@ -3628,6 +3901,7 @@
       "rk_pop": 278,
       "rk_rec": 5406,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santana_AP.pdf",
       "pdf_filename": "FolhetoIFEM_Santana_AP.pdf"
     },
@@ -3641,6 +3915,7 @@
       "rk_pop": 279,
       "rk_rec": 2759,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araxa_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Araxa_MG.pdf"
     },
@@ -3654,6 +3929,7 @@
       "rk_pop": 280,
       "rk_rec": 3855,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itanhaem_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itanhaem_SP.pdf"
     },
@@ -3667,6 +3943,7 @@
       "rk_pop": 281,
       "rk_rec": 2076,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Luis_Eduardo_Magalhaes_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Luis_Eduardo_Magalhaes_BA.pdf"
     },
@@ -3680,6 +3957,7 @@
       "rk_pop": 282,
       "rk_rec": 5120,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Codo_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Codo_MA.pdf"
     },
@@ -3693,6 +3971,7 @@
       "rk_pop": 283,
       "rk_rec": 5426,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Lourenco_da_Mata_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Lourenco_da_Mata_PE.pdf"
     },
@@ -3706,6 +3985,7 @@
       "rk_pop": 284,
       "rk_rec": 1359,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itabira_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Itabira_MG.pdf"
     },
@@ -3719,6 +3999,7 @@
       "rk_pop": 285,
       "rk_rec": 5143,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Camboriu_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Camboriu_SC.pdf"
     },
@@ -3732,6 +4013,7 @@
       "rk_pop": 286,
       "rk_rec": 4049,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Passos_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Passos_MG.pdf"
     },
@@ -3745,6 +4027,7 @@
       "rk_pop": 287,
       "rk_rec": 5207,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tubarao_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Tubarao_SC.pdf"
     },
@@ -3758,6 +4041,7 @@
       "rk_pop": 288,
       "rk_rec": 16,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paulinia_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Paulinia_SP.pdf"
     },
@@ -3771,6 +4055,7 @@
       "rk_pop": 289,
       "rk_rec": 3871,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Breves_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Breves_PA.pdf"
     },
@@ -3784,6 +4069,7 @@
       "rk_pop": 290,
       "rk_rec": 182,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cubatao_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Cubatao_SP.pdf"
     },
@@ -3797,6 +4083,7 @@
       "rk_pop": 291,
       "rk_rec": 4704,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Nova_Serrana_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Nova_Serrana_MG.pdf"
     },
@@ -3810,6 +4097,7 @@
       "rk_pop": 292,
       "rk_rec": 4074,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tangara_da_Serra_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Tangara_da_Serra_MT.pdf"
     },
@@ -3823,6 +4111,7 @@
       "rk_pop": 293,
       "rk_rec": 5065,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itacoatiara_AM.pdf",
       "pdf_filename": "FolhetoIFEM_Itacoatiara_AM.pdf"
     },
@@ -3836,6 +4125,7 @@
       "rk_pop": 294,
       "rk_rec": 3221,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paragominas_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Paragominas_PA.pdf"
     },
@@ -3849,6 +4139,7 @@
       "rk_pop": 295,
       "rk_rec": 3425,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itumbiara_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Itumbiara_GO.pdf"
     },
@@ -3862,6 +4153,7 @@
       "rk_pop": 296,
       "rk_rec": 5340,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Planaltina_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Planaltina_GO.pdf"
     },
@@ -3875,6 +4167,7 @@
       "rk_pop": 297,
       "rk_rec": 5098,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Manacapuru_AM.pdf",
       "pdf_filename": "FolhetoIFEM_Manacapuru_AM.pdf"
     },
@@ -3888,6 +4181,7 @@
       "rk_pop": 298,
       "rk_rec": 3499,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jatai_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Jatai_GO.pdf"
     },
@@ -3901,6 +4195,7 @@
       "rk_pop": 299,
       "rk_rec": 4505,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cambe_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Cambe_PR.pdf"
     },
@@ -3914,6 +4209,7 @@
       "rk_pop": 300,
       "rk_rec": 5110,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lavras_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Lavras_MG.pdf"
     },
@@ -3927,6 +4223,7 @@
       "rk_pop": 301,
       "rk_rec": 5244,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Pedro_da_Aldeia_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Pedro_da_Aldeia_RJ.pdf"
     },
@@ -3940,6 +4237,7 @@
       "rk_pop": 302,
       "rk_rec": 3709,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Acailandia_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Acailandia_MA.pdf"
     },
@@ -3953,6 +4251,7 @@
       "rk_pop": 303,
       "rk_rec": 5353,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santo_Antonio_de_Jesus_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Santo_Antonio_de_Jesus_BA.pdf"
     },
@@ -3966,6 +4265,7 @@
       "rk_pop": 304,
       "rk_rec": 2974,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Vilhena_RO.pdf",
       "pdf_filename": "FolhetoIFEM_Vilhena_RO.pdf"
     },
@@ -3979,6 +4279,7 @@
       "rk_pop": 305,
       "rk_rec": 4211,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Erechim_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Erechim_RS.pdf"
     },
@@ -3992,6 +4293,7 @@
       "rk_pop": 306,
       "rk_rec": 5379,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itabaiana_SE.pdf",
       "pdf_filename": "FolhetoIFEM_Itabaiana_SE.pdf"
     },
@@ -4005,6 +4307,7 @@
       "rk_pop": 307,
       "rk_rec": 4502,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ariquemes_RO.pdf",
       "pdf_filename": "FolhetoIFEM_Ariquemes_RO.pdf"
     },
@@ -4018,6 +4321,7 @@
       "rk_pop": 308,
       "rk_rec": 4800,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Coronel_Fabriciano_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Coronel_Fabriciano_MG.pdf"
     },
@@ -4031,6 +4335,7 @@
       "rk_pop": 309,
       "rk_rec": 5273,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Maranguape_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Maranguape_CE.pdf"
     },
@@ -4044,6 +4349,7 @@
       "rk_pop": 310,
       "rk_rec": 2221,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Muriae_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Muriae_MG.pdf"
     },
@@ -4057,6 +4363,7 @@
       "rk_pop": 311,
       "rk_rec": 5326,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Patos_PB.pdf",
       "pdf_filename": "FolhetoIFEM_Patos_PB.pdf"
     },
@@ -4070,6 +4377,7 @@
       "rk_pop": 312,
       "rk_rec": 4724,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Bacabal_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Bacabal_MA.pdf"
     },
@@ -4083,6 +4391,7 @@
       "rk_pop": 313,
       "rk_rec": 5424,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Novo_Gama_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Novo_Gama_GO.pdf"
     },
@@ -4096,6 +4405,7 @@
       "rk_pop": 314,
       "rk_rec": 4628,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Uba_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Uba_MG.pdf"
     },
@@ -4109,6 +4419,7 @@
       "rk_pop": 315,
       "rk_rec": 3550,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itaperuna_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Itaperuna_RJ.pdf"
     },
@@ -4122,6 +4433,7 @@
       "rk_pop": 316,
       "rk_rec": 3976,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ourinhos_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Ourinhos_SP.pdf"
     },
@@ -4135,6 +4447,7 @@
       "rk_pop": 317,
       "rk_rec": 4181,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caldas_Novas_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Caldas_Novas_GO.pdf"
     },
@@ -4148,6 +4461,7 @@
       "rk_pop": 318,
       "rk_rec": 4581,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ituiutaba_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Ituiutaba_MG.pdf"
     },
@@ -4161,6 +4475,7 @@
       "rk_pop": 319,
       "rk_rec": 118,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ipojuca_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Ipojuca_PE.pdf"
     },
@@ -4174,6 +4489,7 @@
       "rk_pop": 320,
       "rk_rec": 5059,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Poa_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Poa_SP.pdf"
     },
@@ -4187,6 +4503,7 @@
       "rk_pop": 321,
       "rk_rec": 3736,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Balsas_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Balsas_MA.pdf"
     },
@@ -4200,6 +4517,7 @@
       "rk_pop": 322,
       "rk_rec": 5318,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lagarto_SE.pdf",
       "pdf_filename": "FolhetoIFEM_Lagarto_SE.pdf"
     },
@@ -4213,6 +4531,7 @@
       "rk_pop": 323,
       "rk_rec": 4061,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Assis_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Assis_SP.pdf"
     },
@@ -4226,6 +4545,7 @@
       "rk_pop": 324,
       "rk_rec": 5214,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Cruz_do_Capibaribe_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Cruz_do_Capibaribe_PE.pdf"
     },
@@ -4239,6 +4559,7 @@
       "rk_pop": 325,
       "rk_rec": 5429,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Abreu_e_Lima_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Abreu_e_Lima_PE.pdf"
     },
@@ -4252,6 +4573,7 @@
       "rk_pop": 326,
       "rk_rec": 3523,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Campo_Mourao_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Campo_Mourao_PR.pdf"
     },
@@ -4265,6 +4587,7 @@
       "rk_pop": 327,
       "rk_rec": 1222,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aracruz_ES.pdf",
       "pdf_filename": "FolhetoIFEM_Aracruz_ES.pdf"
     },
@@ -4278,6 +4601,7 @@
       "rk_pop": 328,
       "rk_rec": 4397,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itauna_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Itauna_MG.pdf"
     },
@@ -4291,6 +4615,7 @@
       "rk_pop": 329,
       "rk_rec": 4776,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Para_de_Minas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Para_de_Minas_MG.pdf"
     },
@@ -4304,6 +4629,7 @@
       "rk_pop": 330,
       "rk_rec": 4885,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Iguatu_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Iguatu_CE.pdf"
     },
@@ -4317,6 +4643,7 @@
       "rk_pop": 331,
       "rk_rec": 4006,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Francisco_Beltrao_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Francisco_Beltrao_PR.pdf"
     },
@@ -4330,6 +4657,7 @@
       "rk_pop": 332,
       "rk_rec": 5357,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Japeri_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Japeri_RJ.pdf"
     },
@@ -4343,6 +4671,7 @@
       "rk_pop": 333,
       "rk_rec": 4267,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Parintins_AM.pdf",
       "pdf_filename": "FolhetoIFEM_Parintins_AM.pdf"
     },
@@ -4356,6 +4685,7 @@
       "rk_pop": 334,
       "rk_rec": 5364,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cidade_Ocidental_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Cidade_Ocidental_GO.pdf"
     },
@@ -4369,6 +4699,7 @@
       "rk_pop": 335,
       "rk_rec": 3684,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Leme_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Leme_SP.pdf"
     },
@@ -4382,6 +4713,7 @@
       "rk_pop": 336,
       "rk_rec": 5375,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Cristovao_SE.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Cristovao_SE.pdf"
     },
@@ -4395,6 +4727,7 @@
       "rk_pop": 337,
       "rk_rec": 3651,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Votuporanga_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Votuporanga_SP.pdf"
     },
@@ -4408,6 +4741,7 @@
       "rk_pop": 338,
       "rk_rec": 4943,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cacapava_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Cacapava_SP.pdf"
     },
@@ -4421,6 +4755,7 @@
       "rk_pop": 339,
       "rk_rec": 1587,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paracatu_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Paracatu_MG.pdf"
     },
@@ -4434,6 +4769,7 @@
       "rk_pop": 340,
       "rk_rec": 5362,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cruzeiro_do_Sul_AC.pdf",
       "pdf_filename": "FolhetoIFEM_Cruzeiro_do_Sul_AC.pdf"
     },
@@ -4447,6 +4783,7 @@
       "rk_pop": 341,
       "rk_rec": 5387,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Serra_Talhada_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Serra_Talhada_PE.pdf"
     },
@@ -4460,6 +4797,7 @@
       "rk_pop": 342,
       "rk_rec": 1355,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Corumba_MS.pdf",
       "pdf_filename": "FolhetoIFEM_Corumba_MS.pdf"
     },
@@ -4473,6 +4811,7 @@
       "rk_pop": 343,
       "rk_rec": 4380,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ponta_Pora_MS.pdf",
       "pdf_filename": "FolhetoIFEM_Ponta_Pora_MS.pdf"
     },
@@ -4486,6 +4825,7 @@
       "rk_pop": 344,
       "rk_rec": 4540,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caieiras_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Caieiras_SP.pdf"
     },
@@ -4499,6 +4839,7 @@
       "rk_pop": 345,
       "rk_rec": 5183,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barra_do_Pirai_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Barra_do_Pirai_RJ.pdf"
     },
@@ -4512,6 +4853,7 @@
       "rk_pop": 346,
       "rk_rec": 723,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cajamar_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Cajamar_SP.pdf"
     },
@@ -4525,6 +4867,7 @@
       "rk_pop": 347,
       "rk_rec": 5253,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cacoal_RO.pdf",
       "pdf_filename": "FolhetoIFEM_Cacoal_RO.pdf"
     },
@@ -4538,6 +4881,7 @@
       "rk_pop": 348,
       "rk_rec": 4479,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mairipora_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Mairipora_SP.pdf"
     },
@@ -4551,6 +4895,7 @@
       "rk_pop": 349,
       "rk_rec": 3029,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pato_Branco_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Pato_Branco_PR.pdf"
     },
@@ -4564,6 +4909,7 @@
       "rk_pop": 350,
       "rk_rec": 5047,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Rio_Largo_AL.pdf",
       "pdf_filename": "FolhetoIFEM_Rio_Largo_AL.pdf"
     },
@@ -4577,6 +4923,7 @@
       "rk_pop": 351,
       "rk_rec": 5096,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Manhuacu_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Manhuacu_MG.pdf"
     },
@@ -4590,6 +4937,7 @@
       "rk_pop": 352,
       "rk_rec": 2157,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ubatuba_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Ubatuba_SP.pdf"
     },
@@ -4603,6 +4951,7 @@
       "rk_pop": 353,
       "rk_rec": 2673,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lajeado_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Lajeado_RS.pdf"
     },
@@ -4616,6 +4965,7 @@
       "rk_pop": 354,
       "rk_rec": 4713,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itajuba_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Itajuba_MG.pdf"
     },
@@ -4629,6 +4979,7 @@
       "rk_pop": 355,
       "rk_rec": 4249,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Avare_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Avare_SP.pdf"
     },
@@ -4642,6 +4993,7 @@
       "rk_pop": 356,
       "rk_rec": 4624,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Paranavai_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Paranavai_PR.pdf"
     },
@@ -4655,6 +5007,7 @@
       "rk_pop": 357,
       "rk_rec": 2225,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tucurui_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Tucurui_PA.pdf"
     },
@@ -4668,6 +5021,7 @@
       "rk_pop": 358,
       "rk_rec": 3487,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Joao_da_Boa_Vista_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Joao_da_Boa_Vista_SP.pdf"
     },
@@ -4681,6 +5035,7 @@
       "rk_pop": 359,
       "rk_rec": 1720,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Navegantes_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Navegantes_SC.pdf"
     },
@@ -4694,6 +5049,7 @@
       "rk_pop": 360,
       "rk_rec": 2404,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Primavera_do_Leste_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Primavera_do_Leste_MT.pdf"
     },
@@ -4707,6 +5063,7 @@
       "rk_pop": 361,
       "rk_rec": 2659,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guaiba_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Guaiba_RS.pdf"
     },
@@ -4720,6 +5077,7 @@
       "rk_pop": 362,
       "rk_rec": 1894,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lucas_do_Rio_Verde_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Lucas_do_Rio_Verde_MT.pdf"
     },
@@ -4733,6 +5091,7 @@
       "rk_pop": 363,
       "rk_rec": 2389,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mogi_Mirim_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Mogi_Mirim_SP.pdf"
     },
@@ -4746,6 +5105,7 @@
       "rk_pop": 364,
       "rk_rec": 3,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Saquarema_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Saquarema_RJ.pdf"
     },
@@ -4759,6 +5119,7 @@
       "rk_pop": 365,
       "rk_rec": 4552,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Joao_Del_Rei_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Joao_Del_Rei_MG.pdf"
     },
@@ -4772,6 +5133,7 @@
       "rk_pop": 366,
       "rk_rec": 2558,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Patrocinio_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Patrocinio_MG.pdf"
     },
@@ -4785,6 +5147,7 @@
       "rk_pop": 367,
       "rk_rec": 5210,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Guanambi_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Guanambi_BA.pdf"
     },
@@ -4798,6 +5161,7 @@
       "rk_pop": 368,
       "rk_rec": 5422,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Esmeraldas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Esmeraldas_MG.pdf"
     },
@@ -4811,6 +5175,7 @@
       "rk_pop": 369,
       "rk_rec": 4740,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Redencao_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Redencao_PA.pdf"
     },
@@ -4824,6 +5189,7 @@
       "rk_pop": 370,
       "rk_rec": 5391,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Gravata_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Gravata_PE.pdf"
     },
@@ -4837,6 +5203,7 @@
       "rk_pop": 371,
       "rk_rec": 2965,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapeva_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Itapeva_SP.pdf"
     },
@@ -4850,6 +5217,7 @@
       "rk_pop": 372,
       "rk_rec": 4421,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caceres_MT.pdf",
       "pdf_filename": "FolhetoIFEM_Caceres_MT.pdf"
     },
@@ -4863,6 +5231,7 @@
       "rk_pop": 373,
       "rk_rec": 5276,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Moju_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Moju_PA.pdf"
     },
@@ -4876,6 +5245,7 @@
       "rk_pop": 374,
       "rk_rec": 3364,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Unai_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Unai_MG.pdf"
     },
@@ -4889,6 +5259,7 @@
       "rk_pop": 375,
       "rk_rec": 4815,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Caratinga_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Caratinga_MG.pdf"
     },
@@ -4902,6 +5273,7 @@
       "rk_pop": 376,
       "rk_rec": 5376,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Araripina_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Araripina_PE.pdf"
     },
@@ -4915,6 +5287,7 @@
       "rk_pop": 377,
       "rk_rec": 2785,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aruja_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Aruja_SP.pdf"
     },
@@ -4928,6 +5301,7 @@
       "rk_pop": 378,
       "rk_rec": 2431,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Gurupi_TO.pdf",
       "pdf_filename": "FolhetoIFEM_Gurupi_TO.pdf"
     },
@@ -4941,6 +5315,7 @@
       "rk_pop": 379,
       "rk_rec": 5298,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Valenca_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Valenca_BA.pdf"
     },
@@ -4954,6 +5329,7 @@
       "rk_pop": 380,
       "rk_rec": 52,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Canaa_dos_Carajas_PA.pdf",
       "pdf_filename": "FolhetoIFEM_Canaa_dos_Carajas_PA.pdf"
     },
@@ -4967,6 +5343,7 @@
       "rk_pop": 381,
       "rk_rec": 5068,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Quixada_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Quixada_CE.pdf"
     },
@@ -4980,6 +5357,7 @@
       "rk_pop": 382,
       "rk_rec": 5239,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Ines_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Santa_Ines_MA.pdf"
     },
@@ -4993,6 +5371,7 @@
       "rk_pop": 383,
       "rk_rec": 5336,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pinheiro_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Pinheiro_MA.pdf"
     },
@@ -5006,6 +5385,7 @@
       "rk_pop": 384,
       "rk_rec": 2241,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ijui_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Ijui_RS.pdf"
     },
@@ -5019,6 +5399,7 @@
       "rk_pop": 385,
       "rk_rec": 5246,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barra_do_Corda_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Barra_do_Corda_MA.pdf"
     },
@@ -5032,6 +5413,7 @@
       "rk_pop": 386,
       "rk_rec": 2395,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Bento_do_Sul_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Bento_do_Sul_SC.pdf"
     },
@@ -5045,6 +5427,7 @@
       "rk_pop": 387,
       "rk_rec": 5168,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lorena_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Lorena_SP.pdf"
     },
@@ -5058,6 +5441,7 @@
       "rk_pop": 388,
       "rk_rec": 5042,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sant.ana_do_Livramento_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Sant.ana_do_Livramento_RS.pdf"
     },
@@ -5071,6 +5455,7 @@
       "rk_pop": 389,
       "rk_rec": 2724,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Concordia_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Concordia_SC.pdf"
     },
@@ -5084,6 +5469,7 @@
       "rk_pop": 390,
       "rk_rec": 5327,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Macaiba_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Macaiba_RN.pdf"
     },
@@ -5097,6 +5483,7 @@
       "rk_pop": 391,
       "rk_rec": 4780,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tiangua_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Tiangua_CE.pdf"
     },
@@ -5110,6 +5497,7 @@
       "rk_pop": 392,
       "rk_rec": 4497,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Jacobina_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Jacobina_BA.pdf"
     },
@@ -5123,6 +5511,7 @@
       "rk_pop": 393,
       "rk_rec": 4967,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Picos_PI.pdf",
       "pdf_filename": "FolhetoIFEM_Picos_PI.pdf"
     },
@@ -5136,6 +5525,7 @@
       "rk_pop": 394,
       "rk_rec": 5358,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Pacatuba_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Pacatuba_CE.pdf"
     },
@@ -5149,6 +5539,7 @@
       "rk_pop": 395,
       "rk_rec": 4465,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Quixeramobim_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Quixeramobim_CE.pdf"
     },
@@ -5162,6 +5553,7 @@
       "rk_pop": 396,
       "rk_rec": 2244,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Itapema_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Itapema_SC.pdf"
     },
@@ -5175,6 +5567,7 @@
       "rk_pop": 397,
       "rk_rec": 1283,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Goiana_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Goiana_PE.pdf"
     },
@@ -5188,6 +5581,7 @@
       "rk_pop": 398,
       "rk_rec": 3075,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aquiraz_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Aquiraz_CE.pdf"
     },
@@ -5201,8 +5595,8 @@
       "rk_pop": 397,
       "rk_rec": 4154,
       "quintil": "2º quintil",
-      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "ano_dados": 2024,
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Seropedica_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Seropedica_RJ.pdf"
     },
@@ -5216,6 +5610,7 @@
       "rk_pop": 400,
       "rk_rec": 4435,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Serrinha_BA.pdf",
       "pdf_filename": "FolhetoIFEM_Serrinha_BA.pdf"
     },
@@ -5229,6 +5624,7 @@
       "rk_pop": 401,
       "rk_rec": 4914,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Chapadinha_MA.pdf",
       "pdf_filename": "FolhetoIFEM_Chapadinha_MA.pdf"
     },
@@ -5242,6 +5638,7 @@
       "rk_pop": 402,
       "rk_rec": 5080,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Curvelo_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Curvelo_MG.pdf"
     },
@@ -5255,6 +5652,7 @@
       "rk_pop": 403,
       "rk_rec": 43,
       "quintil": "5º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Sebastiao_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Sebastiao_SP.pdf"
     },
@@ -5268,6 +5666,7 @@
       "rk_pop": 404,
       "rk_rec": 4569,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Timoteo_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Timoteo_MG.pdf"
     },
@@ -5281,6 +5680,7 @@
       "rk_pop": 405,
       "rk_rec": 5194,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Belo_Jardim_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Belo_Jardim_PE.pdf"
     },
@@ -5294,6 +5694,7 @@
       "rk_pop": 406,
       "rk_rec": 5355,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Bayeux_PB.pdf",
       "pdf_filename": "FolhetoIFEM_Bayeux_PB.pdf"
     },
@@ -5307,6 +5708,7 @@
       "rk_pop": 407,
       "rk_rec": 4304,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Joao_Monlevade_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Joao_Monlevade_MG.pdf"
     },
@@ -5320,6 +5722,7 @@
       "rk_pop": 408,
       "rk_rec": 4462,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Biguacu_SC.pdf",
       "pdf_filename": "FolhetoIFEM_Biguacu_SC.pdf"
     },
@@ -5333,6 +5736,7 @@
       "rk_pop": 409,
       "rk_rec": 5311,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Ceara-mirim_RN.pdf",
       "pdf_filename": "FolhetoIFEM_Ceara-mirim_RN.pdf"
     },
@@ -5346,6 +5750,7 @@
       "rk_pop": 410,
       "rk_rec": 5374,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Carpina_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Carpina_PE.pdf"
     },
@@ -5359,6 +5764,7 @@
       "rk_pop": 411,
       "rk_rec": 3147,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cianorte_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Cianorte_PR.pdf"
     },
@@ -5372,6 +5778,7 @@
       "rk_pop": 412,
       "rk_rec": 5389,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Arcoverde_PE.pdf",
       "pdf_filename": "FolhetoIFEM_Arcoverde_PE.pdf"
     },
@@ -5385,6 +5792,7 @@
       "rk_pop": 413,
       "rk_rec": 3330,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tres_Rios_RJ.pdf",
       "pdf_filename": "FolhetoIFEM_Tres_Rios_RJ.pdf"
     },
@@ -5398,6 +5806,7 @@
       "rk_pop": 414,
       "rk_rec": 2077,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Alfenas_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Alfenas_MG.pdf"
     },
@@ -5411,6 +5820,7 @@
       "rk_pop": 415,
       "rk_rec": 4343,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Cachoeira_do_Sul_RS.pdf",
       "pdf_filename": "FolhetoIFEM_Cachoeira_do_Sul_RS.pdf"
     },
@@ -5424,6 +5834,7 @@
       "rk_pop": 416,
       "rk_rec": 1541,
       "quintil": "4º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Eusebio_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Eusebio_CE.pdf"
     },
@@ -5437,6 +5848,7 @@
       "rk_pop": 417,
       "rk_rec": 5412,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Goianira_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Goianira_GO.pdf"
     },
@@ -5450,6 +5862,7 @@
       "rk_pop": 418,
       "rk_rec": 3128,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barbalha_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Barbalha_CE.pdf"
     },
@@ -5463,6 +5876,7 @@
       "rk_pop": 419,
       "rk_rec": 2714,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Roque_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Sao_Roque_SP.pdf"
     },
@@ -5476,6 +5890,7 @@
       "rk_pop": 420,
       "rk_rec": 3511,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Lagoa_Santa_MG.pdf",
       "pdf_filename": "FolhetoIFEM_Lagoa_Santa_MG.pdf"
     },
@@ -5489,6 +5904,7 @@
       "rk_pop": 421,
       "rk_rec": 3931,
       "quintil": "2º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Horizonte_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Horizonte_CE.pdf"
     },
@@ -5502,6 +5918,7 @@
       "rk_pop": 422,
       "rk_rec": 4691,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Matao_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Matao_SP.pdf"
     },
@@ -5515,6 +5932,7 @@
       "rk_pop": 423,
       "rk_rec": 2190,
       "quintil": "3º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Tefe_AM.pdf",
       "pdf_filename": "FolhetoIFEM_Tefe_AM.pdf"
     },
@@ -5528,6 +5946,7 @@
       "rk_pop": 424,
       "rk_rec": 4537,
       "quintil": "1º quintil",
+      "ano_dados": 2025,
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Crateus_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Crateus_CE.pdf"
     }
