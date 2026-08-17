@@ -15,7 +15,8 @@
       extend: {
         colors: {
           ink:      "#0F1B2D",
-          paper:    "#FBF7EE",
+          paper:    "#FBF7EE",   /* mantido: token do design system, usado no PDF */
+          field:    "#F6F6F4",   /* cinza neutro dos campos — sobre fundo branco, o creme puxava amarelo */
           rule:     "#E5E0D2",
           'blue-dark': "#0A2A6B",
           muted:    "#6E6B5E",
@@ -31,8 +32,11 @@
   };
 </script>
 <style>
-  html { background: #FBF7EE; }
-  body { font-family: 'Inter', sans-serif; color: #0F1B2D; }
+  html { background: #FFFFFF; }
+  body { font-family: 'Inter', sans-serif; color: #0F1B2D; background: #FFFFFF; }
+  /* Prévia: proporção 1:1 (o folheto é 20×20 cm) reservada antes da imagem
+     carregar, para a página não pular durante o load. */
+  .preview-fig { aspect-ratio: 1 / 1; }
   .title-display { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: -0.01em; }
   /* Quintil chip */
   .chip-q { display:inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; }
@@ -54,7 +58,42 @@
     <section class="mb-6">
       <h2 class="title-display text-2xl sm:text-3xl md:text-4xl text-blue-dark leading-tight">Encontre o relatório individualizado do seu município</h2>
       <p class="text-muted mt-2 max-w-2xl text-sm md:text-base">
-        Digite o nome do município ou a UF para filtrar a lista. Cada folheto traz a posição do município no IFEM, a estrutura da receita e a trajetória 2000–2024.
+        Digite o nome do município ou a UF para filtrar a lista. Cada folheto traz a posição do
+        município no IFEM, a estrutura da receita e a trajetória <span id="periodo">2000–2025</span>.
+      </p>
+    </section>
+
+    <section class="mb-8" aria-labelledby="modelo-titulo">
+      <div class="flex items-baseline justify-between gap-3 flex-wrap mb-3">
+        <h3 id="modelo-titulo" class="title-display text-xl md:text-2xl text-blue-dark">
+          Como é o folheto
+        </h3>
+        <p class="text-xs text-muted">
+          16 páginas · exemplo: São Paulo/SP
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <figure class="preview-fig bg-white rounded-xl border border-rule overflow-hidden">
+          <img src="preview/pagina-1.jpg" alt="Capa do folheto, com o nome do município e sua posição no IFEM"
+               width="720" height="720" loading="lazy" decoding="async"
+               class="w-full h-full object-cover">
+        </figure>
+        <figure class="preview-fig bg-white rounded-xl border border-rule overflow-hidden">
+          <img src="preview/pagina-3.jpg" alt="Página de síntese fiscal, com a trajetória do município entre 2000 e o ano de referência"
+               width="720" height="720" loading="lazy" decoding="async"
+               class="w-full h-full object-cover">
+        </figure>
+        <figure class="preview-fig bg-white rounded-xl border border-rule overflow-hidden">
+          <img src="preview/pagina-6.jpg" alt="Página de estrutura da receita, detalhando as fontes de arrecadação"
+               width="720" height="720" loading="lazy" decoding="async"
+               class="w-full h-full object-cover">
+        </figure>
+      </div>
+
+      <p class="text-xs text-muted mt-2">
+        Capa, síntese fiscal e estrutura da receita. Cada folheto compara o município com as
+        médias nacional, do estado e da faixa populacional.
       </p>
     </section>
 
@@ -64,17 +103,17 @@
         <input id="q" type="search" placeholder="Ex.: Sao Paulo, Fortaleza, Belo Horizonte..."
                autocomplete="off" autocorrect="off" spellcheck="false"
                enterkeyhint="search" inputmode="search"
-               class="w-full px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+               class="w-full px-3 py-2 rounded-lg border border-rule bg-field focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
       </label>
       <label>
         <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">UF</span>
-        <select id="uf" class="px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+        <select id="uf" class="px-3 py-2 rounded-lg border border-rule bg-field focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
           <option value="">Todas</option>
         </select>
       </label>
       <label>
         <span class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1">Ordenar por</span>
-        <select id="sort" class="px-3 py-2 rounded-lg border border-rule bg-paper focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
+        <select id="sort" class="px-3 py-2 rounded-lg border border-rule bg-field focus:outline-none focus:ring-2 focus:ring-blue-dark/40">
           <option value="pop_desc">População ↓</option>
           <option value="pop_asc">População ↑</option>
           <option value="nome">Nome A→Z</option>
@@ -96,7 +135,7 @@
   <footer class="border-t border-rule mt-4">
     <div class="max-w-5xl mx-auto px-4 py-5 text-xs text-muted flex flex-col md:flex-row gap-2 md:justify-between">
       <span>IFEM · Frente Nacional de Prefeitas e Prefeitos</span>
-      <span>Dados: 2024. Folhetos atualizados periodicamente.</span>
+      <span id="rodape-dados">Folhetos atualizados periodicamente.</span>
     </div>
   </footer>
 
@@ -126,6 +165,18 @@
 
   const todos = indice.municipios || [];
   $('#meta').textContent = `${indice.total} municípios disponíveis`;
+
+  // Ano vem do índice, nunca escrito à mão no HTML: quando a base virou 2025,
+  // o "2000–2024" fixo aqui ficou para trás e a página passou a anunciar um ano
+  // diferente do que os PDFs entregavam.
+  if (indice.ano_ref) {
+    const base = indice.ano_base || 2000;
+    $('#periodo').textContent = `${base}–${indice.ano_ref}`;
+    const comRessalva = todos.filter(m => m.aviso).length;
+    $('#rodape-dados').textContent = comRessalva
+      ? `Dados: ${indice.ano_ref} (${comRessalva} municípios com dados do ano anterior, sinalizados na lista).`
+      : `Dados: ${indice.ano_ref}. Folhetos atualizados periodicamente.`;
+  }
 
   // popula UFs ordenadas
   const ufs = [...new Set(todos.map(m => m.uf))].sort();
