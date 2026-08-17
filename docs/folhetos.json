@@ -1,9 +1,9 @@
 {
-  "total": 417,
+  "total": 424,
   "release_tag": "v2",
   "owner": "dadosfnp",
   "repo": "folheto-ifem",
-  "atualizado": "2026-08-17T18:18:08Z",
+  "atualizado": "2026-08-17T19:19:38Z",
   "municipios": [
     {
       "cod_ibge": "3550308",
@@ -1410,6 +1410,21 @@
       "pdf_filename": "FolhetoIFEM_Santa_Maria_RS.pdf"
     },
     {
+      "cod_ibge": "3306305",
+      "municipio": "Volta Redonda",
+      "uf": "RJ",
+      "regiao": "Sudeste",
+      "porte": "200 mil a 500 mil",
+      "populacao": 279898,
+      "rk_pop": 108,
+      "rk_rec": 3039,
+      "quintil": "3º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Volta_Redonda_RJ.pdf",
+      "pdf_filename": "FolhetoIFEM_Volta_Redonda_RJ.pdf"
+    },
+    {
       "cod_ibge": "2408003",
       "municipio": "Mossoró",
       "uf": "RN",
@@ -1668,6 +1683,21 @@
       "quintil": "1º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aguas_Lindas_de_Goias_GO.pdf",
       "pdf_filename": "FolhetoIFEM_Aguas_Lindas_de_Goias_GO.pdf"
+    },
+    {
+      "cod_ibge": "3302502",
+      "municipio": "Magé",
+      "uf": "RJ",
+      "regiao": "Sudeste",
+      "porte": "200 mil a 500 mil",
+      "populacao": 244092,
+      "rk_pop": 129,
+      "rk_rec": 4803,
+      "quintil": "1º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Mage_RJ.pdf",
+      "pdf_filename": "FolhetoIFEM_Mage_RJ.pdf"
     },
     {
       "cod_ibge": "2700300",
@@ -3009,6 +3039,21 @@
       "pdf_filename": "FolhetoIFEM_Jau_SP.pdf"
     },
     {
+      "cod_ibge": "1501303",
+      "municipio": "Barcarena",
+      "uf": "PA",
+      "regiao": "Norte",
+      "porte": "100 mil a 200 mil",
+      "populacao": 137331,
+      "rk_pop": 231,
+      "rk_rec": 1917,
+      "quintil": "4º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Barcarena_PA.pdf",
+      "pdf_filename": "FolhetoIFEM_Barcarena_PA.pdf"
+    },
+    {
       "cod_ibge": "4320008",
       "municipio": "Sapucaia Do Sul",
       "uf": "RS",
@@ -3098,6 +3143,21 @@
       "quintil": "1º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Votorantim_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Votorantim_SP.pdf"
+    },
+    {
+      "cod_ibge": "3204906",
+      "municipio": "São Mateus",
+      "uf": "ES",
+      "regiao": "Sudeste",
+      "porte": "100 mil a 200 mil",
+      "populacao": 133359,
+      "rk_pop": 241,
+      "rk_rec": 5149,
+      "quintil": "1º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sao_Mateus_ES.pdf",
+      "pdf_filename": "FolhetoIFEM_Sao_Mateus_ES.pdf"
     },
     {
       "cod_ibge": "1501709",
@@ -3267,6 +3327,21 @@
       "quintil": "1º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Arapongas_PR.pdf",
       "pdf_filename": "FolhetoIFEM_Arapongas_PR.pdf"
+    },
+    {
+      "cod_ibge": "4100400",
+      "municipio": "Almirante Tamandaré",
+      "uf": "PR",
+      "regiao": "Sul",
+      "porte": "100 mil a 200 mil",
+      "populacao": 124788,
+      "rk_pop": 255,
+      "rk_rec": 5452,
+      "quintil": "1º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Almirante_Tamandare_PR.pdf",
+      "pdf_filename": "FolhetoIFEM_Almirante_Tamandare_PR.pdf"
     },
     {
       "cod_ibge": "5107925",
@@ -3514,6 +3589,21 @@
       "quintil": "2º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Catanduva_SP.pdf",
       "pdf_filename": "FolhetoIFEM_Catanduva_SP.pdf"
+    },
+    {
+      "cod_ibge": "1504422",
+      "municipio": "Marituba",
+      "uf": "PA",
+      "regiao": "Norte",
+      "porte": "100 mil a 200 mil",
+      "populacao": 118998,
+      "rk_pop": 276,
+      "rk_rec": 5130,
+      "quintil": "1º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Marituba_PA.pdf",
+      "pdf_filename": "FolhetoIFEM_Marituba_PA.pdf"
     },
     {
       "cod_ibge": "3543303",
@@ -5100,6 +5190,21 @@
       "quintil": "3º quintil",
       "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Aquiraz_CE.pdf",
       "pdf_filename": "FolhetoIFEM_Aquiraz_CE.pdf"
+    },
+    {
+      "cod_ibge": "3305554",
+      "municipio": "Seropédica",
+      "uf": "RJ",
+      "regiao": "Sudeste",
+      "porte": "50 mil a 100 mil",
+      "populacao": 84737,
+      "rk_pop": 397,
+      "rk_rec": 4154,
+      "quintil": "2º quintil",
+      "aviso": "Dados de 2024 — este município não declarou receita de 2025 ao SICONFI",
+      "ano_dados": 2024,
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Seropedica_RJ.pdf",
+      "pdf_filename": "FolhetoIFEM_Seropedica_RJ.pdf"
     },
     {
       "cod_ibge": "2930501",

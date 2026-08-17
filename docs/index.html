@@ -19,6 +19,7 @@
           rule:     "#E5E0D2",
           'blue-dark': "#0A2A6B",
           muted:    "#6E6B5E",
+          'red-burnt': "#C04A1A",   /* mesmo RED_BURNT de python/core/tokens.py */
           'q1':"#A81C21",'q2':"#E47326",'q3':"#F4D01D",'q4':"#6AC074",'q5':"#1C9148",
         },
         fontFamily: {
@@ -174,9 +175,18 @@
           </div>
           <p class="text-xs text-muted mt-1">
             População <strong class="text-ink">${fmtPop(m.populacao)}</strong> ·
-            Ranking receita p/ hab. <strong class="text-ink">${m.rk_rec.toLocaleString('pt-BR')}º</strong> ·
+            Ranking receita p/ hab. <strong class="text-ink">${m.rk_rec != null ? m.rk_rec.toLocaleString('pt-BR') + 'º' : 'n/d'}</strong> ·
             ${m.porte || ''}
           </p>
+          ${m.aviso ? `
+          <p class="text-xs mt-1.5 inline-flex items-start gap-1.5 text-red-burnt" role="note">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                 stroke-linecap="round" class="shrink-0 mt-0.5" aria-hidden="true">
+              <path d="M12 9v4"/><path d="M12 17h.01"/>
+              <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+            </svg>
+            <span>Dados de <strong>${m.ano_dados}</strong> — município não declarou receita ao SICONFI no ano seguinte.</span>
+          </p>` : ''}
         </div>
         <a href="${m.pdf}" download="${m.pdf_filename}"
            class="shrink-0 inline-flex items-center justify-center gap-2 px-4 py-2.5 md:py-2 rounded-lg bg-blue-dark text-white text-sm font-semibold hover:bg-blue-dark/90 transition w-full md:w-auto"

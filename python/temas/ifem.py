@@ -195,7 +195,27 @@ class FolhetoIFEM(FolhetoFNP):
         draw_page_number(c, self.W, n - 1, lado, lettermark="IFEM")
         draw_header(c, self.H, self.titulo_publicacao)
         draw_footer(c, self.W, footer_label or f"{self.nome} · {self.uf}")
+        self._draw_aviso_dados(c, lado)
         return lado
+
+    def _draw_aviso_dados(self, c, lado: str):
+        """
+        Tarja de ressalva quando o folheto não usa a base do ano corrente.
+
+        Aparece em TODAS as páginas internas de propósito: o folheto circula
+        impresso e em recortes, e uma ressalva só na capa se perde. Ocupa a
+        faixa entre o footer (y=16) e o SAFE_BOTTOM (y=56), que é livre.
+
+        O texto vem do JSON (`aviso_dados`), não do código — quem monta o lote
+        decide o que ressalvar.
+        """
+        aviso = self.d.get("aviso_dados")
+        if not aviso:
+            return
+        x = (STRIPE_W + MARGIN) if lado == "esq" else MARGIN
+        c.setFillColor(RED_BURNT)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 6.2)
+        c.drawString(x, 34, str(aviso).upper())
 
     def _content_x(self, lado: str) -> float:
         """X inicial do conteúdo, evitando o stripe."""
