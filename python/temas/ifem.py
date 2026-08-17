@@ -1863,6 +1863,28 @@ class FolhetoIFEM(FolhetoFNP):
         self._draw_evolucao_percentil(c, x, y - card_h, CONTENT_W, card_h,
                                        h2000, h2024, self.nome)
 
+    def _draw_evolucao_indisponivel(self, c, x, y, w, h):
+        """
+        Card de fallback quando o município não tem série histórica de 2000.
+
+        Preenche o espaço com uma explicação em vez de deixar um buraco branco:
+        o leitor precisa saber que o dado falta, não achar que houve erro de
+        diagramação. O card externo já foi desenhado pelo chamador.
+        """
+        cx = x + w / 2
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 10)
+        c.drawCentredString(cx, y + h / 2 + 6, "Série histórica indisponível")
+        c.setFont(F(FONT_TEXTO), 8.5)
+        c.drawCentredString(
+            cx, y + h / 2 - 8,
+            f"Este município não possui receita declarada em {ANO_BASE}."
+        )
+        c.drawCentredString(
+            cx, y + h / 2 - 20,
+            "A comparação de posição no ranking não pôde ser calculada."
+        )
+
     # ─── Ícones circulares (Síntese Fiscal — estilo landing) ────────────────
 
     def _icone_receita_circ(self, c, cx, cy, size=26):
@@ -1910,11 +1932,20 @@ class FolhetoIFEM(FolhetoFNP):
         c.setLineWidth(0.5)
         c.roundRect(x, y, w, h, 6, fill=0, stroke=1)
 
-        # Dados base
-        pos2000 = h2000["ranking_nacional"]["posicao"]
-        tot2000 = h2000["ranking_nacional"]["total"]
-        pos2024 = h2024["ranking_nacional"]["posicao"]
-        tot2024 = h2024["ranking_nacional"]["total"]
+        # Dados base. A série de 2000 cobre menos municípios que a atual
+        # (5.305 contra 5.440): quem não declarou receita naquele ano não tem
+        # ranking histórico. Sem esta guarda o folheto inteiro estourava com
+        # TypeError, derrubando 14 páginas válidas por causa de um card.
+        rk2000 = (h2000 or {}).get("ranking_nacional")
+        rk2024 = (h2024 or {}).get("ranking_nacional")
+        if not rk2000 or not rk2024:
+            self._draw_evolucao_indisponivel(c, x, y, w, h)
+            return
+
+        pos2000 = rk2000["posicao"]
+        tot2000 = rk2000["total"]
+        pos2024 = rk2024["posicao"]
+        tot2024 = rk2024["total"]
         cor2000 = cor_por_quintil(h2000["quintil"])
         cor2024 = cor_por_quintil(h2024["quintil"])
         tot_max = max(tot2000, tot2024)
