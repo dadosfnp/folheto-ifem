@@ -62,8 +62,21 @@ def _strip_acentos(s: str) -> str:
 
 
 def _slug_release(s: str) -> str:
-    """Filename SEM acento — o que o GitHub Releases efetivamente armazena."""
-    return _strip_acentos(_title_case_br(s or "folheto")).replace(" ", "_")
+    """
+    Filename como o GitHub Releases efetivamente armazena o asset.
+
+    Duas transformações que o GitHub aplica no upload, e que precisam ser
+    replicadas aqui ou o link da landing dá 404:
+
+      1. diacríticos são removidos      — "Bagé"      -> "Bage"
+      2. o que sobra fora de [A-Za-z0-9._-] vira ponto — "Sant'ana" -> "Sant.ana"
+
+    A segunda pegou dois municípios (Sant'ana do Livramento/RS e Santa Bárbara
+    D'Oeste/SP): o apóstrofo virava ponto no release enquanto o índice seguia
+    apontando para o apóstrofo.
+    """
+    base = _strip_acentos(_title_case_br(s or "folheto")).replace(" ", "_")
+    return re.sub(r"[^A-Za-z0-9._-]", ".", base)
 
 
 def _slug_local(s: str) -> str:

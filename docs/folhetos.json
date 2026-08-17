@@ -3,7 +3,7 @@
   "release_tag": "v2",
   "owner": "dadosfnp",
   "repo": "folheto-ifem",
-  "atualizado": "2026-08-17T19:19:38Z",
+  "atualizado": "2026-08-17T21:25:05Z",
   "municipios": [
     {
       "cod_ibge": "3550308",
@@ -2151,8 +2151,8 @@
       "rk_pop": 165,
       "rk_rec": 4926,
       "quintil": "1º quintil",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Barbara_D'oeste_SP.pdf",
-      "pdf_filename": "FolhetoIFEM_Santa_Barbara_D'oeste_SP.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Santa_Barbara_D.oeste_SP.pdf",
+      "pdf_filename": "FolhetoIFEM_Santa_Barbara_D.oeste_SP.pdf"
     },
     {
       "cod_ibge": "2913606",
@@ -5058,8 +5058,8 @@
       "rk_pop": 388,
       "rk_rec": 5042,
       "quintil": "1º quintil",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sant'ana_do_Livramento_RS.pdf",
-      "pdf_filename": "FolhetoIFEM_Sant'ana_do_Livramento_RS.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v2/FolhetoIFEM_Sant.ana_do_Livramento_RS.pdf",
+      "pdf_filename": "FolhetoIFEM_Sant.ana_do_Livramento_RS.pdf"
     },
     {
       "cod_ibge": "4204301",
