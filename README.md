@@ -21,22 +21,53 @@ pip install -r requirements.txt
 # 3. Fontes oficiais (Barlow Condensed + Inter) — NÃO vêm no git
 python tools/baixar_fontes.py
 
-# 4. Dados dos municípios — NÃO vêm no git
-python tools/sync_dados.py
+# 4. Configuração: copie o template e ajuste os caminhos
+Copy-Item .env.example .env
+
+# 5. Dados dos municípios — gerados das planilhas oficiais
+python tools/planilhas_para_json.py --todos
 ```
 
-### Por que os passos 3 e 4 existem
+### Por que os passos 3 e 5 existem
 
 Duas coisas ficam fora do git de propósito, e **ambas mudam o PDF final**:
 
 | O quê | Por que fora do git | Sem ele o PDF… |
 |---|---|---|
 | `fonts/*.ttf` | licença + peso | sai em Helvetica, com tipografia diferente da oficial |
-| `data/ifem/dados-ifem/export_folheto/` | 5.479 arquivos, ~94 MB, regeneráveis do banco | não gera — não há município nenhum |
+| `data/ifem/dados-ifem/` | 5.440 arquivos, ~94 MB, regeneráveis | não gera — não há município nenhum |
 
 Pular esses passos não dá erro: o gerador **degrada e continua**. Por isso os dois
-scripts acima existem, e por isso o gerador agora avisa em `stderr` quando está
-usando fallback. Se aparecer `[aviso]` na saída, o PDF **não** está fiel ao oficial.
+scripts acima existem, e por isso o gerador avisa em `stderr` quando está usando
+fallback. Se aparecer `[aviso]` na saída, o PDF **não** está fiel ao oficial.
+
+### De onde vêm os dados
+
+`tools/planilhas_para_json.py` lê as planilhas oficiais em
+`<Subfinanciados>/base_datas/` — a **mesma fonte** que popula o banco do IFEM em
+produção — e escreve os JSONs que o gerador consome.
+
+Não precisa de banco, de rede, nem de credencial. O caminho das planilhas fica em
+`PLANILHAS_DIR` no `.env`; a rastreabilidade completa está em
+[`data/ifem/PROVENIENCIA.md`](data/ifem/PROVENIENCIA.md).
+
+> **Alternativa:** se você tiver acesso ao banco (só de dentro da VPC da
+> DigitalOcean), `python tools/sync_dados.py` traz o lote gerado pelos exports do
+> Subfinanciados. Os dois caminhos produzem o mesmo resultado.
+
+### Ano de referência
+
+O ano impresso nos folhetos vem de `ANO_REF` no `.env` — **nunca** de um literal
+no código. Para virar o ano:
+
+1. Confirme que existe `receitas_correntes_<ANO>.xlsx` em `base_datas/`
+2. Atualize `ANO_REF` no `.env`
+3. `python tools/planilhas_para_json.py --todos`
+4. `python tools/recalcular_problema.py --aplicar` (números da página "O Problema")
+
+As **chaves** dos JSONs mantêm o sufixo `_2024` (`sintese_fiscal_2000_2024`,
+`posicao_historica.ano_2024`) mesmo com dados mais novos — é contrato interno
+herdado do Subfinanciados. Não derive o ano delas.
 
 ---
 
@@ -50,11 +81,15 @@ python python/gerar.py --listar
 python python/gerar.py --tema ifem `
   --dados data/ifem/dados-ifem/export_folheto/3304557_rio-de-janeiro-rj.json
 
-# Em lote — atenção: o glob abaixo gera os 5.479 municípios
-python python/gerar.py --tema ifem --lote "data/ifem/dados-ifem/export_folheto/*.json"
+# Recorte publicado: municípios acima de 80 mil habitantes (417)
+python python/gerar.py --tema ifem `
+  --lote "data/ifem/dados-ifem/export_folheto/*.json" --pop-minima 80000
 
-# Lote de um estado só (ex.: Ceará)
+# Um estado só (ex.: Ceará)
 python python/gerar.py --tema ifem --lote "data/ifem/dados-ifem/export_folheto/*-ce.json"
+
+# Todos os 5.440 — demora bastante e ocupa vários GB
+python python/gerar.py --tema ifem --lote "data/ifem/dados-ifem/export_folheto/*.json"
 ```
 
 Os PDFs saem em `output/` como `<TemaClasse>_<Municipio>_<UF>.pdf`.
@@ -71,32 +106,44 @@ Get-ChildItem data/ifem/dados-ifem/export_folheto -Filter "*fortaleza*"
 
 ## Atualizar os dados
 
-Os dados vêm do banco do **Subfinanciados** (PostgreSQL gerenciado, database `ifem`).
-O ciclo completo:
+O ciclo completo, sem banco:
 
 ```
-banco ifem  ──►  exports do Subfinanciados  ──►  sync_dados.py  ──►  gerar.py  ──►  PDF
+planilhas (base_datas/*.xlsx)  ──►  planilhas_para_json.py  ──►  gerar.py  ──►  PDF
 ```
 
 ```powershell
-# 1. No Subfinanciados — regenera os JSONs a partir do banco
-cd ..\Subfinanciados
-python export_folheto_municipios.py        # 1 JSON por município + _metodologia.json
-python export_folheto_complementares.py    # _medias_receitas.json
-python validate_export_folheto.py          # confere o schema do lote
+# 1. Regenera os JSONs a partir das planilhas oficiais
+python tools/planilhas_para_json.py --todos
 
-# 2. De volta aqui — traz os JSONs para dentro deste repo
-cd "..\Folhetos FNP"
-python tools/sync_dados.py
+# 2. Atualiza os números da página "O Problema" (mostra antes/depois)
+python tools/recalcular_problema.py            # confere
+python tools/recalcular_problema.py --aplicar  # grava
+
+# 3. Gera o recorte publicado
+python python/gerar.py --tema ifem `
+  --lote "data/ifem/dados-ifem/export_folheto/*.json" --pop-minima 80000
 ```
 
-O passo detalhado (credenciais, o que cada script faz, o que checar) está em
-[`docs/PASSO_A_PASSO.md`](docs/PASSO_A_PASSO.md).
+O passo a passo detalhado está em [`docs/PASSO_A_PASSO.md`](docs/PASSO_A_PASSO.md).
 
-> **`_problema.json` é a exceção.** É texto editorial — nenhum export o gera.
-> Ele vive versionado em [`data/ifem/_problema.json`](data/ifem/_problema.json)
-> e o `sync_dados.py` o injeta no lote. Para mudar o texto da página "O Problema",
-> edite esse arquivo e commite.
+> **`_problema.json` é conteúdo editorial** — nenhum script o gera do zero. Ele
+> vive versionado em [`data/ifem/_problema.json`](data/ifem/_problema.json). O
+> `recalcular_problema.py` atualiza os **números**; o **texto corrido** que cita
+> valores por extenso precisa de revisão humana — o script aponta quais frases
+> ficaram inconsistentes, mas não as reescreve.
+
+### Validar o lote
+
+O Subfinanciados tem um validador de schema que serve para conferir qualquer lote:
+
+```powershell
+# aponte EXPORT_DIR para data/ifem/dados-ifem/export_folheto/ numa cópia do script
+python validate_export_folheto.py
+```
+
+Ele checa as chaves de topo, `supera_pct_nacional` (0–100) em todas as rubricas,
+a hierarquia 4/14/28 e a consistência referencial.
 
 ---
 
