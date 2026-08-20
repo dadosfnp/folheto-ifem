@@ -2081,8 +2081,8 @@ class FolhetoIFEM(FolhetoFNP):
         # Labels "0" e total alinhados verticalmente ao centro da barra
         c.setFillColor(MUTED)
         c.setFont(F(FONT_TEXTO), 9)
-        c.drawRightString(bar_x - 8, bar_y + 1, "0")
-        c.drawString(bar_x + bar_w + 8, bar_y + 1, _br_int(tot_max))
+        c.drawRightString(bar_x - 8, bar_y + 1, _br_int(tot_max))
+        c.drawString(bar_x + bar_w + 8, bar_y + 1, "1")
 
         # Markers: pequena seta cinza sutil + label "POS (ANO)" embaixo
         marker_info = []
