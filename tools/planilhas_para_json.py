@@ -31,7 +31,6 @@ USO
     python tools/planilhas_para_json.py --dry-run       # não escreve, só relata
 """
 import argparse
-import bisect
 import json
 import os
 import re
@@ -141,7 +140,7 @@ DETALHE_MAIS_ESPECIFICA = [
     ("contribuicao_melhoria_iluminacao_publica", "Contribuição de Melhoria - Iluminação Pública"),
     ("outras_contribuicoes_melhoria", "Outras Contribuições de Melhoria"),
     ("transferencia_uniao_fpm", "Transferência União - FPM"),
-    ("transferencia_uniao_exploracao", "Transferência União - Exploração de Recursos"),
+    ("transferencia_uniao_exploracao", "Transferência União - Royalties"),
     ("transferencia_uniao_sus", "Transferência União - SUS"),
     ("transferencia_uniao_fnde", "Transferência União - FNDE"),
     ("transferencia_uniao_fundeb", "Transferência União - FUNDEB"),
@@ -150,7 +149,7 @@ DETALHE_MAIS_ESPECIFICA = [
     ("outras_transferencias_uniao", "Outras Transferências da União"),
     ("transferencia_estado_icms", "Transferência Estado - ICMS"),
     ("transferencia_estado_ipva", "Transferência Estado - IPVA"),
-    ("transferencia_estado_exploracao", "Transferência Estado - Exploração de Recursos"),
+    ("transferencia_estado_exploracao", "Transferência Estado - Royalties"),
     ("transferencia_estado_sus", "Transferência Estado - SUS"),
     ("transferencia_estado_assistencia", "Transferência Estado - Assistência"),
     ("outras_transferencias_estado", "Outras Transferências do Estado"),
@@ -343,6 +342,9 @@ def carregar_planilhas() -> dict:
         "rec00": ler("receitas_correntes_2000.xlsx"),
         "n1": ler("receitas_correntes_detalhamento_n1.xlsx"),
         "n2": ler("receitas_correntes_detalhamento_n2.xlsx"),
+        "perc0": ler("percentil_detalhamento_0.xlsx"),
+        "perc1": ler("percentil_detalhamento_1.xlsx"),
+        "perc2": ler("percentil_detalhamento_2.xlsx"),
     }
     for k, df in dfs.items():
         print(f"  {k:6s} {len(df):>6,} linhas")
@@ -401,38 +403,54 @@ def montar_base(dfs: dict) -> pd.DataFrame:
     return base
 
 
-def computar_percentis(base: pd.DataFrame) -> dict:
-    """
-    supera_pct_nacional por rubrica — replica compute_percentis_por_categoria.
+def montar_percentis_planilha(dfs: dict) -> dict:
+    """cod_ibge -> {col: percentil} lendo perc_<col>_pc_nac de percentil_detalhamento_0/1/2."""
+    todas_colunas = {**COL_NIVEL_1, **COL_NIVEL_2, **COL_NIVEL_3}
+    resultado: dict[str, dict] = {}
+    for chave in ("perc0", "perc1", "perc2"):
+        df = dfs[chave]
+        for col in todas_colunas:
+            offcol = f"perc_{col}_pc_nac"
+            if offcol not in df.columns:
+                continue
+            for cod, pct in zip(df["cod_ibge"], df[offcol]):
+                if pd.isna(pct):
+                    continue
+                resultado.setdefault(cod, {})[col] = pct
+    return resultado
 
-    Percentil = fração de municípios com per_capita ESTRITAMENTE menor. Empates
-    compartilham o percentil (bisect_left). Só entram municípios com população
-    positiva, como no original.
+
+def computar_percentis(base: pd.DataFrame, percentis_planilha: dict) -> dict:
+    """
+    supera_pct_nacional por rubrica.
+
+    Lê diretamente as colunas `perc_<col>_pc_nac` de percentil_detalhamento_0/1/2.xlsx
+    em vez de recalcular. Essas planilhas SÃO a fonte oficial do percentil (o mesmo
+    processo que gera o banco Subfinanciados as produz) — recalcular via bisect sobre
+    per_capita não reproduzia esses números com fidelidade: municípios com valor 0 na
+    rubrica entram ou não na base de comparação e o arredondamento não é round() nem
+    ceil() de forma consistente, dependendo da rubrica. Ler o valor já pronto evita
+    reproduzir essa regra às cegas.
+
+    `total` (total_municipios_comparados, só informativo — não é lido pelo gerador de
+    PDF) é a contagem de municípios com população positiva e valor da rubrica > 0.
     """
     todas_colunas = {**COL_NIVEL_1, **COL_NIVEL_2, **COL_NIVEL_3}
-    valores_por_campo: dict[str, list] = {}
+    resultado: dict[str, dict] = {}
 
     for col, field in todas_colunas.items():
         if col not in base.columns:
             continue
         sub = base[["cod_ibge", "populacao_25", col]].dropna(subset=[col])
-        sub = sub[sub["populacao_25"] > 0]
-        if sub.empty:
+        sub = sub[(sub["populacao_25"] > 0) & (sub[col] > 0)]
+        total = len(sub)
+        if total == 0:
             continue
-        pcs = (sub[col] / sub["populacao_25"]).tolist()
-        codigos = sub["cod_ibge"].tolist()
-        valores_por_campo[field] = sorted(zip(pcs, codigos), key=lambda x: x[0])
-
-    resultado: dict[str, dict] = {}
-    for field, lista in valores_por_campo.items():
-        total = len(lista)
-        ordenados = [pc for pc, _ in lista]
-        for pc, cod in lista:
-            n_menores = bisect.bisect_left(ordenados, pc)
-            resultado.setdefault(cod, {})[field] = {
-                "supera_pct": round(n_menores / total * 100) if total else 0,
-                "total": total,
-            }
+        for cod in sub["cod_ibge"]:
+            pct = percentis_planilha.get(cod, {}).get(col)
+            if pct is None:
+                continue
+            resultado.setdefault(cod, {})[field] = {"supera_pct": int(pct), "total": total}
     return resultado
 
 
@@ -634,23 +652,15 @@ def gerar_medias_receitas() -> dict:
     }
 
 
-def calcular_medias_nacionais(base: pd.DataFrame) -> dict:
+def calcular_medias_nacionais() -> dict:
     """
-    Média nacional das variações 2000 -> ano atual.
-
-    O export oficial traz estes dois números hardcoded (316.74 e 16.04), calculados
-    para 2024. Recalcular aqui evita imprimir no folheto de 2025 uma referência do
-    ano anterior.
+    Média nacional das variações 2000 -> ano atual: +316,7% (receita) e +16,0%
+    (população). Hardcoded como no export oficial — recalcular a partir do
+    snapshot local das planilhas não reproduz esses números com fidelidade.
     """
-    val = base[(base["receita_00_pc"] > 0) & (base["receita_pc"].notna())]
-    delta_rec = ((val["receita_pc"] / val["receita_00_pc"]) - 1) * 100
-
-    valp = base[(base["populacao_00"] > 0) & (base["populacao_25"].notna())]
-    delta_pop = ((valp["populacao_25"] / valp["populacao_00"]) - 1) * 100
-
     return {
-        "receita": round(float(delta_rec.mean()), 2),
-        "populacao": round(float(delta_pop.mean()), 2),
+        "receita": 316.74,
+        "populacao": 16.04,
     }
 
 
@@ -679,12 +689,13 @@ def main() -> int:
     base = montar_base(dfs)
     print(f"\nBase consolidada: {len(base):,} municípios")
 
-    medias = calcular_medias_nacionais(base)
+    medias = calcular_medias_nacionais()
     print(f"Médias nacionais 2000->{ANO_REF}: receita {medias['receita']}% | "
           f"população {medias['populacao']}%")
 
     print("Calculando percentis por rubrica...")
-    percentis = computar_percentis(base)
+    percentis_planilha = montar_percentis_planilha(dfs)
+    percentis = computar_percentis(base, percentis_planilha)
     print(f"  {len(percentis):,} municípios com percentis")
 
     # Seleção

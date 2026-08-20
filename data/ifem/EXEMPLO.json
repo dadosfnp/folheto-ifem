@@ -1,56 +1,126 @@
 {
-  "nome": "Rio de Janeiro",
-  "uf": "RJ",
-  "cod_ibge": 3304557,
-  "url": "https://ifem.fnp.org.br/rio-de-janeiro",
-
-  "populacao": 6747815,
-  "porte": "Capital",
-  "faixa": "Acima de 500 mil",
-
-  "rankings": {
-    "populacao_pos": 2, "populacao_total": 5570,
-    "receita_pos":   2, "receita_total":   5570,
-    "porte_pos":     2, "porte_total":     27,
-    "faixa_pos":     2, "faixa_total":     49
+  "identificacao": {
+    "cod_ibge": "3304557",
+    "municipio": "Rio de Janeiro",
+    "uf": "RJ",
+    "regiao": "Sudeste",
+    "regiao_metropolitana": "RM do Rio de Janeiro (RJ)",
+    "porte": "Acima de 500 mil",
+    "coordenadas": { "x": -43.46, "y": -22.93 }
   },
 
-  "indicadores": {
-    "receita_total_bi":   38.5,
-    "receita_per_capita": 5705,
-    "sus_per_capita":     1240,
-    "cad_unico_pct":      21.4,
-    "idh":                0.799,
-    "ifem":               0.682,
-    "percentil":          87
+  "populacao": {
+    "ano": 2024,
+    "valor": 6729894,
+    "ranking_nacional": { "posicao": 2, "total": 5570 },
+    "ranking_estadual":  { "posicao": 1, "total": 92 },
+    "ranking_por_porte": { "posicao": 2, "total": 48 }
   },
 
-  "receita_estrutura": [
-    { "categoria": "Tributária Própria", "valor_bi": 16.2, "pct": 42.1 },
-    { "categoria": "Transferências",     "valor_bi": 12.4, "pct": 32.2 },
-    { "categoria": "Capital",            "valor_bi":  5.1, "pct": 13.2 },
-    { "categoria": "Outras Correntes",   "valor_bi":  4.8, "pct": 12.5 }
+  "receita_corrente": {
+    "ano": 2024,
+    "valor_absoluto": 37227244132.72,
+    "per_capita": 5531.62,
+    "ranking_por_per_capita": {
+      "nacional": { "posicao": 4299, "total": 5479 },
+      "estadual": { "posicao": 76,   "total": 91 },
+      "por_porte":{ "posicao": 27,   "total": 48 }
+    }
+  },
+
+  "sus_dependente": { "percentual_populacao": 54.3 },
+
+  "cadunico": {
+    "qtd_pessoas_cadastradas": 2106794,
+    "ranking_nacional": { "posicao": 4947, "total": 5570 },
+    "ranking_estadual": { "posicao": 89,  "total": 92 },
+    "ranking_por_porte":{ "posicao": 30,  "total": 48 }
+  },
+
+  "percentil": {
+    "ano": 2024,
+    "percentil_label": "22º percentil",
+    "percentil_numero": 22,
+    "quintil": "2º quintil",
+    "decil": "3º decil"
+  },
+
+  "estrutura_receita_resumo": [
+    {
+      "rubrica": "Impostos, Taxas e Contribuições de Melhoria",
+      "field": "imposto_taxas_contribuicoes",
+      "valor_absoluto": 17876279031.64,
+      "per_capita": 2656.25,
+      "supera_pct_nacional": 98,
+      "total_municipios_comparados": 5479
+    },
+    {
+      "rubrica": "Transferências Correntes",
+      "field": "transferencias_correntes",
+      "valor_absoluto": 13999487930.10,
+      "per_capita": 2080.19,
+      "supera_pct_nacional": 0,
+      "total_municipios_comparados": 5479
+    }
   ],
 
-  "receita_detalhe": [
-    { "rubrica": "ISS",               "mun": 1480, "uf":  920, "porte": 1050, "nacional":  760 },
-    { "rubrica": "IPTU",              "mun":  890, "uf":  410, "porte":  580, "nacional":  290 },
-    { "rubrica": "FPM",               "mun":  120, "uf":  340, "porte":  280, "nacional":  680 },
-    { "rubrica": "ICMS (cota-parte)", "mun":  610, "uf":  780, "porte":  720, "nacional":  840 },
-    { "rubrica": "Outras Correntes",  "mun":  205, "uf":  180, "porte":  195, "nacional":  170 }
-  ],
-
-  "sintese": {
-    "destaque": "Capital com alta autonomia tributária e desafio redistributivo.",
-    "pontos_fortes": [
-      "Receita tributária própria acima da média de porte",
-      "Investimento em saúde supera referência nacional",
-      "Estrutura de arrecadação diversificada"
+  "estrutura_receita_detalhada": {
+    "nivel_2_categorias": [
+      {
+        "rubrica": "Impostos",
+        "field": "imposto",
+        "valor_absoluto": 17046721574.81,
+        "per_capita": 2532.99,
+        "supera_pct_nacional": 98,
+        "total_municipios_comparados": 5479
+      }
     ],
-    "pontos_atencao": [
-      "FPM per capita muito abaixo da média",
-      "Alta vulnerabilidade (CadÚnico) apesar da receita robusta",
-      "Dependência de ISS exige monitoramento de ciclos econômicos"
+    "nivel_3_rubricas": [
+      {
+        "rubrica": "IPTU",
+        "field": "iptu",
+        "valor_absoluto": 4946593936.34,
+        "per_capita": 735.02,
+        "supera_pct_nacional": 95,
+        "total_municipios_comparados": 5479
+      }
     ]
+  },
+
+  "hierarquia_receitas": {
+    "nivel_1": [{ "field": "imposto_taxas_contribuicoes", "label": "Impostos, Taxas e Contribuições de Melhoria" }],
+    "nivel_2": [{ "field": "imposto", "label": "Impostos", "parent_field": "imposto_taxas_contribuicoes" }],
+    "nivel_3": [{ "field": "iptu", "label": "IPTU", "parent_field": "imposto" }]
+  },
+
+  "sintese_fiscal_2000_2024": {
+    "delta_receita_per_capita_pct": 78.4,
+    "delta_populacao_pct": 6.61,
+    "media_nacional_delta_receita_per_capita_pct": 316.74,
+    "media_nacional_delta_populacao_pct": 16.04,
+    "observacao": "Valores financeiros corrigidos pela inflação para 2024."
+  },
+
+  "posicao_historica": {
+    "ano_2000": {
+      "populacao": 6312372,
+      "receita_corrente_absoluta": 19572527796.55,
+      "receita_per_capita": 3100.66,
+      "quintil": "5º quintil",
+      "decil": "9º decil",
+      "percentil_label": "86º percentil",
+      "percentil_numero": 86,
+      "ranking_nacional": { "posicao": 765, "total": 5305 }
+    },
+    "ano_2024": {
+      "populacao": 6729894,
+      "receita_corrente_absoluta": 37227244132.72,
+      "receita_per_capita": 5531.62,
+      "quintil": "2º quintil",
+      "decil": "3º decil",
+      "percentil_label": "22º percentil",
+      "percentil_numero": 22,
+      "ranking_nacional": { "posicao": 4299, "total": 5479 }
+    }
   }
 }
