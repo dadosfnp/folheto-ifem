@@ -46,6 +46,13 @@ except ImportError:
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DESTINO = ROOT_DIR / "data" / "ifem" / "dados-ifem" / "export_folheto"
 RECORTE_JSON = ROOT_DIR / "docs" / "folhetos.json"
+COMPANHEIROS_DIR = ROOT_DIR / "data" / "ifem"
+
+# Companheiros que são TEXTO EDITORIAL, não dado calculado: nenhuma planilha os
+# origina, então este script não tem como gerá-los. Vivem versionados em
+# `data/ifem/` e são copiados para o lote. A lista é o contrato: companheiro
+# editorial novo entra aqui, não numa cópia manual em algum lugar.
+COMPANHEIROS_EDITORIAIS = ("_problema.json", "_metodologia.json")
 
 
 # --------------------------------------------------------------------------
@@ -740,17 +747,25 @@ def main() -> int:
         except Exception as e:
             erros.append(f"{row.get('cod_ibge')} ({row.get('nome_muni')}): {e}")
 
-    # `_problema.json` é editorial e vive versionado em data/ifem/. Um lote antigo
-    # pode ter deixado uma cópia desatualizada aqui, e o gerador prefere a cópia
-    # local ao fallback versionado — então ela venceria silenciosamente e o folheto
-    # sairia com os números do ano anterior. Sincroniza para eliminar a ambiguidade.
+    # Companheiros editoriais: copia a versão do repo para o lote, sempre.
+    #
+    # Duas coisas dependem disso. (1) O gerador prefere a cópia que está ao lado
+    # dos JSONs municipais ao fallback versionado — um lote antigo com cópia
+    # desatualizada venceria em silêncio e o folheto sairia com o texto e os
+    # números do ano anterior. (2) Quem clona o repo não tem lote nenhum: sem esta
+    # cópia a página correspondente sai vazia, e o único sinal é um `[aviso]` no
+    # stderr. Foi exatamente assim que a página "Metodologia" saiu em branco.
     if not args.dry_run:
-        versionado = ROOT_DIR / "data" / "ifem" / "_problema.json"
-        if versionado.exists():
-            destino_prob = DESTINO / "_problema.json"
-            if not destino_prob.exists() or destino_prob.read_bytes() != versionado.read_bytes():
-                destino_prob.write_bytes(versionado.read_bytes())
-                print("\n_problema.json sincronizado a partir de data/ifem/ (versionado)")
+        for nome in COMPANHEIROS_EDITORIAIS:
+            versionado = COMPANHEIROS_DIR / nome
+            if not versionado.exists():
+                print(f"\n[aviso] {nome} não existe em data/ifem/ — a seção que "
+                      f"depende dele sairá vazia.", file=sys.stderr)
+                continue
+            destino = DESTINO / nome
+            if not destino.exists() or destino.read_bytes() != versionado.read_bytes():
+                destino.write_bytes(versionado.read_bytes())
+                print(f"\n{nome} sincronizado a partir de data/ifem/ (versionado)")
 
     # Companheiro compartilhado: sem ele os comparativos do folheto ficam no ano errado.
     if not args.dry_run:

@@ -1,0 +1,51 @@
+{
+  "titulo": "Indicadores de Financiamento e Equidade Municipal (IFEM)",
+  "resumo": "Para comparar contextos tão distintos, o IFEM utiliza um método simples e justo: ordenar para entender. Calculamos quanto cada município tem de receita para cada morador, dividindo a receita corrente pela população. Depois, organizamos todos os municípios do menor para o maior valor por habitante e os dividimos em grupos iguais para comparar situações semelhantes.",
+  "topicos": [
+    {
+      "pergunta": "Qual a base de dados utilizada?",
+      "resposta": "O IFEM é calculado a partir da Receita Corrente dos municípios. Os dados são oficiais, extraídos dos relatórios fiscais (Siconfi/Tesouro Nacional), garantindo a integridade da análise."
+    },
+    {
+      "pergunta": "Por que 'per capita'?",
+      "resposta": "Para comparar cidades de tamanhos diferentes de forma justa. Dividimos a receita total pela população de cada município, encontrando o valor real disponível para cada habitante."
+    },
+    {
+      "pergunta": "Como os grupos são divididos?",
+      "resposta": "Ordenamos os municípios, com dados disponíveis, do menor para o maior valor de receita. Em seguida, fatiamos essa lista em grupos com a mesma quantidade de cidades: Quintis (5 grupos, cada um com 20% dos municípios) e Decis (10 grupos, cada um com 10% dos municípios)."
+    }
+  ],
+  "passos": [
+    {
+      "ordem": 1,
+      "titulo": "Ordenamos todos os municípios",
+      "descricao": "Da menor para a maior receita per capita."
+    },
+    {
+      "ordem": 2,
+      "titulo": "Distribuímos em grupos iguais",
+      "descricao": "Aproximadamente 1.100 municípios em cada quintil (20%) e 550 em cada decil (10%).",
+      "grupos": {
+        "quintis": [
+          { "ordem": 1, "faixa": "0% a 20% (menor receita)" },
+          { "ordem": 2, "faixa": "20% a 40%" },
+          { "ordem": 3, "faixa": "40% a 60%" },
+          { "ordem": 4, "faixa": "60% a 80%" },
+          { "ordem": 5, "faixa": "80% a 100% (maior receita)" }
+        ],
+        "decis": [
+          { "ordem": 1,  "faixa": "0% a 10%" },
+          { "ordem": 2,  "faixa": "10% a 20%" },
+          { "ordem": 3,  "faixa": "20% a 30%" },
+          { "ordem": 4,  "faixa": "30% a 40%" },
+          { "ordem": 5,  "faixa": "40% a 50%" },
+          { "ordem": 6,  "faixa": "50% a 60%" },
+          { "ordem": 7,  "faixa": "60% a 70%" },
+          { "ordem": 8,  "faixa": "70% a 80%" },
+          { "ordem": 9,  "faixa": "80% a 90%" },
+          { "ordem": 10, "faixa": "90% a 100%" }
+        ]
+      }
+    }
+  ]
+}
