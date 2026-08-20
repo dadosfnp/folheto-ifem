@@ -72,7 +72,12 @@ em qualquer máquina que já tivesse um lote antigo em disco.
    ninguém lê `stderr` num lote de 400 PDFs. Só percebemos porque o colega abriu
    o PDF e viu a página vazia.
 
-**Contexto:** o texto da metodologia nasceu como dict hardcoded em ASCII puro no
-`export_folheto_municipios.py` do Subfinanciados. Aproveitamos para acentuar
-(mesmas palavras, mesma ordem) — os folhetos até o release `v2` imprimiam
-"metodo", "municipio" e "populacao" sem acento.
+**Contexto e uma segunda lição:** o texto nasceu como dict hardcoded em ASCII
+puro no `export_folheto_municipios.py` do Subfinanciados, então a página imprime
+"metodo" e "populacao" sem acento. Cheguei a versionar a cópia já acentuada — o
+Pedro reverteu. **Corrigir um defeito de conteúdo não é parte de destravar o
+build.** Eram duas mudanças com consequências diferentes: uma faz a página deixar
+de sair vazia, a outra altera o que já foi impresso e distribuído, e ainda cria
+duas fontes divergentes (repo acentuado vs. export ASCII) onde antes havia uma.
+A correção de acento existe como pendência para ser feita nos dois lados de uma
+vez, não de carona.

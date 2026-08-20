@@ -226,25 +226,28 @@ o lote — igual ao `_problema.json`. A versão do repo vence a que vier de expo
 ```jsonc
 {
   "titulo": "Indicadores de Financiamento e Equidade Municipal (IFEM)",
-  "resumo": "Para comparar contextos tão distintos, o IFEM utiliza um método simples e justo…",
+  "resumo": "Para comparar contextos tao distintos, o IFEM utiliza um metodo simples e justo…",
   "topicos": [
     { "pergunta": "Qual a base de dados utilizada?", "resposta": "…" },
     { "pergunta": "Por que 'per capita'?",            "resposta": "…" },
-    { "pergunta": "Como os grupos são divididos?",    "resposta": "…" }
+    { "pergunta": "Como os grupos sao divididos?",    "resposta": "…" }
   ],
   "passos": [
     // Presente por fidelidade ao contrato do export oficial, mas NÃO consumido
     // pelo folheto: a página 13 desenha esse passo a passo com metodologia.png.
-    { "ordem": 1, "titulo": "Ordenamos todos os municípios", "descricao": "…" },
-    { "ordem": 2, "titulo": "Distribuímos em grupos iguais", "descricao": "…",
+    { "ordem": 1, "titulo": "Ordenamos todos os municipios", "descricao": "…" },
+    { "ordem": 2, "titulo": "Distribuimos em grupos iguais", "descricao": "…",
       "grupos": { "quintis": [/* 5 */], "decis": [/* 10 */] } }
   ]
 }
 ```
 
-> O texto que vem do export oficial (`export_folheto_municipios.py`, dict
-> `METODOLOGIA`) é **sem acentuação** — literal ASCII no fonte. A versão
-> versionada aqui corrige isso; palavra por palavra é o mesmo texto.
+> **O texto é sem acentuação, de propósito.** Ele nasce de um dict em ASCII puro
+> (`export_folheto_municipios.py`, constante `METODOLOGIA`), e o arquivo aqui é
+> cópia byte a byte dele — a página 13 imprime "metodo", "municipio" e
+> "populacao" assim. É a mesma coisa que sai do export oficial: paridade com os
+> folhetos já publicados vem antes. Acentuar é uma decisão editorial e deve ser
+> feita nos dois lados, aqui e no Subfinanciados, para não divergirem.
 
 ## Notas de implementação
 

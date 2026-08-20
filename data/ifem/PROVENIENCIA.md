@@ -72,7 +72,11 @@ o lote — a cópia do repo vence a de qualquer export.
 | [`_problema.json`](_problema.json) | página "O Problema" | os números (população por quintil, % de transferências) vêm de análise agregada; `recalcular_problema.py --aplicar` atualiza os campos numéricos, o texto corrido precisa de revisão humana |
 | [`_metodologia.json`](_metodologia.json) | página "Metodologia do IFEM" | texto fixo; só muda se a metodologia do índice mudar |
 
-O texto da metodologia nasceu como um dict hardcoded em
-`export_folheto_municipios.py` (Subfinanciados), escrito em ASCII puro — por isso
-os folhetos até o release `v2` imprimiam "metodo", "municipio" e "populacao" sem
-acento. A versão versionada aqui corrige a acentuação sem alterar uma palavra.
+`_metodologia.json` é **cópia byte a byte** do que o export oficial produz — o
+texto vem do dict `METODOLOGIA` em `export_folheto_municipios.py`
+(Subfinanciados), escrito em ASCII puro. Por isso a página 13 imprime "metodo",
+"municipio" e "populacao" sem acento: é o texto oficial, e a cópia aqui existe
+para o folheto não sair vazio em máquina sem o lote, não para editá-lo.
+
+Se um dia a acentuação for corrigida, tem que ser nos dois lados — aqui e no
+Subfinanciados — ou as duas fontes divergem e cada máquina gera um PDF diferente.

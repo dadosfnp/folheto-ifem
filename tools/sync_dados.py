@@ -27,12 +27,11 @@ DESTINO = ROOT_DIR / "data" / "ifem" / "dados-ifem" / "export_folheto"
 # Arquivos compartilhados que o gerador procura ao lado dos JSONs municipais.
 COMPANHEIROS = ("_metodologia.json", "_medias_receitas.json", "_problema.json")
 
-# Companheiros de conteúdo EDITORIAL: aqui o repo é a fonte da verdade, não o
-# export. `_problema.json` nenhum export gera. E o `_metodologia.json` que vem do
-# Subfinanciados é uma cópia sem acentuação — o texto está hardcoded como literal
-# ASCII em `export_folheto_municipios.py`, e por isso o folheto imprimia "metodo"
-# e "populacao" sem acento. Sobrescrever a cópia do export é intencional: se ela
-# vencesse, o defeito voltaria a cada sync.
+# Companheiros de conteúdo EDITORIAL: aqui o repo é a fonte da verdade. Nenhum
+# export gera o `_problema.json`, e o `_metodologia.json`, mesmo vindo do export,
+# é texto revisado neste repo. Sobrescrever a cópia que o export trouxe é
+# intencional: sem isso as edições feitas aqui seriam desfeitas a cada sync, em
+# silêncio, e quem regenerasse o lote geraria um PDF diferente do de todo mundo.
 COMPANHEIROS_EDITORIAIS = ("_problema.json", "_metodologia.json")
 COMPANHEIROS_DIR = ROOT_DIR / "data" / "ifem"
 
