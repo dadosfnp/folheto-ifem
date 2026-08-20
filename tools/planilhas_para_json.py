@@ -659,16 +659,37 @@ def gerar_medias_receitas() -> dict:
     }
 
 
+# Médias nacionais das variações 2000 -> ano de referência, usadas como linha de
+# comparação no folheto. Hardcoded como no export oficial: recalcular a partir do
+# snapshot local das planilhas não reproduz estes números com fidelidade.
+#
+# ATENÇÃO — estes valores foram calculados para 2024 e NÃO acompanham o ANO_REF.
+# Com ANO_REF em outro ano, o folheto compara o município de um ano contra uma
+# média nacional de outro. `calcular_medias_nacionais()` avisa quando isso
+# acontece; a decisão de atualizar os números é editorial, não automática.
+MEDIAS_NACIONAIS = {"receita": 316.74, "populacao": 16.04}
+ANO_MEDIAS_NACIONAIS = 2024
+
+
 def calcular_medias_nacionais() -> dict:
     """
-    Média nacional das variações 2000 -> ano atual: +316,7% (receita) e +16,0%
-    (população). Hardcoded como no export oficial — recalcular a partir do
-    snapshot local das planilhas não reproduz esses números com fidelidade.
+    Devolve as médias nacionais de comparação (ver MEDIAS_NACIONAIS).
+
+    Avisa em stderr quando as médias não são do ANO_REF em uso. O aviso é
+    barulhento de propósito: o número entra no folheto de qualquer jeito, e sem
+    ele a divergência de ano passa sem ninguém notar — foi assim que a página
+    "Metodologia" saiu vazia por meses.
     """
-    return {
-        "receita": 316.74,
-        "populacao": 16.04,
-    }
+    if ANO_REF != ANO_MEDIAS_NACIONAIS:
+        print(f"\n[aviso] médias nacionais de comparação são de "
+              f"{ANO_MEDIAS_NACIONAIS}, mas ANO_REF é {ANO_REF}. O folheto vai "
+              f"comparar o município de {ANO_REF} contra uma média nacional de "
+              f"{ANO_MEDIAS_NACIONAIS}.", file=sys.stderr)
+        print(f"        Se quiser corrigir, atualize MEDIAS_NACIONAIS e "
+              f"ANO_MEDIAS_NACIONAIS em tools/{Path(__file__).name}.",
+              file=sys.stderr)
+    # Copia: o chamador não deve conseguir mutar a constante do módulo.
+    return dict(MEDIAS_NACIONAIS)
 
 
 # --------------------------------------------------------------------------
@@ -697,8 +718,8 @@ def main() -> int:
     print(f"\nBase consolidada: {len(base):,} municípios")
 
     medias = calcular_medias_nacionais()
-    print(f"Médias nacionais 2000->{ANO_REF}: receita {medias['receita']}% | "
-          f"população {medias['populacao']}%")
+    print(f"Médias nacionais 2000->{ANO_MEDIAS_NACIONAIS}: "
+          f"receita {medias['receita']}% | população {medias['populacao']}%")
 
     print("Calculando percentis por rubrica...")
     percentis_planilha = montar_percentis_planilha(dfs)
