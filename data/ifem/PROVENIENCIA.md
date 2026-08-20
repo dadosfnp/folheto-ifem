@@ -57,9 +57,17 @@ ausência de dado explicitamente — não preenche com zero.
 
 ## Recorte publicado
 
-Os folhetos publicados cobrem **612 municípios**, listados em
-[`docs/folhetos.json`](../../docs/folhetos.json). O recorte é o mesmo desde o
-release `v1`; o que muda entre releases é o ano dos dados.
+Os folhetos publicados cobrem **424 municípios** — todos acima de 80 mil
+habitantes — listados em [`docs/folhetos.json`](../../docs/folhetos.json):
+
+| Dados de | Municípios | Como entram |
+|---|---|---|
+| 2025 | 417 | filtro `--pop-minima 80000` sobre o lote do ano |
+| 2024 | 7 | não declararam receita de 2025 ao SICONFI; entram com ressalva explícita, via `tools/gerar_sem_declaracao.py` |
+
+O critério (acima de 80 mil habitantes) é o mesmo desde o release `v1`. O que muda
+entre releases é o ano dos dados e, com ele, quantos municípios caem na segunda
+linha.
 
 ## Conteúdo editorial
 
