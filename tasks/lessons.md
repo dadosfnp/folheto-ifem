@@ -33,3 +33,46 @@ O Pedro interrompeu, alarmado — com razão.
 foi explícito: "lá tá funcionando tudo com os dados 2025 atualizados"). Escrever
 qualquer coisa lá dentro, inclusive na pasta `export_folheto/`, é violar isso —
 usar `--out` apontando para fora.
+
+---
+
+## 2026-08-20 — Conteúdo editorial dentro de pasta gitignorada sai vazio em toda máquina nova
+
+**O que aconteceu:** um colega clonou o repo, seguiu o `PASSO_A_PASSO.md` à risca
+e a página "Metodologia" saiu em branco — só a imagem à direita, sem texto. O
+gerador avisava (`[aviso] _metodologia.json não encontrado`), mas o arquivo
+existia e funcionava na minha máquina.
+
+**Por que:** `_metodologia.json` só existia dentro de
+`data/ifem/dados-ifem/export_folheto/` — pasta inteira no `.gitignore`, e com
+razão (5.4k arquivos, ~94 MB, regeneráveis). Só que o conteúdo dela **não é
+homogêneo**: os JSONs municipais são dado calculado, regenerável a partir das
+planilhas; `_metodologia.json` é texto editorial que nenhuma planilha origina.
+Ignorar a pasta por causa do volume levou o texto embora junto. O
+`_problema.json` tinha o mesmo risco e alguém já havia resolvido — o
+`_metodologia.json` nunca ganhou o mesmo tratamento, e o defeito ficou invisível
+em qualquer máquina que já tivesse um lote antigo em disco.
+
+**Regra daqui em diante:**
+
+1. Antes de concluir que um arquivo "está no projeto", checar com
+   `git ls-files <arquivo>` — não com `ls`. O que existe em disco na máquina de
+   quem desenvolveu não é o que o repo entrega.
+2. Pasta ignorada por **volume** precisa ser auditada por **tipo de conteúdo**:
+   dado calculado pode ficar fora; texto redacional, nunca. Se um script não
+   consegue regenerar o arquivo, ele tem que estar versionado.
+3. Quando um arquivo ganha fallback versionado, verificar se existe algum
+   **irmão na mesma categoria** sem o mesmo tratamento. O fix do `_problema.json`
+   apontava exatamente para o buraco do `_metodologia.json`.
+4. Fechar o buraco no **script de setup**, não só no fallback: o gerador prefere
+   a cópia ao lado dos dados à versionada, então um lote velho em disco continua
+   vencendo em silêncio. O `planilhas_para_json.py` e o `sync_dados.py` agora
+   copiam a versão do repo por cima, sempre.
+5. Aviso em `stderr` não é rede de proteção suficiente para conteúdo ausente —
+   ninguém lê `stderr` num lote de 400 PDFs. Só percebemos porque o colega abriu
+   o PDF e viu a página vazia.
+
+**Contexto:** o texto da metodologia nasceu como dict hardcoded em ASCII puro no
+`export_folheto_municipios.py` do Subfinanciados. Aproveitamos para acentuar
+(mesmas palavras, mesma ordem) — os folhetos até o release `v2` imprimiam
+"metodo", "municipio" e "populacao" sem acento.
