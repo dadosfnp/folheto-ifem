@@ -63,7 +63,16 @@ release `v1`; o que muda entre releases é o ano dos dados.
 
 ## Conteúdo editorial
 
-[`_problema.json`](_problema.json) é texto redacional, **não** sai de planilha
-nenhuma. Os números citados nele (população por quintil, % de transferências)
-vêm de análise agregada e precisam ser revisados a cada mudança de ano de
-referência — não são atualizados por nenhum script.
+Dois companheiros são texto redacional e **não** saem de planilha nenhuma. Ambos
+vivem versionados nesta pasta, e é daqui que os scripts de setup os copiam para
+o lote — a cópia do repo vence a de qualquer export.
+
+| Arquivo | O que é | Revisão |
+|---|---|---|
+| [`_problema.json`](_problema.json) | página "O Problema" | os números (população por quintil, % de transferências) vêm de análise agregada; `recalcular_problema.py --aplicar` atualiza os campos numéricos, o texto corrido precisa de revisão humana |
+| [`_metodologia.json`](_metodologia.json) | página "Metodologia do IFEM" | texto fixo; só muda se a metodologia do índice mudar |
+
+O texto da metodologia nasceu como um dict hardcoded em
+`export_folheto_municipios.py` (Subfinanciados), escrito em ASCII puro — por isso
+os folhetos até o release `v2` imprimiam "metodo", "municipio" e "populacao" sem
+acento. A versão versionada aqui corrige a acentuação sem alterar uma palavra.

@@ -127,11 +127,16 @@ python python/gerar.py --tema ifem `
 
 O passo a passo detalhado está em [`docs/PASSO_A_PASSO.md`](docs/PASSO_A_PASSO.md).
 
-> **`_problema.json` é conteúdo editorial** — nenhum script o gera do zero. Ele
-> vive versionado em [`data/ifem/_problema.json`](data/ifem/_problema.json). O
-> `recalcular_problema.py` atualiza os **números**; o **texto corrido** que cita
-> valores por extenso precisa de revisão humana — o script aponta quais frases
-> ficaram inconsistentes, mas não as reescreve.
+> **Dois companheiros são conteúdo editorial** — nenhum script os gera do zero, e
+> por isso vivem versionados no repo:
+> [`data/ifem/_problema.json`](data/ifem/_problema.json) e
+> [`data/ifem/_metodologia.json`](data/ifem/_metodologia.json). Os scripts de
+> setup copiam essa versão para o lote a cada execução, e a cópia do repo **vence**
+> a que vier de export: é ela a fonte da verdade do texto.
+>
+> No caso do `_problema.json`, o `recalcular_problema.py` atualiza os **números**;
+> o **texto corrido** que cita valores por extenso precisa de revisão humana — o
+> script aponta quais frases ficaram inconsistentes, mas não as reescreve.
 
 ### Validar o lote
 
@@ -196,6 +201,7 @@ o GitHub Pages serve `docs/index.html`.
 │   ├── ifem/
 │   │   ├── SCHEMA.md           # Contrato dos JSONs de entrada
 │   │   ├── _problema.json      # Texto editorial (versionado)
+│   │   ├── _metodologia.json   # Texto editorial (versionado)
 │   │   └── dados-ifem/         # JSONs do export (NÃO versionado)
 │   └── cosip/
 ├── assets/                     # Logos, capas, padrões

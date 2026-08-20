@@ -217,19 +217,34 @@ Numeração com lettermark `ifem` em letras modulares no rodapé do stripe.
 }
 ```
 
-## `_metodologia.json` (compartilhado)
+## `_metodologia.json` (compartilhado, **versionado** em `data/ifem/`)
+
+Conteúdo editorial: nenhuma planilha o origina. Vive em
+[`_metodologia.json`](_metodologia.json) e os scripts de setup copiam de lá para
+o lote — igual ao `_problema.json`. A versão do repo vence a que vier de export.
 
 ```jsonc
 {
   "titulo": "Indicadores de Financiamento e Equidade Municipal (IFEM)",
-  "resumo": "Para comparar contextos tao distintos, o IFEM utiliza um metodo simples e justo…",
+  "resumo": "Para comparar contextos tão distintos, o IFEM utiliza um método simples e justo…",
   "topicos": [
     { "pergunta": "Qual a base de dados utilizada?", "resposta": "…" },
     { "pergunta": "Por que 'per capita'?",            "resposta": "…" },
-    { "pergunta": "Como os grupos sao divididos?",    "resposta": "…" }
+    { "pergunta": "Como os grupos são divididos?",    "resposta": "…" }
+  ],
+  "passos": [
+    // Presente por fidelidade ao contrato do export oficial, mas NÃO consumido
+    // pelo folheto: a página 13 desenha esse passo a passo com metodologia.png.
+    { "ordem": 1, "titulo": "Ordenamos todos os municípios", "descricao": "…" },
+    { "ordem": 2, "titulo": "Distribuímos em grupos iguais", "descricao": "…",
+      "grupos": { "quintis": [/* 5 */], "decis": [/* 10 */] } }
   ]
 }
 ```
+
+> O texto que vem do export oficial (`export_folheto_municipios.py`, dict
+> `METODOLOGIA`) é **sem acentuação** — literal ASCII no fonte. A versão
+> versionada aqui corrige isso; palavra por palavra é o mesmo texto.
 
 ## Notas de implementação
 
