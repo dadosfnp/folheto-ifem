@@ -281,6 +281,11 @@ def montar_municipios(base: pd.DataFrame) -> dict[str, dict]:
     total_uf = base.groupby("uf")["cod_ibge"].count().to_dict()
 
     medias = {c: round(float(base[c].mean()), 4) for c in CAMPOS}
+    # Média do indicador na UF do município. O folheto compara a nota com dois
+    # denominadores: o país e o estado. Um município do Norte com malária alta
+    # não é notícia contra a média nacional (que é puxada pelo Sul sem malária);
+    # é contra os vizinhos que enfrentam o mesmo bioma.
+    medias_uf = base.groupby("uf")[CAMPOS].mean().round(4).to_dict("index")
 
     out = {}
     for row in base.to_dict("records"):
@@ -313,6 +318,7 @@ def montar_municipios(base: pd.DataFrame) -> dict[str, dict]:
                         "valor": round(float(row[campo]), 4),
                         "classe": classe_risco(float(row[campo])),
                         "media_nacional": medias[campo],
+                        "media_estadual": medias_uf.get(row["uf"], {}).get(campo),
                         "supera_pct_nacional": _supera_pct(ordenados[campo],
                                                            float(row[campo])),
                     }

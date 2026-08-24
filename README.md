@@ -39,7 +39,7 @@ Três coisas ficam fora do git de propósito, e **todas mudam o PDF final**:
 |---|---|---|
 | `fonts/*.ttf` | licença + peso | sai em Helvetica, com tipografia diferente da oficial |
 | `data/ifem/dados-ifem/` | 5.440 arquivos, ~94 MB, regeneráveis | não gera — não há município nenhum |
-| bloco `risco_climatico` | derivado, mora dentro do lote acima | sai com 16 páginas em vez de 18: a seção de Risco Climático some inteira |
+| bloco `risco_climatico` | derivado, mora dentro do lote acima | sai com 2 páginas a menos: a seção de Risco Climático some inteira |
 
 Pular esses passos não dá erro: o gerador **degrada e continua**. Por isso os dois
 scripts acima existem, e por isso o gerador avisa em `stderr` quando está usando

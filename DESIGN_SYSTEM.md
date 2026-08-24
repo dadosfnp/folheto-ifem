@@ -65,6 +65,13 @@ Combinando essas 4 formas a FNP construiu:
 
 **Headlines amarelos:** o COSIP usa muito tratamento de título amarelo (`YELLOW`) com leve **outline branco/escuro** sobre fundos claros. É marca registrada do folheto — manter.
 
+**Paleta categórica ≠ paleta ordinal.** A paleta de quintis
+(`FNP_Q1`…`FNP_Q5`) significa *bom ou ruim* e só pode ser usada onde existe
+ordem. Gráfico que apenas separa grupos (a pizza da estrutura de receita, por
+exemplo) usa a família azul + um amarelo de acento. Já houve o caso de verde
+significar "Transferências" numa página e "supera muitos municípios" duas
+páginas depois, no mesmo folheto.
+
 **Travessão (—) é proibido em qualquer texto impresso.** Vale para copy nova,
 texto editorial dos JSONs companheiros e placeholder de valor ausente (use `n/d`,
 nunca um traço solto: num KPI o leitor confunde com sinal de menos). Onde a frase
@@ -129,11 +136,36 @@ Box `BLUE` arredondado, aspas grandes `YELLOW` (estilo COSIP páginas 2, 6).
 - Linha divisória `RULE` no fim de cada linha.
 - Coluna do município/tema-foco em `BLUE_DARK` SemiBold; demais em `MUTED` Regular.
 
-### 5.7 Bullets / lista
+### 5.7 Tabela de rubrica (IFEM)
+
+Uma linha por rubrica, para receita e para risco climático. As três tabelas do
+folheto compartilham as MESMAS larguras de coluna — é o que faz as páginas
+lerem como um sistema só, e não como três tabelas parecidas.
+
+| Coluna | Conteúdo |
+|---|---|
+| Rótulo | rubrica (ou setor + subsetor no risco) |
+| `SUPERA` | percentil escrito **e** a barra, ambos na cor do quintil |
+| Município | o valor, na mesma cor |
+| `MÉDIA` | duas caixas iguais: estado e Brasil, nessa ordem |
+
+**Regras que não são negociáveis:**
+
+- O percentil fica **colado à esquerda da barra e na cor dela**. Número e
+  desenho são a mesma medida; separados, viram dois dados disputando atenção.
+- Barra de valor zero recebe traço mínimo de 2,5pt. Zero é um valor medido;
+  largura zero o leitor lê como dado faltando.
+- A unidade é decidida **por linha**, nunca por célula: com `R$ 1,9 mil` ao lado
+  de `R$ 769` o leitor compara 1,9 com 769 e conclui o oposto do que o dado diz.
+- Estado antes do Brasil. O prefeito se compara primeiro com os vizinhos.
+- O que sobra de página abaixo da tabela recebe o alfabeto modular
+  (`_decorar_rodape`), nunca branco solto.
+
+### 5.8 Bullets / lista
 - Quadrado `BLUE` 8×8pt OU `■` glyph como bullet.
 - NUNCA bullets redondos genéricos.
 
-### 5.8 QR code (última página)
+### 5.9 QR code (última página)
 - 140×140pt centralizado, cor de preenchimento `#0E2447`, fundo branco, borda 2.
 - Embaixo: URL em `YELLOW` Inter SemiBold (`Acesse https://...`).
 
