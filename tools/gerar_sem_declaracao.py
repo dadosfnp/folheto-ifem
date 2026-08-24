@@ -123,7 +123,7 @@ def main() -> int:
             (TEMP_DIR / nome).write_bytes(origem.read_bytes())
 
     aviso = (
-        f"Dados de {ANO_ANTERIOR} — este município não declarou receita "
+        f"Dados de {ANO_ANTERIOR}: este município não declarou receita "
         f"de {ANO_REF} ao SICONFI"
     )
 
@@ -135,6 +135,15 @@ def main() -> int:
         d = json.loads(m["json_anterior"].read_text(encoding="utf-8"))
         d["aviso_dados"] = aviso
         destino = TEMP_DIR / m["json_anterior"].name
+
+        # O lote anterior não conhece o AdaptaBrasil, mas o JSON já preparado
+        # aqui pode conhecer: `adapta_para_json.py --injetar` também escreve
+        # nesta pasta. Reconstruir do backup sem carregar o bloco de volta
+        # derrubaria a seção de Risco Climático destes 7 folhetos em silêncio.
+        if destino.exists():
+            anterior = json.loads(destino.read_text(encoding="utf-8"))
+            if anterior.get("risco_climatico"):
+                d["risco_climatico"] = anterior["risco_climatico"]
         destino.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
         preparados.append((destino, m))
 

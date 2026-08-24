@@ -9,6 +9,8 @@ ver `data/ifem/SCHEMA.md` para o contrato. Companheiros `_metodologia.json` e
 Layout estilo revista: pág 1 capa (direita sozinha) + 4 spreads (2-3, 4-5, 6-7, 8-9).
 Stripe lateral sempre na borda externa do spread.
 """
+import json
+import sys
 from io import BytesIO
 
 from reportlab.lib import colors
@@ -16,10 +18,10 @@ from reportlab.lib.utils import simpleSplit, ImageReader
 
 from core.base_folheto import FolhetoFNP
 from core.tokens import (
-    PAPER, BLUE, BLUE_DARK, BLUE_MID, YELLOW, YELLOW_DARK,
+    PAPER, BLUE, BLUE_DARK, BLUE_MID, BLUE_LIGHT, YELLOW, YELLOW_DARK,
     CREAM, CREAM_DARK, RULE, MUTED, INK, WHITE, GREEN, RED_BURNT,
-    STRIPE_W, MARGIN, CONTENT_W, ASSETS_DIR, ROOT_DIR,
-    FS_EYEBROW, FS_TITLE_SECAO, FS_BODY,
+    STRIPE_W, MARGIN, CONTENT_W, ASSETS_DIR, ROOT_DIR, CARD_RADIUS,
+    FS_EYEBROW, FS_TITLE_SECAO, FS_BODY, FS_BODY_SMALL,
     QR_SIZE, QR_FILL_COLOR,
     FNP_Q1, FNP_Q2, FNP_Q3, FNP_Q4, FNP_Q5, FNP_QUINTIS,
     FONT_NUM_BOLD, FONT_NUM_SEMIBOLD, FONT_NUM_REGULAR,
@@ -51,6 +53,41 @@ from core.asset_cache import cached_image
 SAFE_TOP    = 512   # = H - 55 (Y inicial após header)
 SAFE_BOTTOM = 56    # margem mínima acima do footer label
 SAFE_HEIGHT = SAFE_TOP - SAFE_BOTTOM
+
+
+# ─── Risco Climático (AdaptaBrasil/MCTI) ─────────────────────────────────────
+# Dados: bloco `risco_climatico` no JSON do município + agregados nacionais em
+# `data/clima/_panorama_nacional.json`. Ambos saem de tools/adapta_para_json.py;
+# a rastreabilidade completa está em data/clima/PROVENIENCIA.md.
+#
+# ATENÇÃO À ESCALA: aqui é o inverso do resto do folheto. No IFEM, valor alto =
+# município bem financiado (verde). No AdaptaBrasil, o índice mede EXPOSIÇÃO —
+# valor alto = pior. Por isso estas páginas têm o próprio mapa de cores e NÃO
+# usam `cor_por_percentil`: reaproveitar aquele helper pintaria de verde
+# justamente o município que corre mais risco.
+
+# Do pior para o melhor — ordem da legenda do painel oficial e ordem de
+# empilhamento das barras (pior embaixo).
+CLASSES_RISCO = ("Muito alto", "Alto", "Médio", "Baixo", "Muito baixo")
+
+COR_CLASSE_RISCO = {
+    "Muito alto":  FNP_Q1,   # vermelho
+    "Alto":        FNP_Q2,   # laranja
+    "Médio":       FNP_Q3,   # amarelo
+    "Baixo":       FNP_Q4,   # verde claro
+    "Muito baixo": FNP_Q5,   # verde
+}
+
+PANORAMA_CLIMA_JSON = ROOT_DIR / "data" / "clima" / "_panorama_nacional.json"
+
+
+def _cor_risco(classe: str | None):
+    return COR_CLASSE_RISCO.get(classe or "", MUTED)
+
+
+def _nota_risco(v) -> str:
+    """0.7766 -> '0,78'. Duas casas: é a precisão que o painel publica."""
+    return "n/d" if v is None else f"{v:.2f}".replace(".", ",")
 
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -120,7 +157,7 @@ def _fmt_total_unidade(v):
         senão   → '1.234' unidade=''
     Devolve (valor_str, unidade)."""
     if v is None:
-        return ("—", "")
+        return ("n/d", "")
     if v >= 1e9:
         return (f"R$ {v/1e9:.1f}".replace(".", ","), "bi")
     if v >= 1e6:
@@ -137,7 +174,7 @@ def _fmt_pop(v):
         senão   → '824'
     Devolve (valor_str, unidade)."""
     if v is None:
-        return ("—", "hab.")
+        return ("n/d", "hab.")
     if v >= 1e6:
         return (f"{v/1e6:.1f}".replace(".", ","), "mi hab.")
     if v >= 1e3:
@@ -148,7 +185,7 @@ def _fmt_pop(v):
 def _so_numero(rotulo: str) -> str:
     """De '2º quintil' / '3º decil' extrai apenas '2' / '3'."""
     if not rotulo:
-        return "—"
+        return "n/d"
     return rotulo.split("º")[0].strip()
 
 
@@ -164,6 +201,10 @@ def cor_verbo_gap(fator: float):
 class FolhetoIFEM(FolhetoFNP):
     titulo_publicacao = "IFEM · INDICADORES DE FINANCIAMENTO E EQUIDADE MUNICIPAL"
 
+    def __init__(self, dados: dict, output_path=None):
+        super().__init__(dados, output_path)
+        self._panorama_clima = None   # lazy: ver property panorama_clima
+
     # Atalhos
     @property
     def ident(self):  return self.d["identificacao"]
@@ -174,6 +215,32 @@ class FolhetoIFEM(FolhetoFNP):
 
     def _output_name(self):
         return self.nome, self.uf
+
+    @property
+    def risco_climatico(self) -> dict:
+        """Bloco AdaptaBrasil do município. Vazio quando o JSON não foi
+        enriquecido — nesse caso as duas páginas de risco saem da publicação
+        inteira (ver construir_paginas), em vez de imprimirem quadros vazios."""
+        return self.d.get("risco_climatico") or {}
+
+    @property
+    def panorama_clima(self) -> dict:
+        """Agregados nacionais do AdaptaBrasil, carregados uma vez por folheto.
+
+        Vive fora do payload do município porque é o MESMO conteúdo para os
+        5.570 — replicá-lo em cada JSON do lote custaria ~18 MB para nada.
+        """
+        if self._panorama_clima is None:
+            if PANORAMA_CLIMA_JSON.exists():
+                with PANORAMA_CLIMA_JSON.open(encoding="utf-8") as f:
+                    self._panorama_clima = json.load(f)
+            else:
+                print(f"[aviso] {PANORAMA_CLIMA_JSON.name} não encontrado; a página de "
+                      f"panorama do risco climático sairá vazia. "
+                      f"        Rode: python tools/adapta_para_json.py --injetar",
+                      file=sys.stderr)
+                self._panorama_clima = {}
+        return self._panorama_clima
 
     def _seed(self):
         return int(self.ident["cod_ibge"]) % 100_000
@@ -301,7 +368,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Ordem narrativa: depois de apresentar O PROBLEMA, mostrar logo a
         # trajetória do município (Síntese 2000–2024 + Variações) antes de
         # entrar no detalhamento atual da receita.
-        return [
+        paginas = [
             self._pag_capa,                  # 1
             self._pag_problema,              # 2
             self._pag_sintese,               # 3  (Síntese Fiscal 2000–2024)
@@ -315,10 +382,32 @@ class FolhetoIFEM(FolhetoFNP):
             self._pag_detalhamento_subs_c,   # 11 (Outras Receitas + nível 3)
             self._pag_detalhamento_subs_d,   # 12 (Contribuições + nível 3)
             self._pag_metodologia,           # 13
-            self._pag_mapa_brasil,           # 14 (mapa IFEM dos 5.479 municípios)
-            self._pag_convite,               # 15 (QR code)
-            self._pag_ultima,                # 16 (verso do folheto — padrão FNP)
         ]
+
+        # Risco climático entra aqui, e sempre AOS PARES, por dois motivos:
+        #
+        # 1. As duas páginas são um spread — panorama à esquerda, município à
+        #    direita. Só nas posições (par, ímpar) o stripe cai na borda externa
+        #    e elas se enxergam abertas. Entrando depois da metodologia, ficam
+        #    em (14, 15) e nenhum par já existente se desfaz.
+        # 2. Inserir ou omitir 2 páginas preserva a paridade de todas as
+        #    seguintes — o mapa continua caindo em página par, o QR em ímpar.
+        #
+        # Sem o bloco no JSON, a seção some inteira em vez de imprimir quadros
+        # vazios. É o caso de todo lote gerado antes de
+        # `tools/adapta_para_json.py --injetar`.
+        if self.risco_climatico:
+            paginas += [
+                self._pag_risco_panorama,    # 14 (o tema + o Brasil)
+                self._pag_risco_municipio,   # 15 (média em destaque + 12 notas)
+            ]
+
+        paginas += [
+            self._pag_mapa_brasil,           # mapa IFEM dos 5.479 municípios
+            self._pag_convite,               # QR code
+            self._pag_ultima,                # verso do folheto — padrão FNP
+        ]
+        return paginas
 
     # ─── 1. Capa ────────────────────────────────────────────────────────────
 
@@ -2547,9 +2636,9 @@ class FolhetoIFEM(FolhetoFNP):
             c.setLineWidth(0.6)
             c.roundRect(box_x, box_y, box_w, box_h, 4, fill=1, stroke=1)
 
-            # Título "SP — São Paulo" centralizado no topo do quadro.
+            # Título "SP · São Paulo" centralizado no topo do quadro.
             uf_nome = _UF_NOMES.get(self.uf, self.uf)
-            titulo = f"{self.uf} — {uf_nome}"
+            titulo = f"{self.uf} · {uf_nome}"
             c.setFillColor(BLUE_DARK)
             c.setFont(F(FONT_TEXTO_SEMIBOLD), 9)
             c.drawCentredString(box_x + box_w / 2,
@@ -2580,3 +2669,496 @@ class FolhetoIFEM(FolhetoFNP):
         draw_ultima_padrao(c, self.W, self.H, n,
                            url=url, seed=self._seed(),
                            lado=self._lado_pagina(n))
+
+    # ─── 14. Risco climático: o tema e o panorama nacional ──────────────────
+
+    def _pag_risco_panorama(self, c, n):
+        pan = self.panorama_clima
+        lado = self._moldura_pagina(c, n, "Risco Climático")
+        x = self._content_x(lado)
+        w = CONTENT_W
+
+        y = SAFE_TOP
+        draw_eyebrow(c, "AdaptaBrasil · MCTI", x, y)
+
+        y -= 30
+        draw_titulo(c, "Risco climático", x, y, size=FS_TITLE_SECAO)
+
+        y -= 20
+        # draw_body já devolve y um interlinhamento abaixo da última baseline;
+        # somar outro respiro aqui abriria um buraco visível antes da faixa.
+        y = draw_body(
+            c,
+            "O AdaptaBrasil mede a exposição de cada município brasileiro a 12 riscos "
+            "climáticos, reunidos em 6 setores estratégicos. Cada indicador vai de 0 a 1: "
+            "quanto mais alto, maior o risco.",
+            x, y, w, size=FS_BODY_SMALL,
+        )
+
+        y = self._draw_kpis_risco(c, x, y - 2, w)
+
+        # ─ Gráfico: distribuição por classe de risco × quintil do IFEM ─
+        y -= 22
+        c.setFillColor(BLUE_DARK)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 10)
+        c.drawString(x, y, "Municípios por classe de risco e quintil do IFEM")
+
+        y -= 15
+        y = self._draw_legenda_risco(c, x, y, w)
+
+        y -= 10
+        y = self._draw_grafico_risco_quintis(c, x, y, w, 164, pan)
+
+        y -= 14
+        draw_caption(c, "Fonte: AdaptaBrasil (MCTI) e IFEM/FNP.", x, y)
+
+        # ─ A leitura que o gráfico permite ─
+        self._draw_conclusao_risco(c, x, y - 18, w, 52, pan)
+
+    def _draw_kpis_risco(self, c, x, y_top, w, h: float = 50) -> float:
+        """Três números do panorama em uma faixa creme. Retorna y abaixo."""
+        pan = self.panorama_clima
+        y_bot = y_top - h
+        c.setFillColor(CREAM)
+        c.roundRect(x, y_bot, w, h, CARD_RADIUS, fill=1, stroke=0)
+
+        classes = {cl["nome"]: cl["total"] for cl in pan.get("classes", [])}
+        expostos = classes.get("Muito alto", 0) + classes.get("Alto", 0)
+        total = pan.get("total_municipios", 0) or 1
+
+        itens = [
+            (_br(pan.get("media_nacional", 0), 2), "de 1,00", "média nacional do índice"),
+            (_fmt_int(expostos), f"({_br(expostos / total * 100, 1)}%)",
+             "em risco alto ou muito alto"),
+        ]
+
+        cell_w = w / len(itens)
+        for i, (valor, unidade, label) in enumerate(itens):
+            cx = x + i * cell_w + 14
+            if i:
+                c.setStrokeColor(RULE)
+                c.setLineWidth(0.6)
+                c.line(x + i * cell_w, y_bot + 10, x + i * cell_w, y_top - 10)
+
+            c.setFillColor(BLUE_DARK)
+            c.setFont(F(FONT_NUM_BOLD), 21)
+            c.drawString(cx, y_bot + 20, valor)
+            if unidade:
+                c.setFillColor(MUTED)
+                c.setFont(F(FONT_TEXTO), 8)
+                c.drawString(cx + c.stringWidth(valor, F(FONT_NUM_BOLD), 21) + 4,
+                             y_bot + 22, unidade)
+
+            c.setFillColor(MUTED)
+            c.setFont(F(FONT_TEXTO), 7.5)
+            c.drawString(cx, y_bot + 9, label)
+
+        return y_bot
+
+    def _draw_legenda_risco(self, c, x, y, w) -> float:
+        """Legenda horizontal das 5 classes. Retorna y abaixo da linha."""
+        cx = x
+        for classe in CLASSES_RISCO:
+            c.setFillColor(_cor_risco(classe))
+            c.rect(cx, y - 1, 7, 7, fill=1, stroke=0)
+            c.setFillColor(INK)
+            c.setFont(F(FONT_TEXTO), 7.5)
+            c.drawString(cx + 10, y, classe)
+            cx += 10 + c.stringWidth(classe, F(FONT_TEXTO), 7.5) + 16
+        return y - 6
+
+    def _draw_grafico_risco_quintis(self, c, x, y_top, w, h, pan) -> float:
+        """Barras empilhadas: um grupo por quintil do IFEM, empilhado por classe
+        de risco (pior embaixo). Reproduz o gráfico do painel IFEM.
+
+        Rótulo de segmento fino (< ~8pt) não cabe dentro da barra. Ele sai ao
+        LADO, na altura do próprio segmento e ligado por um traço-guia — nunca
+        acima da barra: um "44" de risco muito alto (que mora embaixo) flutuando
+        no topo faz o leitor atribuí-lo à classe errada.
+        """
+        grupos = pan.get("por_quintil_ifem", [])
+        if not grupos:
+            return y_top - h
+
+        EIXO_MAX = 1200          # folga sobre os 1.088 de cada quintil
+        PASSO = 300
+        LABEL_W = 26             # coluna dos rótulos do eixo Y
+        AXIS_H = 16              # faixa dos rótulos "1º quintil" etc.
+        MIN_LABEL_H = 8.5        # altura mínima para caber número dentro
+
+        plot_x = x + LABEL_W
+        plot_w = w - LABEL_W
+        y_base = y_top - h + AXIS_H
+        plot_h = h - AXIS_H - 10          # 10pt de respiro no topo
+
+        def _py(valor):
+            return y_base + plot_h * (valor / EIXO_MAX)
+
+        # Grade horizontal + rótulos do eixo Y
+        c.setLineWidth(0.5)
+        for v in range(0, EIXO_MAX + 1, PASSO):
+            gy = _py(v)
+            c.setStrokeColor(RULE)
+            c.line(plot_x, gy, plot_x + plot_w, gy)
+            c.setFillColor(MUTED)
+            c.setFont(F(FONT_TEXTO), 6.5)
+            c.drawRightString(plot_x - 5, gy - 2, _fmt_int(v))
+
+        slot = plot_w / len(grupos)
+        bar_w = min(56, slot * 0.44)
+
+        for i, g in enumerate(grupos):
+            bx = plot_x + i * slot + (slot - bar_w) / 2
+            cursor = y_base
+            finos = []   # (classe, qtd, y do meio do segmento)
+
+            for classe in CLASSES_RISCO:
+                qtd = g["classes"].get(classe, 0)
+                if not qtd:
+                    continue
+                seg_h = plot_h * (qtd / EIXO_MAX)
+                c.setFillColor(_cor_risco(classe))
+                c.rect(bx, cursor, bar_w, seg_h, fill=1, stroke=0)
+
+                if seg_h >= MIN_LABEL_H:
+                    c.setFillColor(WHITE if classe in ("Muito alto", "Muito baixo") else INK)
+                    c.setFont(F(FONT_NUM_SEMIBOLD), 7.5)
+                    c.drawCentredString(bx + bar_w / 2, cursor + seg_h / 2 - 2.5, _fmt_int(qtd))
+                else:
+                    finos.append((classe, qtd, cursor + seg_h / 2))
+                cursor += seg_h
+
+            # Rótulos externos. O último grupo joga para a esquerda: à direita
+            # dele só existe a margem da página.
+            para_esquerda = i == len(grupos) - 1
+            ocupados = []
+            for classe, qtd, ym in finos:
+                while any(abs(ym - u) < 8 for u in ocupados):
+                    ym += 8
+                ocupados.append(ym)
+                c.setStrokeColor(_cor_risco(classe))
+                c.setLineWidth(0.7)
+                c.setFillColor(_cor_risco(classe))
+                c.setFont(F(FONT_NUM_SEMIBOLD), 6.5)
+                if para_esquerda:
+                    c.line(bx - 4, ym, bx, ym)
+                    c.drawRightString(bx - 6, ym - 2, _fmt_int(qtd))
+                else:
+                    c.line(bx + bar_w, ym, bx + bar_w + 4, ym)
+                    c.drawString(bx + bar_w + 6, ym - 2, _fmt_int(qtd))
+
+            c.setFillColor(BLUE_DARK)
+            c.setFont(F(FONT_TEXTO_SEMIBOLD), 7.5)
+            c.drawCentredString(bx + bar_w / 2, y_base - 11, f"{g['quintil']}º quintil")
+
+        return y_top - h
+
+    def _draw_conclusao_risco(self, c, x, y_top, w, h, pan) -> float:
+        """Caixa azul com a leitura do gráfico. O número é calculado, nunca
+        escrito à mão: se a base mudar, o texto acompanha."""
+        grupos = {g["quintil"]: g for g in pan.get("por_quintil_ifem", [])}
+        if not grupos:
+            return y_top - h
+
+        def _pct_expostos(q):
+            g = grupos.get(q, {})
+            tot = g.get("total") or 1
+            alto = g["classes"].get("Muito alto", 0) + g["classes"].get("Alto", 0)
+            return alto / tot * 100
+
+        y_bot = y_top - h
+        c.setFillColor(BLUE)
+        c.roundRect(x, y_bot, w, h, CARD_RADIUS, fill=1, stroke=0)
+        c.setFillColor(YELLOW)
+        c.rect(x, y_bot, 4, h, fill=1, stroke=0)
+
+        c.setFillColor(YELLOW)
+        c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+        c.drawString(x + 14, y_top - 14, "MENOS RECEITA, MAIS RISCO")
+
+        texto = (
+            f"No 1º quintil do IFEM, que reúne os municípios com menos receita "
+            f"por habitante, {_br(_pct_expostos(1), 1)}% estão em risco climático "
+            f"alto ou muito alto. "
+            f"No 5º quintil, {_br(_pct_expostos(5), 1)}%."
+        )
+        c.setFillColor(WHITE)
+        c.setFont(F(FONT_TEXTO), 8.5)
+        for i, linha in enumerate(simpleSplit(texto, F(FONT_TEXTO), 8.5, w - 28)):
+            c.drawString(x + 14, y_top - 27 - i * 11, linha)
+        return y_bot
+
+    # ─── 15. Risco climático: média em destaque + as 12 notas ───────────────
+
+    def _pag_risco_municipio(self, c, n):
+        lado = self._moldura_pagina(c, n, f"{self.nome} · {self.uf}")
+        x = self._content_x(lado)
+
+        # Cabeçalho compacto: as duas colunas precisam de toda a altura útil,
+        # então aqui o nome sai menor que o FS_TITLE_SECAO das demais páginas.
+        c.setFillColor(BLUE_DARK)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), 12)
+        c.drawString(x, SAFE_TOP, "Risco Climático")
+
+        nome_uf = f"{self.nome} - {self.uf}"
+        fs = 26
+        while c.stringWidth(nome_uf, F(FONT_NUM_BOLD), fs) > CONTENT_W and fs > 16:
+            fs -= 1
+        c.setFont(F(FONT_NUM_BOLD), fs)
+        c.drawString(x, SAFE_TOP - 26, nome_uf)
+
+        y_col = SAFE_TOP - 44
+        gap = 12
+        col_esq_w = 196
+        col_dir_x = x + col_esq_w + gap
+        col_dir_w = CONTENT_W - col_esq_w - gap
+
+        self._col_risco_panorama(c, x, y_col, col_esq_w)
+        self._col_risco_notas(c, col_dir_x, y_col, col_dir_w)
+
+    # ─── Coluna esquerda: panorama nacional + gráfico + média do município ───
+
+    def _col_risco_panorama(self, c, x, y_top, w):
+        pan = self.panorama_clima
+        media = (self.risco_climatico.get("media_geral") or {})
+
+        # A nota do município vem primeiro: é o número que o leitor abre a
+        # página para ver. A escala nacional entra logo abaixo, como régua para
+        # situá-lo, na ordem em que ele lê: do pior risco para o melhor.
+        y = self._draw_card_media_risco(c, x, y_top, w, 210, media)
+
+        y -= 22
+        draw_eyebrow(c, "Panorama nacional", x, y)
+        y -= 12
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO), 7.5)
+        c.drawString(x, y, f"{_fmt_int(pan.get('total_municipios', 0))} municípios "
+                           f"por classe de risco")
+
+        y -= 16
+        self._draw_distribuicao_risco(c, x, y, w, pan, media.get("classe"))
+
+        # Caption ancorada no pé da coluna (e não colada no card): equilibra a
+        # altura com a coluna das notas, que desce quase até o rodapé.
+        draw_caption(c, f"Fonte: AdaptaBrasil (MCTI), {pan.get('ano_ref', '')}.",
+                     x, SAFE_BOTTOM + 8)
+
+    def _draw_distribuicao_risco(self, c, x, y_top, w, pan, classe_muni) -> float:
+        """Cinco linhas — uma por classe — com barra proporcional ao número de
+        municípios. A classe do município do folheto é marcada, para o leitor
+        se localizar no país antes de ver a própria nota."""
+        classes = pan.get("classes", [])
+        if not classes:
+            return y_top
+        maior = max(cl["total"] for cl in classes) or 1
+        total = pan.get("total_municipios", 0) or 1
+
+        ROW_H = 23
+        y = y_top
+        for cl in classes:
+            destaque = cl["nome"] == classe_muni
+            if destaque:
+                c.setFillColor(CREAM)
+                c.roundRect(x - 6, y - 18, w + 12, ROW_H, 2, fill=1, stroke=0)
+                c.setFillColor(YELLOW)
+                c.rect(x - 6, y - 18, 3, ROW_H, fill=1, stroke=0)
+
+            c.setFillColor(_cor_risco(cl["nome"]))
+            c.rect(x, y - 6.5, 7, 7, fill=1, stroke=0)
+
+            c.setFillColor(BLUE_DARK if destaque else INK)
+            c.setFont(F(FONT_TEXTO_SEMIBOLD if destaque else FONT_TEXTO), 8)
+            c.drawString(x + 11, y - 6, cl["nome"])
+
+            c.setFillColor(MUTED)
+            c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+            c.drawRightString(x + w, y - 6,
+                              f"{_fmt_int(cl['total'])}  ({_br(cl['total'] / total * 100, 1)}%)")
+
+            # Barra proporcional à MAIOR classe (não ao total): com 36 municípios
+            # em "Muito baixo", uma escala sobre o total viraria um fio invisível.
+            c.setFillColor(CREAM_DARK)
+            c.rect(x, y - 14, w, 3.5, fill=1, stroke=0)
+            c.setFillColor(_cor_risco(cl["nome"]))
+            c.rect(x, y - 14, w * (cl["total"] / maior), 3.5, fill=1, stroke=0)
+
+            y -= ROW_H
+        return y
+
+    def _draw_card_media_risco(self, c, x, y_top, w, h, media) -> float:
+        """A média geral do município — o número que a página inteira serve."""
+        y_bot = y_top - h
+        classe = media.get("classe")
+        cor = _cor_risco(classe)
+
+        c.setFillColor(BLUE_DARK)
+        c.roundRect(x, y_bot, w, h, CARD_RADIUS, fill=1, stroke=0)
+        c.setFillColor(cor)
+        c.rect(x, y_top - 4, w, 4, fill=1, stroke=0)
+
+        pad = 14
+        c.setFillColor(YELLOW)
+        c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+        c.drawString(x + pad, y_top - 22, "MÉDIA GERAL DE RISCO")
+
+        valor = _nota_risco(media.get("valor"))
+        c.setFillColor(WHITE)
+        c.setFont(F(FONT_NUM_BOLD), 50)
+        c.drawString(x + pad, y_top - 72, valor)
+        c.setFillColor(BLUE_LIGHT)
+        c.setFont(F(FONT_TEXTO), 9)
+        c.drawString(x + pad + c.stringWidth(valor, F(FONT_NUM_BOLD), 50) + 6,
+                     y_top - 72, "de 1,00")
+
+        # Chip da classe
+        if classe:
+            txt = f"RISCO {classe.upper()}"
+            tw = c.stringWidth(txt, F(FONT_NUM_SEMIBOLD), 8.5)
+            c.setFillColor(cor)
+            c.roundRect(x + pad, y_top - 94, tw + 16, 15, 2, fill=1, stroke=0)
+            c.setFillColor(WHITE if classe in ("Muito alto", "Muito baixo") else BLUE_DARK)
+            c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+            c.drawString(x + pad + 8, y_top - 89.5, txt)
+
+        pct = media.get("supera_pct_nacional")
+        if pct is not None:
+            c.setFillColor(BLUE_LIGHT)
+            c.setFont(F(FONT_TEXTO), 8)
+            c.drawString(x + pad, y_top - 112, f"Risco maior que {pct}% dos municípios")
+
+        self._draw_gauge_risco(c, x + pad, y_top - 140, w - pad * 2, media.get("valor"))
+
+        y = y_top - 170
+        for rk, escopo in ((media.get("ranking_nacional"), "no país"),
+                           (media.get("ranking_estadual"), "no estado")):
+            if not rk:
+                continue
+            c.setFillColor(WHITE)
+            c.setFont(F(FONT_NUM_BOLD), 12)
+            pos = f"{rk['posicao']}º"
+            c.drawString(x + pad, y, pos)
+            c.setFillColor(BLUE_LIGHT)
+            c.setFont(F(FONT_TEXTO), 7.5)
+            c.drawString(x + pad + c.stringWidth(pos, F(FONT_NUM_BOLD), 12) + 5, y + 1,
+                         f"de {_fmt_int(rk['total'])} {escopo}")
+            y -= 16
+
+        # A ressalva vale para os dois rankings — repeti-la em cada linha só
+        # rouba espaço. E ela é indispensável: no IFEM, 1º é o melhor colocado.
+        c.setFillColor(BLUE_LIGHT)   # MUTED sobre BLUE_DARK fica ilegível no impresso
+        c.setFont(F(FONT_TEXTO), 6.5)
+        c.drawString(x + pad, y - 2, "1º = município mais exposto do recorte")
+        return y_bot
+
+    def _draw_gauge_risco(self, c, x, y, w, valor):
+        """Régua 0–1 com as cinco faixas de classe e o município marcado."""
+        if valor is None:
+            return
+        H = 7
+        for i, classe in enumerate(reversed(CLASSES_RISCO)):   # do melhor ao pior
+            c.setFillColor(_cor_risco(classe))
+            c.rect(x + i * w / 5, y, w / 5, H, fill=1, stroke=0)
+
+        # Marcador: triângulo branco apontando para a posição do município.
+        # Preso a 4pt das pontas: nos extremos reais da base (Caucaia em 1,00,
+        # Fernando de Noronha em 0,00) metade dele ficaria fora da régua.
+        mx = x + w * min(max(valor, 0.0), 1.0)
+        mx = min(max(mx, x + 4), x + w - 4)
+        p = c.beginPath()
+        p.moveTo(mx, y + H + 1)
+        p.lineTo(mx - 4, y + H + 7)
+        p.lineTo(mx + 4, y + H + 7)
+        p.close()
+        c.setFillColor(WHITE)
+        c.drawPath(p, fill=1, stroke=0)
+
+        c.setFillColor(BLUE_LIGHT)
+        c.setFont(F(FONT_TEXTO), 6.5)
+        c.drawString(x, y - 8, "0")
+        c.drawRightString(x + w, y - 8, "1")
+
+    # ─── Coluna direita: as 12 notas, uma por card ───────────────────────────
+
+    def _col_risco_notas(self, c, x, y_top, w):
+        # Ordenado do maior para o menor risco: o leitor encontra primeiro o
+        # que mais expõe o município. O desempate mantém a ordem da taxonomia
+        # (sort estável do Python), então dois subsetores com a mesma nota saem
+        # sempre na mesma sequência — nada de ordem oscilando entre gerações.
+        indicadores = sorted(
+            self.risco_climatico.get("indicadores") or [],
+            key=lambda i: i.get("valor") or 0.0,
+            reverse=True,
+        )
+        y = y_top
+        draw_eyebrow(c, f"As {len(indicadores)} notas do município", x, y)
+
+        # A chave de leitura vem ANTES dos cards: 12 barras sem legenda obrigam
+        # o leitor a decifrar o primeiro card para entender os outros onze.
+        y -= 11
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO), 6.5)
+        c.drawString(x, y, "Do maior para o menor risco. Barra: nota do município "
+                           "(0 a 1). Traço: média nacional.")
+
+        y -= 12
+        CARD_H, GAP = 31, 1
+        for ind in indicadores:
+            self._draw_card_indicador_risco(c, x, y, w, CARD_H, ind)
+            y -= CARD_H + GAP
+
+    def _draw_card_indicador_risco(self, c, x, y_top, w, h, ind):
+        """Card de um subsetor: setor estratégico, subsetor, nota e barra com a
+        média nacional como referência."""
+        y_bot = y_top - h
+        cor = _cor_risco(ind.get("classe"))
+
+        c.setFillColor(WHITE)
+        c.roundRect(x, y_bot, w, h, 2, fill=1, stroke=0)
+        c.setStrokeColor(RULE)
+        c.setLineWidth(0.6)
+        c.roundRect(x, y_bot, w, h, 2, fill=0, stroke=1)
+        c.setFillColor(cor)
+        c.rect(x, y_bot, 3, h, fill=1, stroke=0)
+
+        pad = 9
+        tx = x + 3 + pad
+        valor = ind.get("valor")
+
+        # Nota, à direita — reserva a faixa que o texto do subsetor não pode invadir.
+        nota_txt = _nota_risco(valor)
+        c.setFillColor(cor)
+        c.setFont(F(FONT_NUM_BOLD), 15)
+        nota_w = c.stringWidth(nota_txt, F(FONT_NUM_BOLD), 15)
+        c.drawRightString(x + w - pad, y_top - 21, nota_txt)
+
+        texto_w = w - 3 - pad * 3 - nota_w
+
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO), 6.2)
+        c.drawString(tx, y_top - 9, str(ind.get("setor", "")).upper())
+
+        sub = str(ind.get("subsetor", ""))
+        fs = 9
+        while c.stringWidth(sub, F(FONT_TEXTO_SEMIBOLD), fs) > texto_w and fs > 6.5:
+            fs -= 0.25
+        c.setFillColor(INK)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), fs)
+        c.drawString(tx, y_top - 19, sub)
+
+        # Barra 0–1 com a média nacional marcada. Fica rente ao pé do card:
+        # subir mais faria o traço da média encostar nas descidas do subsetor.
+        bar_x = tx
+        bar_w = w - 3 - pad * 2
+        bar_y = y_bot + 3.5
+        c.setFillColor(CREAM_DARK)
+        c.rect(bar_x, bar_y, bar_w, 2.5, fill=1, stroke=0)
+        if valor is not None:
+            c.setFillColor(cor)
+            c.rect(bar_x, bar_y, bar_w * min(max(valor, 0.0), 1.0), 2.5, fill=1, stroke=0)
+
+        media_nac = ind.get("media_nacional")
+        if media_nac is not None:
+            c.setStrokeColor(BLUE_DARK)
+            c.setLineWidth(0.9)
+            mx = bar_x + bar_w * media_nac
+            c.line(mx, bar_y - 2.5, mx, bar_y + 3.5)
