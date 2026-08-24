@@ -81,3 +81,33 @@ de sair vazia, a outra altera o que já foi impresso e distribuído, e ainda cri
 duas fontes divergentes (repo acentuado vs. export ASCII) onde antes havia uma.
 A correção de acento existe como pendência para ser feita nos dois lados de uma
 vez, não de carona.
+
+---
+
+## Travessão no folheto: convenção da publicação, não gosto do autor
+
+**O que aconteceu:** escrevi as páginas de Risco Climático usando travessão (—)
+em texto corrido, do jeito que escrevo em qualquer outro lugar. Na revisão o Pedro
+cortou: *"tire todas as barras do texto, nunca é para aparecer"*.
+
+**Por que passou:** olhei o DESIGN_SYSTEM.md atrás de cor, fonte e grid — e não
+havia nada sobre pontuação, então assumi que não havia regra. Havia: estava na
+cabeça de quem revisa, e o folheto anterior só não a contrariava por acaso. Pior:
+o caractere já existia em texto que eu não escrevi (`_problema.json`, título do
+quadro da UF, placeholders de valor ausente), então "só arrumar a minha página"
+deixaria o defeito vivo em outras três.
+
+**Regra daqui em diante:**
+
+1. Convenção tipográfica de uma publicação é regra do projeto. Ao escrever copy
+   nova, imitar a pontuação que **já está impressa** nas páginas aprovadas em vez
+   de importar o próprio estilo.
+2. Quando o cliente enuncia uma regra ("nunca é para aparecer"), ela vale para o
+   **documento inteiro**: copy nova, texto editorial nos JSONs e placeholders de
+   dado ausente. Auditar tudo antes de responder, não só a página que ele estava
+   olhando.
+3. Regra recém-descoberta vira **linha no DESIGN_SYSTEM.md + item de checklist
+   verificável**, senão volta no próximo folheto. A verificação aqui é objetiva:
+   varrer `page.get_text()` de todas as páginas do PDF atrás do caractere.
+4. Placeholder de valor ausente nunca é um traço solto: num KPI ele se confunde
+   com sinal de menos. `n/d` diz o que aconteceu.

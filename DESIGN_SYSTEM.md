@@ -65,6 +65,12 @@ Combinando essas 4 formas a FNP construiu:
 
 **Headlines amarelos:** o COSIP usa muito tratamento de título amarelo (`YELLOW`) com leve **outline branco/escuro** sobre fundos claros. É marca registrada do folheto — manter.
 
+**Travessão (—) é proibido em qualquer texto impresso.** Vale para copy nova,
+texto editorial dos JSONs companheiros e placeholder de valor ausente (use `n/d`,
+nunca um traço solto: num KPI o leitor confunde com sinal de menos). Onde a frase
+pedia um travessão, use vírgula, dois-pontos ou ponto final. Para separar rótulos
+curtos, o separador da casa é o ponto médio (`·`), como no cabeçalho e no rodapé.
+
 **Fallback automático:** Helvetica Bold / Helvetica (caso Barlow/Inter não estejam instalados — já implementado em `ifem_folheto.py`).
 
 ---
@@ -182,6 +188,7 @@ Existem duas variantes (ver [`inspiration/`](inspiration/)):
 
 ## 9. Checklist antes de exportar PDF
 
+- [ ] Nenhum travessão (—) no texto do PDF (`page.get_text()` de todas as páginas).
 - [ ] Stripes alternam corretamente entre páginas pares e ímpares.
 - [ ] Numeração de página em branco aparece em todas as páginas (exceto se o tema pedir capa "limpa").
 - [ ] Toda página interna tem cabeçalho (`IFEM · …` ou `COSIP · …`) e rodapé (label + logo FNP).
