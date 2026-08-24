@@ -19,6 +19,13 @@ output/_preview_*/
 # cópias do mesmo dado e não devem entrar no histórico.
 data/ifem/dados-ifem/
 
+# Dados de Risco Climático por município - regeneráveis com
+# `python tools/adapta_para_json.py`. O panorama nacional (3 KB) fica versionado
+# de propósito: é o único agregado que a página de introdução consome, e exigir
+# as planilhas oficiais de quem só quer conferir o layout não se paga.
+data/clima/*.json
+!data/clima/_panorama_nacional.json
+
 # Harness Claude Code (local)
 .claude/
 
