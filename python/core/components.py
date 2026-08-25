@@ -163,7 +163,7 @@ def _fmt_money_br(v: float) -> str:
     Valores < R$ 10 ganham 2 decimais (ex: R$ 0,50) para evitar "R$ 0" enganoso.
     """
     if v is None:
-        return "—"
+        return "n/d"
     if abs(v) < 10 and v != 0:
         return "R$ " + f"{v:.2f}".replace(".", ",")
     return "R$ " + f"{int(round(v)):,}".replace(",", ".")

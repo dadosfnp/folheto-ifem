@@ -31,7 +31,6 @@ USO
     python tools/planilhas_para_json.py --dry-run       # não escreve, só relata
 """
 import argparse
-import bisect
 import json
 import os
 import re
@@ -47,6 +46,13 @@ except ImportError:
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DESTINO = ROOT_DIR / "data" / "ifem" / "dados-ifem" / "export_folheto"
 RECORTE_JSON = ROOT_DIR / "docs" / "folhetos.json"
+COMPANHEIROS_DIR = ROOT_DIR / "data" / "ifem"
+
+# Companheiros que são TEXTO EDITORIAL, não dado calculado: nenhuma planilha os
+# origina, então este script não tem como gerá-los. Vivem versionados em
+# `data/ifem/` e são copiados para o lote. A lista é o contrato: companheiro
+# editorial novo entra aqui, não numa cópia manual em algum lugar.
+COMPANHEIROS_EDITORIAIS = ("_problema.json", "_metodologia.json")
 
 
 # --------------------------------------------------------------------------
@@ -141,7 +147,7 @@ DETALHE_MAIS_ESPECIFICA = [
     ("contribuicao_melhoria_iluminacao_publica", "Contribuição de Melhoria - Iluminação Pública"),
     ("outras_contribuicoes_melhoria", "Outras Contribuições de Melhoria"),
     ("transferencia_uniao_fpm", "Transferência União - FPM"),
-    ("transferencia_uniao_exploracao", "Transferência União - Exploração de Recursos"),
+    ("transferencia_uniao_exploracao", "Transferência União - Royalties"),
     ("transferencia_uniao_sus", "Transferência União - SUS"),
     ("transferencia_uniao_fnde", "Transferência União - FNDE"),
     ("transferencia_uniao_fundeb", "Transferência União - FUNDEB"),
@@ -150,7 +156,7 @@ DETALHE_MAIS_ESPECIFICA = [
     ("outras_transferencias_uniao", "Outras Transferências da União"),
     ("transferencia_estado_icms", "Transferência Estado - ICMS"),
     ("transferencia_estado_ipva", "Transferência Estado - IPVA"),
-    ("transferencia_estado_exploracao", "Transferência Estado - Exploração de Recursos"),
+    ("transferencia_estado_exploracao", "Transferência Estado - Royalties"),
     ("transferencia_estado_sus", "Transferência Estado - SUS"),
     ("transferencia_estado_assistencia", "Transferência Estado - Assistência"),
     ("outras_transferencias_estado", "Outras Transferências do Estado"),
@@ -343,6 +349,9 @@ def carregar_planilhas() -> dict:
         "rec00": ler("receitas_correntes_2000.xlsx"),
         "n1": ler("receitas_correntes_detalhamento_n1.xlsx"),
         "n2": ler("receitas_correntes_detalhamento_n2.xlsx"),
+        "perc0": ler("percentil_detalhamento_0.xlsx"),
+        "perc1": ler("percentil_detalhamento_1.xlsx"),
+        "perc2": ler("percentil_detalhamento_2.xlsx"),
     }
     for k, df in dfs.items():
         print(f"  {k:6s} {len(df):>6,} linhas")
@@ -401,38 +410,54 @@ def montar_base(dfs: dict) -> pd.DataFrame:
     return base
 
 
-def computar_percentis(base: pd.DataFrame) -> dict:
-    """
-    supera_pct_nacional por rubrica — replica compute_percentis_por_categoria.
+def montar_percentis_planilha(dfs: dict) -> dict:
+    """cod_ibge -> {col: percentil} lendo perc_<col>_pc_nac de percentil_detalhamento_0/1/2."""
+    todas_colunas = {**COL_NIVEL_1, **COL_NIVEL_2, **COL_NIVEL_3}
+    resultado: dict[str, dict] = {}
+    for chave in ("perc0", "perc1", "perc2"):
+        df = dfs[chave]
+        for col in todas_colunas:
+            offcol = f"perc_{col}_pc_nac"
+            if offcol not in df.columns:
+                continue
+            for cod, pct in zip(df["cod_ibge"], df[offcol]):
+                if pd.isna(pct):
+                    continue
+                resultado.setdefault(cod, {})[col] = pct
+    return resultado
 
-    Percentil = fração de municípios com per_capita ESTRITAMENTE menor. Empates
-    compartilham o percentil (bisect_left). Só entram municípios com população
-    positiva, como no original.
+
+def computar_percentis(base: pd.DataFrame, percentis_planilha: dict) -> dict:
+    """
+    supera_pct_nacional por rubrica.
+
+    Lê diretamente as colunas `perc_<col>_pc_nac` de percentil_detalhamento_0/1/2.xlsx
+    em vez de recalcular. Essas planilhas SÃO a fonte oficial do percentil (o mesmo
+    processo que gera o banco Subfinanciados as produz) — recalcular via bisect sobre
+    per_capita não reproduzia esses números com fidelidade: municípios com valor 0 na
+    rubrica entram ou não na base de comparação e o arredondamento não é round() nem
+    ceil() de forma consistente, dependendo da rubrica. Ler o valor já pronto evita
+    reproduzir essa regra às cegas.
+
+    `total` (total_municipios_comparados, só informativo — não é lido pelo gerador de
+    PDF) é a contagem de municípios com população positiva e valor da rubrica > 0.
     """
     todas_colunas = {**COL_NIVEL_1, **COL_NIVEL_2, **COL_NIVEL_3}
-    valores_por_campo: dict[str, list] = {}
+    resultado: dict[str, dict] = {}
 
     for col, field in todas_colunas.items():
         if col not in base.columns:
             continue
         sub = base[["cod_ibge", "populacao_25", col]].dropna(subset=[col])
-        sub = sub[sub["populacao_25"] > 0]
-        if sub.empty:
+        sub = sub[(sub["populacao_25"] > 0) & (sub[col] > 0)]
+        total = len(sub)
+        if total == 0:
             continue
-        pcs = (sub[col] / sub["populacao_25"]).tolist()
-        codigos = sub["cod_ibge"].tolist()
-        valores_por_campo[field] = sorted(zip(pcs, codigos), key=lambda x: x[0])
-
-    resultado: dict[str, dict] = {}
-    for field, lista in valores_por_campo.items():
-        total = len(lista)
-        ordenados = [pc for pc, _ in lista]
-        for pc, cod in lista:
-            n_menores = bisect.bisect_left(ordenados, pc)
-            resultado.setdefault(cod, {})[field] = {
-                "supera_pct": round(n_menores / total * 100) if total else 0,
-                "total": total,
-            }
+        for cod in sub["cod_ibge"]:
+            pct = percentis_planilha.get(cod, {}).get(col)
+            if pct is None:
+                continue
+            resultado.setdefault(cod, {})[field] = {"supera_pct": int(pct), "total": total}
     return resultado
 
 
@@ -634,24 +659,37 @@ def gerar_medias_receitas() -> dict:
     }
 
 
-def calcular_medias_nacionais(base: pd.DataFrame) -> dict:
+# Médias nacionais das variações 2000 -> ano de referência, usadas como linha de
+# comparação no folheto. Hardcoded como no export oficial: recalcular a partir do
+# snapshot local das planilhas não reproduz estes números com fidelidade.
+#
+# ATENÇÃO — estes valores foram calculados para 2024 e NÃO acompanham o ANO_REF.
+# Com ANO_REF em outro ano, o folheto compara o município de um ano contra uma
+# média nacional de outro. `calcular_medias_nacionais()` avisa quando isso
+# acontece; a decisão de atualizar os números é editorial, não automática.
+MEDIAS_NACIONAIS = {"receita": 316.74, "populacao": 16.04}
+ANO_MEDIAS_NACIONAIS = 2024
+
+
+def calcular_medias_nacionais() -> dict:
     """
-    Média nacional das variações 2000 -> ano atual.
+    Devolve as médias nacionais de comparação (ver MEDIAS_NACIONAIS).
 
-    O export oficial traz estes dois números hardcoded (316.74 e 16.04), calculados
-    para 2024. Recalcular aqui evita imprimir no folheto de 2025 uma referência do
-    ano anterior.
+    Avisa em stderr quando as médias não são do ANO_REF em uso. O aviso é
+    barulhento de propósito: o número entra no folheto de qualquer jeito, e sem
+    ele a divergência de ano passa sem ninguém notar — foi assim que a página
+    "Metodologia" saiu vazia por meses.
     """
-    val = base[(base["receita_00_pc"] > 0) & (base["receita_pc"].notna())]
-    delta_rec = ((val["receita_pc"] / val["receita_00_pc"]) - 1) * 100
-
-    valp = base[(base["populacao_00"] > 0) & (base["populacao_25"].notna())]
-    delta_pop = ((valp["populacao_25"] / valp["populacao_00"]) - 1) * 100
-
-    return {
-        "receita": round(float(delta_rec.mean()), 2),
-        "populacao": round(float(delta_pop.mean()), 2),
-    }
+    if ANO_REF != ANO_MEDIAS_NACIONAIS:
+        print(f"\n[aviso] médias nacionais de comparação são de "
+              f"{ANO_MEDIAS_NACIONAIS}, mas ANO_REF é {ANO_REF}. O folheto vai "
+              f"comparar o município de {ANO_REF} contra uma média nacional de "
+              f"{ANO_MEDIAS_NACIONAIS}.", file=sys.stderr)
+        print(f"        Se quiser corrigir, atualize MEDIAS_NACIONAIS e "
+              f"ANO_MEDIAS_NACIONAIS em tools/{Path(__file__).name}.",
+              file=sys.stderr)
+    # Copia: o chamador não deve conseguir mutar a constante do módulo.
+    return dict(MEDIAS_NACIONAIS)
 
 
 # --------------------------------------------------------------------------
@@ -679,12 +717,13 @@ def main() -> int:
     base = montar_base(dfs)
     print(f"\nBase consolidada: {len(base):,} municípios")
 
-    medias = calcular_medias_nacionais(base)
-    print(f"Médias nacionais 2000->{ANO_REF}: receita {medias['receita']}% | "
-          f"população {medias['populacao']}%")
+    medias = calcular_medias_nacionais()
+    print(f"Médias nacionais 2000->{ANO_MEDIAS_NACIONAIS}: "
+          f"receita {medias['receita']}% | população {medias['populacao']}%")
 
     print("Calculando percentis por rubrica...")
-    percentis = computar_percentis(base)
+    percentis_planilha = montar_percentis_planilha(dfs)
+    percentis = computar_percentis(base, percentis_planilha)
     print(f"  {len(percentis):,} municípios com percentis")
 
     # Seleção
@@ -729,17 +768,25 @@ def main() -> int:
         except Exception as e:
             erros.append(f"{row.get('cod_ibge')} ({row.get('nome_muni')}): {e}")
 
-    # `_problema.json` é editorial e vive versionado em data/ifem/. Um lote antigo
-    # pode ter deixado uma cópia desatualizada aqui, e o gerador prefere a cópia
-    # local ao fallback versionado — então ela venceria silenciosamente e o folheto
-    # sairia com os números do ano anterior. Sincroniza para eliminar a ambiguidade.
+    # Companheiros editoriais: copia a versão do repo para o lote, sempre.
+    #
+    # Duas coisas dependem disso. (1) O gerador prefere a cópia que está ao lado
+    # dos JSONs municipais ao fallback versionado — um lote antigo com cópia
+    # desatualizada venceria em silêncio e o folheto sairia com o texto e os
+    # números do ano anterior. (2) Quem clona o repo não tem lote nenhum: sem esta
+    # cópia a página correspondente sai vazia, e o único sinal é um `[aviso]` no
+    # stderr. Foi exatamente assim que a página "Metodologia" saiu em branco.
     if not args.dry_run:
-        versionado = ROOT_DIR / "data" / "ifem" / "_problema.json"
-        if versionado.exists():
-            destino_prob = DESTINO / "_problema.json"
-            if not destino_prob.exists() or destino_prob.read_bytes() != versionado.read_bytes():
-                destino_prob.write_bytes(versionado.read_bytes())
-                print("\n_problema.json sincronizado a partir de data/ifem/ (versionado)")
+        for nome in COMPANHEIROS_EDITORIAIS:
+            versionado = COMPANHEIROS_DIR / nome
+            if not versionado.exists():
+                print(f"\n[aviso] {nome} não existe em data/ifem/ — a seção que "
+                      f"depende dele sairá vazia.", file=sys.stderr)
+                continue
+            destino = DESTINO / nome
+            if not destino.exists() or destino.read_bytes() != versionado.read_bytes():
+                destino.write_bytes(versionado.read_bytes())
+                print(f"\n{nome} sincronizado a partir de data/ifem/ (versionado)")
 
     # Companheiro compartilhado: sem ele os comparativos do folheto ficam no ano errado.
     if not args.dry_run:

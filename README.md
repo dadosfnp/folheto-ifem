@@ -26,16 +26,20 @@ Copy-Item .env.example .env
 
 # 5. Dados dos municípios — gerados das planilhas oficiais
 python tools/planilhas_para_json.py --todos
+
+# 6. Risco climático (AdaptaBrasil) — enriquece os JSONs do passo 5
+python tools/adapta_para_json.py --injetar --todos
 ```
 
-### Por que os passos 3 e 5 existem
+### Por que os passos 3, 5 e 6 existem
 
-Duas coisas ficam fora do git de propósito, e **ambas mudam o PDF final**:
+Três coisas ficam fora do git de propósito, e **todas mudam o PDF final**:
 
 | O quê | Por que fora do git | Sem ele o PDF… |
 |---|---|---|
 | `fonts/*.ttf` | licença + peso | sai em Helvetica, com tipografia diferente da oficial |
 | `data/ifem/dados-ifem/` | 5.440 arquivos, ~94 MB, regeneráveis | não gera — não há município nenhum |
+| bloco `risco_climatico` | derivado, mora dentro do lote acima | sai com 2 páginas a menos: a seção de Risco Climático some inteira |
 
 Pular esses passos não dá erro: o gerador **degrada e continua**. Por isso os dois
 scripts acima existem, e por isso o gerador avisa em `stderr` quando está usando
@@ -54,6 +58,18 @@ Não precisa de banco, de rede, nem de credencial. O caminho das planilhas fica 
 > **Alternativa:** se você tiver acesso ao banco (só de dentro da VPC da
 > DigitalOcean), `python tools/sync_dados.py` traz o lote gerado pelos exports do
 > Subfinanciados. Os dois caminhos produzem o mesmo resultado.
+
+`tools/adapta_para_json.py` faz o mesmo com `indicadores_adapta_brasil.xlsx` — a
+planilha que alimenta a tabela `AdaptaBrasil` do banco. Com `--injetar` ele grava
+o bloco `risco_climatico` dentro dos JSONs do passo 5 (é idempotente) e escreve
+os agregados nacionais em `data/clima/_panorama_nacional.json`, o único arquivo
+de dados versionado. Rastreabilidade em
+[`data/clima/PROVENIENCIA.md`](data/clima/PROVENIENCIA.md).
+
+> ⚠️ **A escala do risco é invertida em relação ao IFEM.** No IFEM, valor alto =
+> município bem financiado. No AdaptaBrasil, o índice mede exposição: valor alto
+> = pior, e `ranking_nacional.posicao == 1` é o município **mais** exposto do
+> país. As páginas de risco têm o próprio mapa de cores por isso.
 
 ### Ano de referência
 
@@ -127,11 +143,16 @@ python python/gerar.py --tema ifem `
 
 O passo a passo detalhado está em [`docs/PASSO_A_PASSO.md`](docs/PASSO_A_PASSO.md).
 
-> **`_problema.json` é conteúdo editorial** — nenhum script o gera do zero. Ele
-> vive versionado em [`data/ifem/_problema.json`](data/ifem/_problema.json). O
-> `recalcular_problema.py` atualiza os **números**; o **texto corrido** que cita
-> valores por extenso precisa de revisão humana — o script aponta quais frases
-> ficaram inconsistentes, mas não as reescreve.
+> **Dois companheiros são conteúdo editorial** — nenhum script os gera do zero, e
+> por isso vivem versionados no repo:
+> [`data/ifem/_problema.json`](data/ifem/_problema.json) e
+> [`data/ifem/_metodologia.json`](data/ifem/_metodologia.json). Os scripts de
+> setup copiam essa versão para o lote a cada execução, e a cópia do repo **vence**
+> a que vier de export: é ela a fonte da verdade do texto.
+>
+> No caso do `_problema.json`, o `recalcular_problema.py` atualiza os **números**;
+> o **texto corrido** que cita valores por extenso precisa de revisão humana — o
+> script aponta quais frases ficaram inconsistentes, mas não as reescreve.
 
 ### Validar o lote
 
@@ -196,6 +217,7 @@ o GitHub Pages serve `docs/index.html`.
 │   ├── ifem/
 │   │   ├── SCHEMA.md           # Contrato dos JSONs de entrada
 │   │   ├── _problema.json      # Texto editorial (versionado)
+│   │   ├── _metodologia.json   # Texto editorial (versionado)
 │   │   └── dados-ifem/         # JSONs do export (NÃO versionado)
 │   └── cosip/
 ├── assets/                     # Logos, capas, padrões

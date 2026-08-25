@@ -217,7 +217,11 @@ Numeração com lettermark `ifem` em letras modulares no rodapé do stripe.
 }
 ```
 
-## `_metodologia.json` (compartilhado)
+## `_metodologia.json` (compartilhado, **versionado** em `data/ifem/`)
+
+Conteúdo editorial: nenhuma planilha o origina. Vive em
+[`_metodologia.json`](_metodologia.json) e os scripts de setup copiam de lá para
+o lote — igual ao `_problema.json`. A versão do repo vence a que vier de export.
 
 ```jsonc
 {
@@ -227,9 +231,23 @@ Numeração com lettermark `ifem` em letras modulares no rodapé do stripe.
     { "pergunta": "Qual a base de dados utilizada?", "resposta": "…" },
     { "pergunta": "Por que 'per capita'?",            "resposta": "…" },
     { "pergunta": "Como os grupos sao divididos?",    "resposta": "…" }
+  ],
+  "passos": [
+    // Presente por fidelidade ao contrato do export oficial, mas NÃO consumido
+    // pelo folheto: a página 13 desenha esse passo a passo com metodologia.png.
+    { "ordem": 1, "titulo": "Ordenamos todos os municipios", "descricao": "…" },
+    { "ordem": 2, "titulo": "Distribuimos em grupos iguais", "descricao": "…",
+      "grupos": { "quintis": [/* 5 */], "decis": [/* 10 */] } }
   ]
 }
 ```
+
+> **O texto é sem acentuação, de propósito.** Ele nasce de um dict em ASCII puro
+> (`export_folheto_municipios.py`, constante `METODOLOGIA`), e o arquivo aqui é
+> cópia byte a byte dele — a página 13 imprime "metodo", "municipio" e
+> "populacao" assim. É a mesma coisa que sai do export oficial: paridade com os
+> folhetos já publicados vem antes. Acentuar é uma decisão editorial e deve ser
+> feita nos dois lados, aqui e no Subfinanciados, para não divergirem.
 
 ## Notas de implementação
 

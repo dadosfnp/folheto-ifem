@@ -1,0 +1,183 @@
+{
+  "fonte": "AdaptaBrasil (MCTI) · Índice de risco climático municipal",
+  "ano_ref": 2025,
+  "total_municipios": 5570,
+  "media_nacional": 0.5579,
+  "mediana_nacional": 0.5631,
+  "classes": [
+    {
+      "nome": "Muito alto",
+      "min": 0.8,
+      "max": 1.0,
+      "total": 380
+    },
+    {
+      "nome": "Alto",
+      "min": 0.6,
+      "max": 0.8,
+      "total": 1949
+    },
+    {
+      "nome": "Médio",
+      "min": 0.4,
+      "max": 0.6,
+      "total": 2192
+    },
+    {
+      "nome": "Baixo",
+      "min": 0.2,
+      "max": 0.4,
+      "total": 1013
+    },
+    {
+      "nome": "Muito baixo",
+      "min": 0.0,
+      "max": 0.2,
+      "total": 36
+    }
+  ],
+  "por_quintil_ifem": [
+    {
+      "quintil": 1,
+      "total": 1088,
+      "classes": {
+        "Muito alto": 207,
+        "Alto": 593,
+        "Médio": 258,
+        "Baixo": 30,
+        "Muito baixo": 0
+      }
+    },
+    {
+      "quintil": 2,
+      "total": 1088,
+      "classes": {
+        "Muito alto": 91,
+        "Alto": 520,
+        "Médio": 426,
+        "Baixo": 51,
+        "Muito baixo": 0
+      }
+    },
+    {
+      "quintil": 3,
+      "total": 1088,
+      "classes": {
+        "Muito alto": 44,
+        "Alto": 428,
+        "Médio": 478,
+        "Baixo": 136,
+        "Muito baixo": 2
+      }
+    },
+    {
+      "quintil": 4,
+      "total": 1088,
+      "classes": {
+        "Muito alto": 22,
+        "Alto": 245,
+        "Médio": 572,
+        "Baixo": 245,
+        "Muito baixo": 4
+      }
+    },
+    {
+      "quintil": 5,
+      "total": 1088,
+      "classes": {
+        "Muito alto": 10,
+        "Alto": 118,
+        "Médio": 417,
+        "Baixo": 514,
+        "Muito baixo": 29
+      }
+    }
+  ],
+  "municipios_sem_quintil_ifem": 130,
+  "indicadores": [
+    {
+      "campo": "bio_int_bio",
+      "setor": "Biodiversidade",
+      "subsetor": "Integridade da biodiversidade",
+      "media_nacional": 0.4038,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "des_des_ter",
+      "setor": "Desastres geo-hidrológicos",
+      "subsetor": "Deslizamentos de terra",
+      "media_nacional": 0.4255,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "des_in_enx_ala",
+      "setor": "Desastres geo-hidrológicos",
+      "subsetor": "Inundações, enxurradas e alagamentos",
+      "media_nacional": 0.4817,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "rec_ris_est_hid",
+      "setor": "Recursos hídricos",
+      "subsetor": "Risco de estresse hídrico",
+      "media_nacional": 0.4895,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "sau_arb",
+      "setor": "Saúde",
+      "subsetor": "Arboviroses",
+      "media_nacional": 0.5194,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "sau_lei_teg_ame",
+      "setor": "Saúde",
+      "subsetor": "Leishmaniose tegumentar americana",
+      "media_nacional": 0.4749,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "sau_lei_vis",
+      "setor": "Saúde",
+      "subsetor": "Leishmaniose visceral",
+      "media_nacional": 0.5664,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "sau_mal",
+      "setor": "Saúde",
+      "subsetor": "Malária",
+      "media_nacional": 0.5005,
+      "classe_media": "Médio"
+    },
+    {
+      "campo": "seg_ali_ace_con_ali",
+      "setor": "Segurança alimentar",
+      "subsetor": "Acesso e consumo de alimentos",
+      "media_nacional": 0.2356,
+      "classe_media": "Baixo"
+    },
+    {
+      "campo": "seg_ali_dis",
+      "setor": "Segurança alimentar",
+      "subsetor": "Disponibilidade de alimentos",
+      "media_nacional": 0.2326,
+      "classe_media": "Baixo"
+    },
+    {
+      "campo": "seg_ene_ace",
+      "setor": "Segurança energética",
+      "subsetor": "Acesso à energia",
+      "media_nacional": 0.3872,
+      "classe_media": "Baixo"
+    },
+    {
+      "campo": "seg_ene_dis",
+      "setor": "Segurança energética",
+      "subsetor": "Disponibilidade de energia",
+      "media_nacional": 0.3468,
+      "classe_media": "Baixo"
+    }
+  ]
+}

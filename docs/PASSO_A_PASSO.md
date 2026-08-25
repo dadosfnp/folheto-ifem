@@ -138,14 +138,21 @@ Lendo planilhas...
   rec00   5,305 linhas
   n1      5,440 linhas
   n2      5,440 linhas
+  perc0   5,440 linhas
+  perc1   5,440 linhas
+  perc2   5,440 linhas
   rm      1,397 municípios com região metropolitana
 
 Base consolidada: 5,570 municípios
-Médias nacionais 2000->2025: receita 343.76% | população 16.41%
+Médias nacionais 2000->2025: receita 316.74% | população 16.04%
 Calculando percentis por rubrica...
   5,440 municípios com percentis
 
 Gerando 5,440 JSONs...
+
+_problema.json sincronizado a partir de data/ifem/ (versionado)
+
+_metodologia.json sincronizado a partir de data/ifem/ (versionado)
 
 Gerando _medias_receitas.json...
   43 rubricas | 27 UFs | 8 portes | ano 2025
@@ -158,12 +165,18 @@ Isso escreve em `data/ifem/dados-ifem/export_folheto/`:
 
 ```
 export_folheto/
-├── _medias_receitas.json                   ← médias/medianas por rubrica
-├── _metodologia.json                       ← texto da metodologia
-├── _problema.json                          ← página "O Problema" (editorial)
+├── _medias_receitas.json                   ← médias/medianas por rubrica (calculado)
+├── _metodologia.json                       ← texto da metodologia (editorial, copiado de data/ifem/)
+├── _problema.json                          ← página "O Problema" (editorial, copiado de data/ifem/)
 ├── 1100015_alta-floresta-d-oeste-ro.json   ← 1 por município
 └── … (5.440 municípios)
 ```
+
+As duas linhas `sincronizado a partir de data/ifem/` só aparecem quando a cópia do
+lote está diferente da versionada. Numa pasta recém-criada aparecem sempre — e
+**precisam** aparecer: são elas que garantem as páginas "O Problema" e
+"Metodologia". Se faltarem numa pasta nova, confira se os dois arquivos existem em
+`data/ifem/`.
 
 ### Só alguns municípios
 
@@ -316,6 +329,20 @@ Rode `python tools/recalcular_problema.py --aplicar` e regenere os PDFs. Se aind
 divergir, confira se `data/ifem/dados-ifem/export_folheto/_problema.json` não é
 uma cópia velha: o gerador prefere a cópia local ao arquivo versionado em
 `data/ifem/`.
+
+### `[aviso] _metodologia.json não encontrado` (ou `_problema.json`)
+
+A página correspondente sai **vazia** — no caso da metodologia, só a imagem à
+direita, sem texto à esquerda. Os dois arquivos são editoriais e vivem versionados
+em `data/ifem/`; o gerador cai neles quando não acha companheiro ao lado do
+`--dados`. Se o aviso apareceu:
+
+```powershell
+Get-ChildItem data/ifem/_problema.json, data/ifem/_metodologia.json
+```
+
+Faltando algum, você está num commit anterior ao fix — atualize a branch. Os dois
+presentes e o aviso persistindo significa que o `--dados` aponta para fora do repo.
 
 ### `FileNotFoundError: Arquivo de dados não encontrado`
 

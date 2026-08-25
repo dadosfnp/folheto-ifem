@@ -27,9 +27,13 @@ DESTINO = ROOT_DIR / "data" / "ifem" / "dados-ifem" / "export_folheto"
 # Arquivos compartilhados que o gerador procura ao lado dos JSONs municipais.
 COMPANHEIROS = ("_metodologia.json", "_medias_receitas.json", "_problema.json")
 
-# `_problema.json` é conteúdo editorial: nenhum export do Subfinanciados o gera.
-# Ele vive versionado em data/ifem/ e é copiado daqui para o lote.
-PROBLEMA_VERSIONADO = ROOT_DIR / "data" / "ifem" / "_problema.json"
+# Companheiros de conteúdo EDITORIAL: aqui o repo é a fonte da verdade. Nenhum
+# export gera o `_problema.json`, e o `_metodologia.json`, mesmo vindo do export,
+# é texto revisado neste repo. Sobrescrever a cópia que o export trouxe é
+# intencional: sem isso as edições feitas aqui seriam desfeitas a cada sync, em
+# silêncio, e quem regenerasse o lote geraria um PDF diferente do de todo mundo.
+COMPANHEIROS_EDITORIAIS = ("_problema.json", "_metodologia.json")
+COMPANHEIROS_DIR = ROOT_DIR / "data" / "ifem"
 
 
 def descobrir_origem(informado: str | None) -> Path:
@@ -114,16 +118,19 @@ def main() -> int:
         except OSError as e:
             erros.append(f"{arq.name}: {e}")
 
-    # _problema.json não sai de export nenhum; garante que ele chegue ao lote.
-    if not any(a.name == "_problema.json" for a in arquivos):
-        if PROBLEMA_VERSIONADO.exists():
-            if not args.dry_run:
-                shutil.copy2(PROBLEMA_VERSIONADO, DESTINO / "_problema.json")
-            print("[info] _problema.json não veio do export; usei a cópia "
-                  "versionada em data/ifem/.")
-        else:
-            print("[aviso] _problema.json não encontrado em lugar nenhum — "
-                  "a página 'O Problema' sairá vazia.", file=sys.stderr)
+    # Companheiros editoriais: a versão do repo vence a do export (ver constante).
+    for nome in COMPANHEIROS_EDITORIAIS:
+        versionado = COMPANHEIROS_DIR / nome
+        if not versionado.exists():
+            print(f"[aviso] {nome} não existe em data/ifem/ — a seção que depende "
+                  f"dele sairá vazia.", file=sys.stderr)
+            continue
+        veio_do_export = any(a.name == nome for a in arquivos)
+        if not args.dry_run:
+            shutil.copy2(versionado, DESTINO / nome)
+        detalhe = ("sobrescrevi a do export" if veio_do_export
+                   else "o export não traz este arquivo")
+        print(f"[info] {nome}: usei a versão de data/ifem/ ({detalhe}).")
 
     faltando = [c for c in COMPANHEIROS if not (DESTINO / c).exists()] if not args.dry_run else []
 

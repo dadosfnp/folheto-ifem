@@ -8,8 +8,11 @@ Para adicionar um folheto novo:
 """
 from .ifem import FolhetoIFEM
 from .cosip import FolhetoCOSIP
+from .clima import FolhetoClima
 
 TEMAS = {
     "ifem":  FolhetoIFEM,
     "cosip": FolhetoCOSIP,
+    # Protótipo: só o spread de Risco Climático (ver temas/clima.py).
+    "clima": FolhetoClima,
 }

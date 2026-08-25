@@ -57,13 +57,34 @@ ausência de dado explicitamente — não preenche com zero.
 
 ## Recorte publicado
 
-Os folhetos publicados cobrem **612 municípios**, listados em
-[`docs/folhetos.json`](../../docs/folhetos.json). O recorte é o mesmo desde o
-release `v1`; o que muda entre releases é o ano dos dados.
+Os folhetos publicados cobrem **424 municípios** — todos acima de 80 mil
+habitantes — listados em [`docs/folhetos.json`](../../docs/folhetos.json):
+
+| Dados de | Municípios | Como entram |
+|---|---|---|
+| 2025 | 417 | filtro `--pop-minima 80000` sobre o lote do ano |
+| 2024 | 7 | não declararam receita de 2025 ao SICONFI; entram com ressalva explícita, via `tools/gerar_sem_declaracao.py` |
+
+O critério (acima de 80 mil habitantes) é o mesmo desde o release `v1`. O que muda
+entre releases é o ano dos dados e, com ele, quantos municípios caem na segunda
+linha.
 
 ## Conteúdo editorial
 
-[`_problema.json`](_problema.json) é texto redacional, **não** sai de planilha
-nenhuma. Os números citados nele (população por quintil, % de transferências)
-vêm de análise agregada e precisam ser revisados a cada mudança de ano de
-referência — não são atualizados por nenhum script.
+Dois companheiros são texto redacional e **não** saem de planilha nenhuma. Ambos
+vivem versionados nesta pasta, e é daqui que os scripts de setup os copiam para
+o lote — a cópia do repo vence a de qualquer export.
+
+| Arquivo | O que é | Revisão |
+|---|---|---|
+| [`_problema.json`](_problema.json) | página "O Problema" | os números (população por quintil, % de transferências) vêm de análise agregada; `recalcular_problema.py --aplicar` atualiza os campos numéricos, o texto corrido precisa de revisão humana |
+| [`_metodologia.json`](_metodologia.json) | página "Metodologia do IFEM" | texto fixo; só muda se a metodologia do índice mudar |
+
+`_metodologia.json` é **cópia byte a byte** do que o export oficial produz — o
+texto vem do dict `METODOLOGIA` em `export_folheto_municipios.py`
+(Subfinanciados), escrito em ASCII puro. Por isso a página 13 imprime "metodo",
+"municipio" e "populacao" sem acento: é o texto oficial, e a cópia aqui existe
+para o folheto não sair vazio em máquina sem o lote, não para editá-lo.
+
+Se um dia a acentuação for corrigida, tem que ser nos dois lados — aqui e no
+Subfinanciados — ou as duas fontes divergem e cada máquina gera um PDF diferente.
