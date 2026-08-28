@@ -159,7 +159,10 @@ lerem como um sistema só, e não como três tabelas parecidas.
   de `R$ 769` o leitor compara 1,9 com 769 e conclui o oposto do que o dado diz.
 - Estado antes do Brasil. O prefeito se compara primeiro com os vizinhos.
 - O que sobra de página abaixo da tabela recebe o alfabeto modular
-  (`_decorar_rodape`), nunca branco solto.
+  (`_decorar_rodape`), nunca branco solto. **Mas conteúdo vence decoração:**
+  a arte só entra no espaço que sobra de verdade — quando não cabe, encolhe,
+  troca por uma faixa mais fina ou simplesmente não aparece. Rodapé branco é
+  aceitável; tabela com a última linha coberta, não. Ver §5.10.
 
 ### 5.8 Bullets / lista
 - Quadrado `BLUE` 8×8pt OU `■` glyph como bullet.
@@ -168,6 +171,29 @@ lerem como um sistema só, e não como três tabelas parecidas.
 ### 5.9 QR code (última página)
 - 140×140pt centralizado, cor de preenchimento `#0E2447`, fundo branco, borda 2.
 - Embaixo: URL em `YELLOW` Inter SemiBold (`Acesse https://...`).
+
+### 5.10 Decoração de rodapé (alfabeto modular)
+
+Três faixas, da mais alta para a mais fina: `arte2` (592×216), `arte1` (591×108)
+e `arte0` (437×39), todas em `assets/padroes/`. Quem desenha é
+`_decorar_rodape(c, lado, y_max, …)`.
+
+**A regra é uma só: a arte nunca cruza `y_max`**, o Y onde o conteúdo da página
+terminou. Quem mede é o `_decorar_rodape`, nunca o chamador — a página só informa
+onde parou de desenhar. Cada página fazendo a própria conta foi exatamente o que
+produziu o defeito de agosto/2026 (tabelas com a última linha coberta em 100% do
+lote publicado).
+
+A escolha desce a lista a partir da arte pedida, nunca sobe:
+
+| Espaço livre acima do footer | O que acontece |
+|---|---|
+| cabe a faixa inteira na largura do conteúdo | desenha em largura total (encaixe preferido) |
+| não cabe, mas encolhida ainda ocupa ≥ 60% da largura | encolhe preservando o ratio, centralizada |
+| nem isso | tenta a próxima faixa mais fina |
+| nenhuma serve (ou sobram < 20pt) | **não desenha nada** |
+
+Verificação objetiva no PDF gerado: `python tools/verificar_arte.py output/`.
 
 ---
 
@@ -221,6 +247,7 @@ Existem duas variantes (ver [`inspiration/`](inspiration/)):
 ## 9. Checklist antes de exportar PDF
 
 - [ ] Nenhum travessão (—) no texto do PDF (`page.get_text()` de todas as páginas).
+- [ ] Nenhuma arte de rodapé cobrindo conteúdo: `python tools/verificar_arte.py output/` sai com 0 falhas.
 - [ ] Stripes alternam corretamente entre páginas pares e ímpares.
 - [ ] Numeração de página em branco aparece em todas as páginas (exceto se o tema pedir capa "limpa").
 - [ ] Toda página interna tem cabeçalho (`IFEM · …` ou `COSIP · …`) e rodapé (label + logo FNP).

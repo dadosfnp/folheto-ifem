@@ -359,56 +359,68 @@ class FolhetoIFEM(FolhetoFNP):
         c.drawString(x, y, nome_uf)
         return y - 26
 
+    # Artes decorativas do rodapé, da mais alta para a mais fina. O ratio vem
+    # das dimensões reais do PNG (assets/padroes) — não estimar.
+    ARTES_RODAPE = (
+        ("arte2", 592 / 216),   # faixa alta
+        ("arte1", 591 / 108),   # faixa fina
+        ("arte0", 437 / 39),    # ultra-fina
+    )
+    # Abaixo disso a arte vira um carimbo perdido no meio da página: melhor
+    # descer para a próxima mais fina ou não desenhar nada.
+    LARGURA_MIN_ARTE = 0.6
+
     def _decorar_rodape(self, c, lado: str, y_max: float, seed_offset: int = 0,
                         forcar_fina: bool = False, arte: str | None = None):
         """Preenche o espaço vazio do rodapé com um dos padrões decorativos.
-        `arte`: 'arte0' (ultra-fino), 'arte1' (faixa fina) ou 'arte2' (faixa
-        alta). Quando None, escolhe automaticamente baseado em `h_disp` ou
-        `forcar_fina`."""
+
+        `y_max` é o Y do último traço de conteúdo da página: a arte é sempre
+        desenhada ABAIXO dele, e é este método — não o chamador — quem garante
+        isso. Uma arte que não cabe no espaço livre é substituída pela próxima
+        mais fina; se nenhuma couber, a página fica sem decoração.
+
+        `arte` fixa a preferência ('arte0' | 'arte1' | 'arte2') e `forcar_fina`
+        começa a busca na arte1. Em ambos os casos a preferência é o teto, não
+        uma garantia: a busca só desce a lista, nunca sobe para uma arte mais
+        alta do que a pedida.
+        """
         FOOTER_Y = 36
-        h_disp = y_max - FOOTER_Y
+        # A tarja de ressalva (`aviso_dados`) mora na faixa do footer; quando
+        # existe, a arte precisa começar acima dela.
+        base_y = 46 if self.d.get("aviso_dados") else FOOTER_Y + 4
+        h_disp = y_max - base_y
         if h_disp < 20:
             return
 
         x0 = STRIPE_W + MARGIN if lado == "esq" else MARGIN
         w_disp = CONTENT_W
-
         padroes_dir = ASSETS_DIR / "padroes"
-        # arte0: 437×39 (ratio 11.2) — ultra-fino
-        # arte1: 591×108 (ratio 5.47) — faixa fina
-        # arte2: 592×216 (ratio 2.74) — faixa alta
-        if arte == "arte0":
-            img_path = padroes_dir / "arte0.png"
-            ratio = 437 / 39
-        elif arte == "arte1" or forcar_fina or h_disp < 130:
-            img_path = padroes_dir / "arte1.png"
-            ratio = 591 / 108
-        else:
-            img_path = padroes_dir / "arte2.png"
-            ratio = 592 / 216
 
-        if not img_path.exists():
-            return
+        preferida = arte or ("arte1" if forcar_fina else "arte2")
+        inicio = next((i for i, (nome, _) in enumerate(self.ARTES_RODAPE)
+                       if nome == preferida), 0)
 
-        # arte1 SEMPRE usa largura total do conteúdo — fica mais elegante
-        # que um carimbo pequeno e centralizado. arte2 mantém o encaixe
-        # tradicional (preserva ratio dentro do retângulo disponível).
-        if forcar_fina or h_disp < 130:
-            # largura total → altura proporcional
-            w_fit = w_disp
-            h_fit = w_fit / ratio
-        else:
-            h_fit = w_disp / ratio
-            if h_fit > h_disp:
+        for nome, ratio in self.ARTES_RODAPE[inicio:]:
+            img_path = padroes_dir / f"{nome}.png"
+            if not img_path.exists():
+                continue
+            h_cheia = w_disp / ratio
+            if h_cheia <= h_disp:
+                # Cabe inteira: largura total do conteúdo, que é o encaixe
+                # mais elegante e o que já está impresso hoje.
+                w_fit, h_fit = w_disp, h_cheia
+            else:
+                # Não cabe: encolhe preservando o ratio, mas só até o limite em
+                # que ainda lê como faixa. Abaixo disso, tenta a próxima.
                 h_fit = h_disp
                 w_fit = h_fit * ratio
-            else:
-                w_fit = w_disp
-        img_x = x0 + (w_disp - w_fit) / 2
-        img_y = FOOTER_Y + 4   # logo acima do footer label
-        c.drawImage(cached_image(img_path), img_x, img_y,
-                    width=w_fit, height=h_fit,
-                    preserveAspectRatio=True, mask="auto")
+                if w_fit < w_disp * self.LARGURA_MIN_ARTE:
+                    continue
+            img_x = x0 + (w_disp - w_fit) / 2
+            c.drawImage(cached_image(img_path), img_x, base_y,
+                        width=w_fit, height=h_fit,
+                        preserveAspectRatio=True, mask="auto")
+            return
 
     def construir_paginas(self):
         """Ordem narrativa: O PROBLEMA, a trajetória do município, e só então o
@@ -551,11 +563,9 @@ class FolhetoIFEM(FolhetoFNP):
             self._draw_legenda_quintil_combinada(c, x, y, CONTENT_W, legenda)
             y -= 26
 
-        # Decoração no rodapé com arte1 — só desenha se a arte1 cabe SEM
-        # sobrepor o conteúdo. Espaço mínimo = altura da arte1 + folga.
-        arte1_h_estim = CONTENT_W / (591 / 108)   # ratio arte1
-        if y - arte1_h_estim - 4 >= SAFE_BOTTOM:
-            self._decorar_rodape(c, lado, y, seed_offset=1, forcar_fina=True)
+        # Decoração no rodapé com arte1. Quem mede o espaço é o
+        # `_decorar_rodape`: aqui só informamos onde o conteúdo terminou.
+        self._decorar_rodape(c, lado, y, seed_offset=1, forcar_fina=True)
 
     def _draw_grafico_cruzado(self, c, x, y_top, w, h, menor, maior):
         """Gráfico 'X invertido' (tese do IFEM): 2 linhas cruzando entre 2000
@@ -889,8 +899,7 @@ class FolhetoIFEM(FolhetoFNP):
         # Y depois de todos os chips
         y_after = y - len(linhas) * (chip_h + cat_label_h + gap_row)
         # arte0 (ultra-fina) no rodapé do Resumo — assinatura visual sutil.
-        if y_after > SAFE_BOTTOM + 8:
-            self._decorar_rodape(c, lado, y_after, seed_offset=0, arte="arte0")
+        self._decorar_rodape(c, lado, y_after, seed_offset=0, arte="arte0")
 
     def _draw_regua_quintil_mini(self, c, x_right, y_top, w,
                                   quintil_str: str, decil_str: str) -> None:
@@ -1450,9 +1459,9 @@ class FolhetoIFEM(FolhetoFNP):
                 c.drawString(x, y - i * 10 - 8, ln)
             y -= len(linhas_nota) * 10 + 10
 
-        # Decora rodapé com arte1 se sobra espaço (≥ 50pt acima da SAFE_BOTTOM).
-        if y > SAFE_BOTTOM + 50:
-            self._decorar_rodape(c, lado, y, seed_offset=2, forcar_fina=True)
+        # Decora o rodapé com arte1 quando sobra espaço — a medida é feita
+        # dentro do `_decorar_rodape`.
+        self._decorar_rodape(c, lado, y, seed_offset=2, forcar_fina=True)
 
     def _netos_por_pai_n2(self):
         """Mapeia field do pai (nivel_2) → lista de filhos (nivel_3) ordenada

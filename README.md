@@ -166,6 +166,17 @@ python validate_export_folheto.py
 Ele checa as chaves de topo, `supera_pct_nacional` (0–100) em todas as rubricas,
 a hierarquia 4/14/28 e a consistência referencial.
 
+### Validar os PDFs antes de publicar
+
+```powershell
+python tools/verificar_arte.py output/
+```
+
+Mede, no PDF gerado, se a arte decorativa do rodapé cobre texto ou gráfico —
+defeito que não gera erro nenhum (o arquivo abre, o texto continua extraível) e
+só aparece para quem olha a página. Sai com código 1 se achar qualquer colisão.
+Rodar **sempre** antes do `gh release create`.
+
 ---
 
 ## Publicar (PDFs + landing page)

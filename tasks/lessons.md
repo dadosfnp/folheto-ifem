@@ -111,3 +111,46 @@ deixaria o defeito vivo em outras três.
    varrer `page.get_text()` de todas as páginas do PDF atrás do caractere.
 4. Placeholder de valor ausente nunca é um traço solto: num KPI ele se confunde
    com sinal de menos. `n/d` diz o que aconteceu.
+
+---
+
+## Decoração não pode cobrir dado: quem desenha por último precisa medir
+
+**O que aconteceu:** o Pedro mandou o print da página de Risco Climático com a
+arte do rodapé por cima da tabela — a última linha ("Integridade da
+biodiversidade") ficava escondida atrás dos quartos de círculo. Auditando o lote
+inteiro, o defeito não era daquele município nem daquela página: **424 de 424
+folhetos publicados** tinham a arte cobrindo conteúdo, em três páginas cada
+(receita nível 1-2, primeira do nível 3 e a tabela de risco).
+
+**Por que passou:** `_decorar_rodape` tinha dois caminhos de encaixe. No caminho
+"largura total" (o da arte1, e o usado por toda chamada com `forcar_fina`) a
+altura saía de `w_disp / ratio` e **nunca era comparada com o espaço livre** — o
+clamp existia só no outro ramo. Uma arte1 de 87pt entrava num rodapé de 30pt e
+apagava 24pt de tabela. Como PDF não tem colisão nem erro, nada avisou: o
+arquivo abre, o texto continua extraível pelo `get_text()`, e só quem olha a
+página vê.
+
+Pior: cada chamador fazia a própria conta antes de chamar
+(`if y - arte1_h_estim - 4 >= SAFE_BOTTOM`, `if y_after > SAFE_BOTTOM + 8`,
+`if y > SAFE_BOTTOM + 50`), com pisos diferentes entre si e diferentes do que a
+função usava por dentro. Três contas paralelas para uma regra só, e duas delas
+erradas.
+
+**Regra daqui em diante:**
+
+1. Quem desenha por último é quem tem que medir. Se um elemento é aplicado por
+   cima de uma página já montada, o cálculo de "cabe?" mora **dentro** dele, e o
+   chamador só informa onde o conteúdo terminou. Guarda no call site é convite a
+   divergência.
+2. Toda decoração degrada em cascata explícita — encolhe, troca por uma variante
+   menor, ou não aparece. **Rodapé branco é aceitável; dado coberto, não.**
+   Quando o design pede o inverso, é o layout que está apertado demais, não a
+   decoração que merece prioridade.
+3. Defeito visual em PDF não aparece em `stderr` nem em teste de conteúdo. A
+   verificação tem que medir **geometria do arquivo gerado**: `tools/verificar_arte.py`
+   compara o retângulo real da imagem com o de cada texto e vetor da página, e
+   sai com código 1 se houver interseção. Entrou no checklist do DESIGN_SYSTEM.md.
+4. Print de uma página é amostra, não escopo. Antes de responder "corrigi",
+   rodar a verificação no lote inteiro — aqui, o que parecia um município virou
+   1.272 páginas defeituosas em produção.
