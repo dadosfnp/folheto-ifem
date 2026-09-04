@@ -744,12 +744,31 @@ def main() -> int:
     else:
         sel = base
 
-    # Sem receita não há folheto — o import oficial também pula esses.
+    # Sem receita não há folheto AQUI — o import oficial também pula esses.
+    #
+    # Mas "pulado" não é "sem folheto": quem não declarou no ano corrente é
+    # publicado com o dado do ano anterior mais uma tarja de ressalva, por
+    # `tools/gerar_sem_declaracao.py`. O aviso precisa dizer isso e destacar
+    # quantos caem no recorte publicado — um `[aviso] 130 pulados` solto já fez
+    # colega concluir que o município simplesmente não tinha folheto.
     antes = len(sel)
+    pulados = sel[sel["receita"].isna()]
     sel = sel[sel["receita"].notna()]
     if len(sel) < antes:
-        print(f"[aviso] {antes - len(sel)} município(s) sem receita declarada — pulados",
-              file=sys.stderr)
+        print(f"\n[aviso] {antes - len(sel)} município(s) sem receita declarada em "
+              f"{ANO_REF} — fora deste lote.", file=sys.stderr)
+        if "populacao_25" in pulados.columns:
+            grandes = pulados[pulados["populacao_25"] > 80_000]
+            if len(grandes):
+                nomes = ", ".join(
+                    f"{r['nome_muni']}/{r['uf']}"
+                    for _, r in grandes.sort_values("populacao_25", ascending=False).iterrows()
+                )
+                plural = "estão" if len(grandes) > 1 else "está"
+                print(f"        {len(grandes)} {plural} no recorte publicado "
+                      f"(> 80 mil hab.): {nomes}", file=sys.stderr)
+        print("        Esses saem por `python tools/gerar_sem_declaracao.py`, "
+              "com o dado do ano anterior e ressalva.", file=sys.stderr)
 
     if not args.dry_run:
         DESTINO.mkdir(parents=True, exist_ok=True)

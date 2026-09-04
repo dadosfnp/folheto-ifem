@@ -215,6 +215,46 @@ python python/gerar.py --tema ifem `
 
 São **417 municípios**. Leva ~15 minutos.
 
+### Os 7 que faltam: municípios sem declaração no ano
+
+O recorte publicado tem **424** municípios, mas o comando acima gera 417. Os
+outros 7 não declararam receita de 2025 ao SICONFI, então não existem no lote —
+`planilhas_para_json.py` os descarta (ele avisa quais, em `stderr`).
+
+Eles **não** ficam de fora da publicação: saem com o dado de 2024 e uma tarja de
+ressalva em todas as páginas.
+
+```powershell
+python tools/gerar_sem_declaracao.py --listar   # confere quem são
+python tools/gerar_sem_declaracao.py            # gera os PDFs
+```
+
+```
+Ano de referência: 2025 | dado de fallback: 2024
+Identificação por: planilhas oficiais
+Fallback versionado: data\ifem\fallback_2024 (existe)
+
+Municípios sem receita declarada em 2025: 7
+
+  Volta Redonda                RJ    279,971   3306305_volta-redonda-rj.json
+  Magé                         RJ    244,142   3302502_mage-rj.json
+  ...
+```
+
+O dado de 2024 desses municípios está **versionado** em
+`data/ifem/fallback_2024/`, porque não há como recriá-lo: `base_datas/` só tem
+`receitas_correntes_2000.xlsx` e `receitas_correntes_2025.xlsx`. Detalhes no
+[README da pasta](../data/ifem/fallback_2024/README.md).
+
+> **Ordem importa.** O script recusa gerar se os JSONs ainda não tiverem o bloco
+> de Risco Climático — sairiam com duas páginas a menos. Numa pasta nova, rode:
+>
+> ```powershell
+> python tools/gerar_sem_declaracao.py --apenas-preparar
+> python tools/adapta_para_json.py --injetar --todos
+> python tools/gerar_sem_declaracao.py
+> ```
+
 ### Outros recortes
 
 ```powershell

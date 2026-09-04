@@ -1,0 +1,617 @@
+{
+  "identificacao": {
+    "cod_ibge": "1501303",
+    "municipio": "Barcarena",
+    "uf": "PA",
+    "name_muni_uf": "Barcarena - PA",
+    "regiao": "Norte",
+    "regiao_metropolitana": "RM de Belém (PA)",
+    "porte": "100 mil a 200 mil",
+    "coordenadas": {
+      "x": -48.63432626113585,
+      "y": -1.436508476500003
+    }
+  },
+  "populacao": {
+    "ano": 2024,
+    "valor": 137331,
+    "ranking_nacional": {
+      "posicao": 231,
+      "total": 5570
+    },
+    "ranking_estadual": {
+      "posicao": 9,
+      "total": 144
+    },
+    "ranking_por_porte": {
+      "posicao": 73,
+      "total": 178
+    }
+  },
+  "receita_corrente": {
+    "ano": 2024,
+    "valor_absoluto": 1105261269.26,
+    "per_capita": 8048.155691431651,
+    "ranking_por_per_capita": {
+      "nacional": {
+        "posicao": 1917,
+        "total": 5479
+      },
+      "estadual": {
+        "posicao": 13,
+        "total": 133
+      },
+      "por_porte": {
+        "posicao": 20,
+        "total": 176
+      }
+    }
+  },
+  "sus_dependente": {
+    "percentual_populacao": 78.6,
+    "descricao": "Percentual da populacao dependente exclusivamente do SUS."
+  },
+  "cadunico": {
+    "qtd_pessoas_cadastradas": 82030,
+    "ranking_nacional": {
+      "posicao": 2793,
+      "total": 5570
+    },
+    "ranking_estadual": {
+      "posicao": 122,
+      "total": 144
+    },
+    "ranking_por_porte": {
+      "posicao": 30,
+      "total": 178
+    }
+  },
+  "percentil": {
+    "ano": 2024,
+    "percentil_label": "65º percentil",
+    "percentil_numero": 65,
+    "quintil": "4º quintil",
+    "decil": "7º decil"
+  },
+  "estrutura_receita_resumo": [
+    {
+      "rubrica": "Impostos, Taxas e Contribuições de Melhoria",
+      "field": "imposto_taxas_contribuicoes",
+      "valor_absoluto": 535155385.44,
+      "per_capita": 3896.83,
+      "supera_pct_nacional": 99,
+      "total_municipios_comparados": 5479
+    },
+    {
+      "rubrica": "Transferências Correntes",
+      "field": "transferencias_correntes",
+      "valor_absoluto": 525398194.77,
+      "per_capita": 3825.78,
+      "supera_pct_nacional": 9,
+      "total_municipios_comparados": 5479
+    },
+    {
+      "rubrica": "Outras Receitas",
+      "field": "outras_receita",
+      "valor_absoluto": 27393672.52,
+      "per_capita": 199.47,
+      "supera_pct_nacional": 46,
+      "total_municipios_comparados": 5479
+    },
+    {
+      "rubrica": "Contribuições",
+      "field": "contribuicoes",
+      "valor_absoluto": 17314016.53,
+      "per_capita": 126.08,
+      "supera_pct_nacional": 61,
+      "total_municipios_comparados": 5479
+    }
+  ],
+  "estrutura_receita_detalhada": {
+    "nivel_2_categorias": [
+      {
+        "rubrica": "Impostos",
+        "field": "imposto",
+        "valor_absoluto": 527346643.2,
+        "per_capita": 3839.97,
+        "supera_pct_nacional": 99,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Taxas",
+        "field": "taxas",
+        "valor_absoluto": 7808742.24,
+        "per_capita": 56.86,
+        "supera_pct_nacional": 68,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Contribuição de Iluminação Pública",
+        "field": "contribuicoes_iluminacao_publica",
+        "valor_absoluto": 17314016.53,
+        "per_capita": 126.08,
+        "supera_pct_nacional": 92,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferências da União",
+        "field": "tranferencias_uniao",
+        "valor_absoluto": 225137493.22,
+        "per_capita": 1639.38,
+        "supera_pct_nacional": 6,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferências dos Estados",
+        "field": "tranferencias_estados",
+        "valor_absoluto": 186698276.2,
+        "per_capita": 1359.48,
+        "supera_pct_nacional": 48,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outras Transferências",
+        "field": "outras_tranferencias",
+        "valor_absoluto": 113562425.35,
+        "per_capita": 826.92,
+        "supera_pct_nacional": 35,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Receita Patrimonial",
+        "field": "receita_patrimonial",
+        "valor_absoluto": 19645351.5,
+        "per_capita": 143.05,
+        "supera_pct_nacional": 54,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Receita de Serviços",
+        "field": "receita_servicos",
+        "valor_absoluto": 2370610.17,
+        "per_capita": 17.26,
+        "supera_pct_nacional": 71,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outras Receitas",
+        "field": "outras_receitas",
+        "valor_absoluto": 5377710.85,
+        "per_capita": 39.16,
+        "supera_pct_nacional": 55,
+        "total_municipios_comparados": 5479
+      }
+    ],
+    "nivel_3_rubricas": [
+      {
+        "rubrica": "IPTU",
+        "field": "iptu",
+        "valor_absoluto": 205697885.32,
+        "per_capita": 1497.83,
+        "supera_pct_nacional": 100,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "ITBI",
+        "field": "itbi",
+        "valor_absoluto": 1214319.18,
+        "per_capita": 8.84,
+        "supera_pct_nacional": 28,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "ISS",
+        "field": "iss",
+        "valor_absoluto": 295303690.81,
+        "per_capita": 2150.31,
+        "supera_pct_nacional": 99,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Imposto de Renda",
+        "field": "imposto_renda",
+        "valor_absoluto": 25130747.89,
+        "per_capita": 182.99,
+        "supera_pct_nacional": 58,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outros Impostos",
+        "field": "outros_impostos",
+        "valor_absoluto": -0.0,
+        "per_capita": -0.0,
+        "supera_pct_nacional": 3,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Taxa de Polícia",
+        "field": "taxa_policia",
+        "valor_absoluto": 7568678.55,
+        "per_capita": 55.11,
+        "supera_pct_nacional": 91,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Taxa de Prestação de Serviço",
+        "field": "taxa_prestacao_servico",
+        "valor_absoluto": 240063.69,
+        "per_capita": 1.75,
+        "supera_pct_nacional": 32,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outras Taxas",
+        "field": "outras_taxas",
+        "valor_absoluto": 0.0,
+        "per_capita": 0.0,
+        "supera_pct_nacional": 91,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - FPM",
+        "field": "transferencia_uniao_fpm",
+        "valor_absoluto": 84692079.87,
+        "per_capita": 616.7,
+        "supera_pct_nacional": 3,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - Exploração de Recursos",
+        "field": "transferencia_uniao_exploracao",
+        "valor_absoluto": 2659880.03,
+        "per_capita": 19.37,
+        "supera_pct_nacional": 6,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - SUS",
+        "field": "transferencia_uniao_sus",
+        "valor_absoluto": 55913284.76,
+        "per_capita": 407.14,
+        "supera_pct_nacional": 27,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - FNDE",
+        "field": "transferencia_uniao_fnde",
+        "valor_absoluto": 21262850.52,
+        "per_capita": 154.83,
+        "supera_pct_nacional": 79,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - FUNDEB",
+        "field": "transferencia_uniao_fundeb",
+        "valor_absoluto": 54614142.88,
+        "per_capita": 397.68,
+        "supera_pct_nacional": 75,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência União - FNAS",
+        "field": "transferencia_uniao_fnas",
+        "valor_absoluto": 2055143.34,
+        "per_capita": 14.96,
+        "supera_pct_nacional": 21,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outras Transferências da União",
+        "field": "outras_transferencias_uniao",
+        "valor_absoluto": 3940111.82,
+        "per_capita": 28.69,
+        "supera_pct_nacional": 33,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência Estado - ICMS",
+        "field": "transferencia_estado_icms",
+        "valor_absoluto": 167374503.74,
+        "per_capita": 1218.77,
+        "supera_pct_nacional": 59,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência Estado - IPVA",
+        "field": "transferencia_estado_ipva",
+        "valor_absoluto": 8695039.21,
+        "per_capita": 63.31,
+        "supera_pct_nacional": 33,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência Estado - SUS",
+        "field": "transferencia_estado_sus",
+        "valor_absoluto": 1889761.11,
+        "per_capita": 13.76,
+        "supera_pct_nacional": 36,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Transferência Estado - Assistência",
+        "field": "transferencia_estado_assistencia",
+        "valor_absoluto": 108000.0,
+        "per_capita": 0.79,
+        "supera_pct_nacional": 28,
+        "total_municipios_comparados": 5479
+      },
+      {
+        "rubrica": "Outras Transferências do Estado",
+        "field": "outras_transferencias_estado",
+        "valor_absoluto": 8630972.14,
+        "per_capita": 62.85,
+        "supera_pct_nacional": 37,
+        "total_municipios_comparados": 5479
+      }
+    ]
+  },
+  "hierarquia_receitas": {
+    "nivel_1": [
+      {
+        "field": "imposto_taxas_contribuicoes",
+        "label": "Impostos, Taxas e Contribuições de Melhoria"
+      },
+      {
+        "field": "contribuicoes",
+        "label": "Contribuições"
+      },
+      {
+        "field": "transferencias_correntes",
+        "label": "Transferências Correntes"
+      },
+      {
+        "field": "outras_receita",
+        "label": "Outras Receitas"
+      }
+    ],
+    "nivel_2": [
+      {
+        "field": "imposto",
+        "label": "Impostos",
+        "parent_field": "imposto_taxas_contribuicoes"
+      },
+      {
+        "field": "taxas",
+        "label": "Taxas",
+        "parent_field": "imposto_taxas_contribuicoes"
+      },
+      {
+        "field": "contribuicoes_melhoria",
+        "label": "Contribuições de Melhoria",
+        "parent_field": "imposto_taxas_contribuicoes"
+      },
+      {
+        "field": "contribuicoes_sociais",
+        "label": "Contribuições Sociais",
+        "parent_field": "contribuicoes"
+      },
+      {
+        "field": "contribuicoes_iluminacao_publica",
+        "label": "Contribuição de Iluminação Pública",
+        "parent_field": "contribuicoes"
+      },
+      {
+        "field": "outras_contribuicoes",
+        "label": "Outras Contribuições",
+        "parent_field": "contribuicoes"
+      },
+      {
+        "field": "tranferencias_uniao",
+        "label": "Transferências da União",
+        "parent_field": "transferencias_correntes"
+      },
+      {
+        "field": "tranferencias_estados",
+        "label": "Transferências dos Estados",
+        "parent_field": "transferencias_correntes"
+      },
+      {
+        "field": "outras_tranferencias",
+        "label": "Outras Transferências",
+        "parent_field": "transferencias_correntes"
+      },
+      {
+        "field": "receita_patrimonial",
+        "label": "Receita Patrimonial",
+        "parent_field": "outras_receita"
+      },
+      {
+        "field": "receita_agropecuaria",
+        "label": "Receita Agropecuária",
+        "parent_field": "outras_receita"
+      },
+      {
+        "field": "receita_industrial",
+        "label": "Receita Industrial",
+        "parent_field": "outras_receita"
+      },
+      {
+        "field": "receita_servicos",
+        "label": "Receita de Serviços",
+        "parent_field": "outras_receita"
+      },
+      {
+        "field": "outras_receitas",
+        "label": "Outras Receitas",
+        "parent_field": "outras_receita"
+      }
+    ],
+    "nivel_3": [
+      {
+        "field": "iptu",
+        "label": "IPTU",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "itbi",
+        "label": "ITBI",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "iss",
+        "label": "ISS",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "imposto_renda",
+        "label": "Imposto de Renda",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "imposto_icms",
+        "label": "ICMS",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "imposto_ipva",
+        "label": "IPVA",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "outros_impostos",
+        "label": "Outros Impostos",
+        "parent_field": "imposto"
+      },
+      {
+        "field": "taxa_policia",
+        "label": "Taxa de Polícia",
+        "parent_field": "taxas"
+      },
+      {
+        "field": "taxa_prestacao_servico",
+        "label": "Taxa de Prestação de Serviço",
+        "parent_field": "taxas"
+      },
+      {
+        "field": "outras_taxas",
+        "label": "Outras Taxas",
+        "parent_field": "taxas"
+      },
+      {
+        "field": "contribuicao_melhoria_pavimento_obras",
+        "label": "Contribuição de Melhoria - Pavimentação/Obras",
+        "parent_field": "contribuicoes_melhoria"
+      },
+      {
+        "field": "contribuicao_melhoria_agua_potavel",
+        "label": "Contribuição de Melhoria - Água Potável",
+        "parent_field": "contribuicoes_melhoria"
+      },
+      {
+        "field": "contribuicao_melhoria_iluminacao_publica",
+        "label": "Contribuição de Melhoria - Iluminação Pública",
+        "parent_field": "contribuicoes_melhoria"
+      },
+      {
+        "field": "outras_contribuicoes_melhoria",
+        "label": "Outras Contribuições de Melhoria",
+        "parent_field": "contribuicoes_melhoria"
+      },
+      {
+        "field": "transferencia_uniao_fpm",
+        "label": "Transferência União - FPM",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_exploracao",
+        "label": "Transferência União - Exploração de Recursos",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_sus",
+        "label": "Transferência União - SUS",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_fnde",
+        "label": "Transferência União - FNDE",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_fundeb",
+        "label": "Transferência União - FUNDEB",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_fnas",
+        "label": "Transferência União - FNAS",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_uniao_fpe",
+        "label": "Transferência União - FPE",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "outras_transferencias_uniao",
+        "label": "Outras Transferências da União",
+        "parent_field": "tranferencias_uniao"
+      },
+      {
+        "field": "transferencia_estado_icms",
+        "label": "Transferência Estado - ICMS",
+        "parent_field": "tranferencias_estados"
+      },
+      {
+        "field": "transferencia_estado_ipva",
+        "label": "Transferência Estado - IPVA",
+        "parent_field": "tranferencias_estados"
+      },
+      {
+        "field": "transferencia_estado_exploracao",
+        "label": "Transferência Estado - Exploração de Recursos",
+        "parent_field": "tranferencias_estados"
+      },
+      {
+        "field": "transferencia_estado_sus",
+        "label": "Transferência Estado - SUS",
+        "parent_field": "tranferencias_estados"
+      },
+      {
+        "field": "transferencia_estado_assistencia",
+        "label": "Transferência Estado - Assistência",
+        "parent_field": "tranferencias_estados"
+      },
+      {
+        "field": "outras_transferencias_estado",
+        "label": "Outras Transferências do Estado",
+        "parent_field": "tranferencias_estados"
+      }
+    ]
+  },
+  "sintese_fiscal_2000_2024": {
+    "delta_receita_per_capita_pct": 336.34,
+    "delta_populacao_pct": 108.95,
+    "media_nacional_delta_receita_per_capita_pct": 316.74,
+    "media_nacional_delta_populacao_pct": 16.04,
+    "observacao": "Valores financeiros corrigidos pela inflacao para 2024."
+  },
+  "posicao_historica": {
+    "ano_2000": {
+      "populacao": 65724,
+      "receita_corrente_absoluta": 121226269.1496249,
+      "receita_per_capita": 1844.474912507225,
+      "quintil": "3º quintil",
+      "decil": "6º decil",
+      "percentil_label": "53º percentil",
+      "percentil_numero": 53,
+      "ranking_nacional": {
+        "posicao": 2533,
+        "total": 5305
+      }
+    },
+    "ano_2024": {
+      "populacao": 137331,
+      "receita_corrente_absoluta": 1105261269.26,
+      "receita_per_capita": 8048.155691431651,
+      "quintil": "4º quintil",
+      "decil": "7º decil",
+      "percentil_label": "65º percentil",
+      "percentil_numero": 65,
+      "ranking_nacional": {
+        "posicao": 1917,
+        "total": 5479
+      }
+    }
+  }
+}
