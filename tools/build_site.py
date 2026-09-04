@@ -151,14 +151,29 @@ def _carregar_indice_municipios() -> dict[str, dict]:
     return idx
 
 
-def _pdf_filename_local(municipio: str, uf: str) -> str:
+def _sufixo_ano(meta: dict) -> str:
+    """
+    `_<ano>` para o folheto que não é do ano corrente, "" para os demais.
+
+    Espelha `FolhetoIFEM._default_output()`: os municípios que não declararam
+    receita no ano saem com o dado do ano anterior e carregam o ano no nome do
+    arquivo. Se este sufixo divergir do que o gerador escreve, o município some
+    do índice em silêncio — `build()` só inclui quem tem PDF em `output/`.
+    """
+    if not meta.get("aviso"):
+        return ""
+    ano = meta.get("ano_dados")
+    return f"_{ano}" if ano else ""
+
+
+def _pdf_filename_local(municipio: str, uf: str, meta: dict) -> str:
     """Filename como o gerador escreve em output/ — com acentos."""
-    return f"FolhetoIFEM_{_slug_local(municipio)}_{uf}.pdf"
+    return f"FolhetoIFEM_{_slug_local(municipio)}_{uf}{_sufixo_ano(meta)}.pdf"
 
 
-def _pdf_filename_release(municipio: str, uf: str) -> str:
+def _pdf_filename_release(municipio: str, uf: str, meta: dict) -> str:
     """Filename como o GitHub Releases armazena — sem acentos."""
-    return f"FolhetoIFEM_{_slug_release(municipio)}_{uf}.pdf"
+    return f"FolhetoIFEM_{_slug_release(municipio)}_{uf}{_sufixo_ano(meta)}.pdf"
 
 
 def _agora_iso() -> str:
@@ -183,8 +198,8 @@ def build(release_tag: str, owner: str, repo: str) -> None:
 
     items = []
     for cod, meta in municipios_meta.items():
-        fname_local   = _pdf_filename_local(meta["municipio"], meta["uf"])
-        fname_release = _pdf_filename_release(meta["municipio"], meta["uf"])
+        fname_local   = _pdf_filename_local(meta["municipio"], meta["uf"], meta)
+        fname_release = _pdf_filename_release(meta["municipio"], meta["uf"], meta)
         # Confere disponibilidade pelo arquivo local (que tem acento), mas
         # aponta a URL pro nome sem acento (forma como o GitHub Releases guarda).
         if fname_local not in pdfs_disponiveis:

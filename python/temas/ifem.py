@@ -262,6 +262,29 @@ class FolhetoIFEM(FolhetoFNP):
     def _output_name(self):
         return self.nome, self.uf
 
+    def _default_output(self):
+        """
+        `FolhetoIFEM_<Municipio>_<UF>.pdf`, com sufixo `_<ano>` quando o folheto
+        não é do ano corrente.
+
+        Sete municípios do recorte não declararam receita ao SICONFI no ano e
+        são publicados com o dado do ano anterior. O folheto inteiro sai naquele
+        ano — `gerar_sem_declaracao.py` roda com `ANO_REF` do dado, então todo
+        rótulo impresso é coerente e nada afirma ser do ano corrente.
+
+        O ano viaja no nome do arquivo porque é ali que ele sobrevive: o PDF
+        circula solto, por e-mail e download, longe do índice que o descreve.
+        Sem o sufixo, dois folhetos do mesmo município em anos diferentes teriam
+        o mesmo nome e um sobrescreveria o outro em `output/`.
+
+        Só os fora do ano corrente ganham sufixo: pôr o ano em todos os 424
+        mudaria as URLs já publicadas sem necessidade.
+        """
+        base = super()._default_output()
+        if not self.d.get("aviso_dados"):
+            return base
+        return base.with_name(f"{base.stem}_{ANO_REF}{base.suffix}")
+
     @property
     def risco_climatico(self) -> dict:
         """Bloco AdaptaBrasil do município. Vazio quando o JSON não foi
@@ -308,27 +331,13 @@ class FolhetoIFEM(FolhetoFNP):
         draw_page_number(c, self.W, n - 1, lado, lettermark="IFEM")
         draw_header(c, self.H, self.titulo_publicacao)
         draw_footer(c, self.W, footer_label or f"{self.nome} · {self.uf}")
-        self._draw_aviso_dados(c, lado)
         return lado
 
-    def _draw_aviso_dados(self, c, lado: str):
-        """
-        Tarja de ressalva quando o folheto não usa a base do ano corrente.
-
-        Aparece em TODAS as páginas internas de propósito: o folheto circula
-        impresso e em recortes, e uma ressalva só na capa se perde. Ocupa a
-        faixa entre o footer (y=16) e o SAFE_BOTTOM (y=56), que é livre.
-
-        O texto vem do JSON (`aviso_dados`), não do código — quem monta o lote
-        decide o que ressalvar.
-        """
-        aviso = self.d.get("aviso_dados")
-        if not aviso:
-            return
-        x = (STRIPE_W + MARGIN) if lado == "esq" else MARGIN
-        c.setFillColor(RED_BURNT)
-        c.setFont(F(FONT_TEXTO_SEMIBOLD), 6.2)
-        c.drawString(x, 34, str(aviso).upper())
+    # O folheto de município que não declarou no ano corrente já sai inteiro no
+    # ano do dado: `gerar_sem_declaracao.py` roda com ANO_REF do ano anterior,
+    # então todo rótulo impresso diz 2024 e nada afirma ser do ano corrente.
+    # A ressalva que antes vinha carimbada em todas as páginas saiu por decisão
+    # editorial; o ano passou a viajar no NOME DO ARQUIVO (ver `_default_output`).
 
     def _content_x(self, lado: str) -> float:
         """X inicial do conteúdo, evitando o stripe."""
@@ -385,9 +394,7 @@ class FolhetoIFEM(FolhetoFNP):
         alta do que a pedida.
         """
         FOOTER_Y = 36
-        # A tarja de ressalva (`aviso_dados`) mora na faixa do footer; quando
-        # existe, a arte precisa começar acima dela.
-        base_y = 46 if self.d.get("aviso_dados") else FOOTER_Y + 4
+        base_y = FOOTER_Y + 4
         h_disp = y_max - base_y
         if h_disp < 20:
             return

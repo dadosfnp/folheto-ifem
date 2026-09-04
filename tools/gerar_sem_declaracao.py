@@ -8,9 +8,9 @@ Volta Redonda/RJ (280 mil) e Magé/RJ (244 mil). Todas tinham folheto no lote
 anterior.
 
 A ESCOLHA
-Publicar o folheto do último ano disponível, com ressalva explícita, em vez de
-deixar a cidade de fora sem explicação. Quem procura o folheto de Volta Redonda
-prefere o dado de 2024 marcado como tal do que um 404.
+Publicar o folheto do último ano disponível, marcado como tal, em vez de deixar
+a cidade de fora sem explicação. Quem procura o folheto de Volta Redonda prefere
+o dado de 2024 identificado do que um 404.
 
 DE ONDE VEM O DADO
 De `data/ifem/fallback_<ano anterior>/`, que é **versionado**. Isso não é
@@ -26,9 +26,13 @@ erro nenhum — o município sumia do lote em silêncio. Um lote local de backup
 quando existe, ainda é aceito como complemento para municípios fora do recorte.
 
 COMO
-Injeta `aviso_dados` no JSON do ano anterior — o tema renderiza como tarja em
-todas as páginas — e gera o folheto com `ANO_REF` do ano do dado, para que todos
-os rótulos internos fiquem coerentes. Nada no folheto afirma ser do ano corrente.
+Gera o folheto com `ANO_REF` do ano do dado, para que todos os rótulos internos
+fiquem coerentes: nada no folheto afirma ser do ano corrente.
+
+O campo `aviso_dados` no JSON é o marcador desses municípios. Ele não é impresso
+(a tarja que aparecia em todas as páginas saiu por decisão editorial): serve para
+o gerador acrescentar o ano ao nome do arquivo (`..._PR_2024.pdf`) e para a
+landing sinalizar o folheto na lista.
 
 O `ANO_REF` precisa ir por subprocesso porque `core/tokens.py` o lê uma vez, no
 import: dois anos diferentes não coexistem no mesmo processo.
@@ -189,7 +193,7 @@ def identificar() -> tuple[list[dict], str]:
 
 
 def preparar(geraveis: list[dict], aviso: str) -> list[tuple[Path, dict]]:
-    """Escreve em TEMP_DIR os JSONs do ano anterior já com a ressalva."""
+    """Escreve em TEMP_DIR os JSONs do ano anterior já marcados."""
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
 
     for nome in COMPANHEIROS_DO_ANO:
@@ -238,7 +242,7 @@ def _sem_risco(preparados: list[tuple[Path, dict]]) -> list[str]:
 def gerar(preparados: list[tuple[Path, dict]]) -> list[str]:
     """Gera um PDF por município, cada um com ANO_REF do ano do dado."""
     # Sem isto o folheto imprimiria o ano corrente sobre números do ano
-    # anterior — exatamente o erro que a ressalva existe para evitar.
+    # anterior — o folheto passaria a afirmar um ano que não é o do dado.
     env = {**os.environ, "ANO_REF": str(ANO_ANTERIOR), "PYTHONIOENCODING": "utf-8"}
 
     erros = []
@@ -261,7 +265,7 @@ def main() -> int:
         description="Folhetos de municípios sem declaração no ano de referência")
     ap.add_argument("--listar", action="store_true", help="só lista, não gera")
     ap.add_argument("--apenas-preparar", action="store_true",
-                    help="escreve os JSONs com a ressalva e para, sem gerar PDF "
+                    help="escreve os JSONs marcados e para, sem gerar PDF "
                          "(rode antes do adapta_para_json.py --injetar)")
     ap.add_argument("--sem-risco", action="store_true",
                     help="gera mesmo sem o bloco de Risco Climático")
@@ -303,7 +307,7 @@ def main() -> int:
         f"Dados de {ANO_ANTERIOR}: este município não declarou receita "
         f"de {ANO_REF} ao SICONFI"
     )
-    print(f"\nPreparando {len(geraveis)} JSON(s) com a ressalva:")
+    print(f"\nPreparando {len(geraveis)} JSON(s), marcados como:")
     print(f'  "{aviso}"\n')
     preparados = preparar(geraveis, aviso)
 
@@ -338,7 +342,8 @@ def main() -> int:
     for e in erros:
         print(f"  - {e}", file=sys.stderr)
     if len(erros) < len(preparados):
-        print("\nOs PDFs saíram em output/ com a tarja de ressalva em todas as páginas.")
+        print(f"\nOs PDFs saíram em output/ com o ano no nome: "
+              f"FolhetoIFEM_<Municipio>_<UF>_{ANO_ANTERIOR}.pdf")
         print("Rode `python tools/build_site.py --release-tag <tag>` para reindexar.")
     return 1 if erros else 0
 
