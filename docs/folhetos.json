@@ -5,7 +5,7 @@
   "release_tag": "v6",
   "owner": "dadosfnp",
   "repo": "folheto-ifem",
-  "atualizado": "2026-09-04T18:19:23Z",
+  "atualizado": "2026-09-04T18:48:33Z",
   "municipios": [
     {
       "cod_ibge": "3550308",
@@ -1531,8 +1531,8 @@
       "quintil": "3º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Volta_Redonda_RJ.pdf",
-      "pdf_filename": "FolhetoIFEM_Volta_Redonda_RJ.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Volta_Redonda_RJ_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Volta_Redonda_RJ_2024.pdf"
     },
     {
       "cod_ibge": "2408003",
@@ -1826,8 +1826,8 @@
       "quintil": "1º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Mage_RJ.pdf",
-      "pdf_filename": "FolhetoIFEM_Mage_RJ.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Mage_RJ_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Mage_RJ_2024.pdf"
     },
     {
       "cod_ibge": "2700300",
@@ -3283,8 +3283,8 @@
       "quintil": "4º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Barcarena_PA.pdf",
-      "pdf_filename": "FolhetoIFEM_Barcarena_PA.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Barcarena_PA_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Barcarena_PA_2024.pdf"
     },
     {
       "cod_ibge": "4320008",
@@ -3396,8 +3396,8 @@
       "quintil": "1º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Sao_Mateus_ES.pdf",
-      "pdf_filename": "FolhetoIFEM_Sao_Mateus_ES.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Sao_Mateus_ES_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Sao_Mateus_ES_2024.pdf"
     },
     {
       "cod_ibge": "1501709",
@@ -3593,8 +3593,8 @@
       "quintil": "1º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Almirante_Tamandare_PR.pdf",
-      "pdf_filename": "FolhetoIFEM_Almirante_Tamandare_PR.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Almirante_Tamandare_PR_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Almirante_Tamandare_PR_2024.pdf"
     },
     {
       "cod_ibge": "5107925",
@@ -3874,8 +3874,8 @@
       "quintil": "1º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Marituba_PA.pdf",
-      "pdf_filename": "FolhetoIFEM_Marituba_PA.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Marituba_PA_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Marituba_PA_2024.pdf"
     },
     {
       "cod_ibge": "3543303",
@@ -5597,8 +5597,8 @@
       "quintil": "2º quintil",
       "ano_dados": 2024,
       "aviso": "Dados de 2024: este município não declarou receita de 2025 ao SICONFI",
-      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Seropedica_RJ.pdf",
-      "pdf_filename": "FolhetoIFEM_Seropedica_RJ.pdf"
+      "pdf": "https://github.com/dadosfnp/folheto-ifem/releases/download/v6/FolhetoIFEM_Seropedica_RJ_2024.pdf",
+      "pdf_filename": "FolhetoIFEM_Seropedica_RJ_2024.pdf"
     },
     {
       "cod_ibge": "2930501",
