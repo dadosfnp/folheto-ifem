@@ -764,7 +764,8 @@ def main() -> int:
                     f"{r['nome_muni']}/{r['uf']}"
                     for _, r in grandes.sort_values("populacao_25", ascending=False).iterrows()
                 )
-                print(f"        {len(grandes)} deles estão no recorte publicado "
+                plural = "estão" if len(grandes) > 1 else "está"
+                print(f"        {len(grandes)} {plural} no recorte publicado "
                       f"(> 80 mil hab.): {nomes}", file=sys.stderr)
         print("        Esses saem por `python tools/gerar_sem_declaracao.py`, "
               "com o dado do ano anterior e ressalva.", file=sys.stderr)

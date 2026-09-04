@@ -178,6 +178,43 @@ def _rank(serie_desc: dict, cod: str, total: int) -> dict | None:
 # Carga
 # --------------------------------------------------------------------------
 
+def _erro_planilha_incompleta(nome: str, colunas) -> None:
+    """
+    Aborta explicando que a planilha do AdaptaBrasil está numa versão parcial.
+
+    Existem duas versões dela circulando no Subfinanciados, um dia de diferença
+    entre elas. A parcial tem `geocod_ibge` e traz só os 12 indicadores; a boa
+    tem `cod_ibge` mais `pontuacao_risco_norm_pond`, `quintil` e `decil`.
+
+    A diferença importa porque `pontuacao_risco_norm_pond` é a média ponderada
+    de risco do município — a nota grande da faixa de destaque, a classe, o
+    ranking nacional e o estadual saem dela. Ela NÃO é a média simples dos 12
+    indicadores (medido: diferença média de 0,14 e máxima de 0,34 no lote
+    publicado), então não há como recalculá-la aqui.
+
+    Sem esta checagem o script morria em `KeyError: 'cod_ibge'`, e quem não
+    escreveu o código não tinha como ligar aquilo a "estou com a planilha
+    errada". Pior: um `--injetar` que falha deixa o lote sem o bloco de risco, e
+    aí todo folheto sai com duas páginas a menos sem que nada avise.
+    """
+    tem = sorted(str(c) for c in colunas)
+    sys.exit(
+        f"\n{nome} está numa versão INCOMPLETA.\n\n"
+        f"  Colunas encontradas: {', '.join(tem)}\n\n"
+        f"  Falta `{COL_MEDIA}` (a média ponderada de risco do município), e a\n"
+        f"  chave veio como `geocod_ibge` em vez de `cod_ibge`. Essa versão só\n"
+        f"  traz os 12 indicadores — a nota geral, a classe de risco e os\n"
+        f"  rankings não saem dela, e não dá para calculá-los a partir dos 12.\n\n"
+        f"  A versão completa está no Subfinanciados, um commit depois da que\n"
+        f"  costuma vir na branch de trabalho. Para restaurá-la:\n\n"
+        f"    cd <Subfinanciados>\n"
+        f"    git log --all --oneline -- base_datas/{nome}\n"
+        f"    git checkout <commit-que-tem-cod_ibge> -- base_datas/{nome}\n\n"
+        f"  Confira antes de rodar de novo: a planilha certa tem as colunas\n"
+        f"  cod_ibge, {COL_MEDIA}, quintil e decil.\n"
+    )
+
+
 def carregar() -> pd.DataFrame:
     """Lê AdaptaBrasil + população e devolve a base consolidada por município."""
     if not PLANILHAS_DIR or not PLANILHAS_DIR.is_dir():
@@ -192,6 +229,8 @@ def carregar() -> pd.DataFrame:
             sys.exit(f"Planilha obrigatória ausente: {p}")
         df = pd.read_excel(p)
         df.columns = df.columns.str.lower()
+        if "cod_ibge" not in df.columns:
+            _erro_planilha_incompleta(nome, df.columns)
         df["cod_ibge"] = df["cod_ibge"].astype(str).str.strip()
         return df
 
@@ -203,6 +242,8 @@ def carregar() -> pd.DataFrame:
 
     faltando = [c for c in CAMPOS + [COL_MEDIA] if c not in ad.columns]
     if faltando:
+        if COL_MEDIA in faltando:
+            _erro_planilha_incompleta(PLANILHA, ad.columns)
         sys.exit(f"{PLANILHA} sem as colunas esperadas: {', '.join(faltando)}")
 
     base = ad.merge(

@@ -195,3 +195,40 @@ versionado era editorial; aqui é dado — mas dado que **nenhum script recria**
    `gerar_sem_declaracao.py` não era citado em lugar nenhum da documentação —
    nem no README, nem no PASSO_A_PASSO. Quem não escreveu o script não tinha
    como saber que o caminho existia.
+
+---
+
+## Duas versões da mesma planilha, e a branch de trabalho tem a errada
+
+**O que aconteceu:** ao testar o caminho completo num clone limpo,
+`adapta_para_json.py --injetar` morreu em `KeyError: 'cod_ibge'`. A primeira
+leitura foi "trocaram a planilha e mudaram o contrato" — o arquivo em disco
+tinha data do dia anterior. Estava errado: o git do Subfinanciados guarda **duas
+versões** do `indicadores_adapta_brasil.xlsx`, com um dia de diferença. A de
+06/08 tem `geocod_ibge` e só os 12 indicadores; a de 07/08 tem `cod_ibge` mais
+`pontuacao_risco_norm_pond`, `quintil` e `decil`. A branch em que o repo estava
+(`refactor/ifem-2.0`) contém só a primeira; a segunda vive em `production/main`
+e em outras branches. O lote publicado saiu da completa, numa época em que a
+working copy estava em outra branch.
+
+**Por que importa tanto:** `pontuacao_risco_norm_pond` é a média ponderada de
+risco — a nota grande da faixa, a classe e os dois rankings saem dela. Medi
+contra o lote publicado: **não** é a média simples dos 12 indicadores (diferença
+média 0,14, máxima 0,34). Ou seja, com a planilha parcial o dado não é
+recuperável por cálculo. E o efeito de deixar passar é silencioso: `--injetar`
+falha, o lote fica sem o bloco `risco_climatico`, e todo folheto sai com duas
+páginas a menos sem nada avisar.
+
+**Regra daqui em diante:**
+
+1. "A planilha mudou" é hipótese, não diagnóstico. Antes de adaptar o código ao
+   arquivo que está em disco, procurar o histórico dele:
+   `git log --all --oneline -- <caminho>`. Aqui a resposta era um checkout, não
+   uma mudança de contrato — e adaptar o parser teria fixado a versão pior.
+2. Arquivo de entrada versionado em OUTRO repo é dependência com versão. Se o
+   script exige uma coluna específica, ele tem que **checar a coluna e nomear a
+   correção**, não estourar `KeyError` de dentro do pandas.
+3. Antes de propor recalcular um agregado que sumiu, **medir contra o dado já
+   publicado** se a fórmula candidata reproduz o número. Dois minutos de
+   verificação evitaram trocar uma média ponderada por uma média simples e mudar
+   silenciosamente a nota impressa de 5.570 municípios.

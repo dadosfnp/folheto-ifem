@@ -77,6 +77,23 @@ de dados versionado. Rastreabilidade em
 > = pior, e `ranking_nacional.posicao == 1` é o município **mais** exposto do
 > país. As páginas de risco têm o próprio mapa de cores por isso.
 
+> ⚠️ **Existem duas versões da `indicadores_adapta_brasil.xlsx` circulando no
+> Subfinanciados**, um dia de diferença entre elas — e a branch de trabalho
+> costuma vir com a **incompleta**, que tem `geocod_ibge` e só os 12
+> indicadores. A completa tem `cod_ibge` e mais `pontuacao_risco_norm_pond`, a
+> média ponderada de onde saem a nota geral, a classe de risco e os rankings.
+> Ela **não** é a média dos 12 (difere até 0,34), então não há como recalcular.
+>
+> Com a incompleta, o `adapta_para_json.py` aborta explicando o que fazer. Se
+> alguém contornar o aviso, **todo folheto sai com 2 páginas a menos**. Para
+> restaurar a certa:
+>
+> ```powershell
+> cd <Subfinanciados>
+> git log --all --oneline -- base_datas/indicadores_adapta_brasil.xlsx
+> git checkout <commit-com-cod_ibge> -- base_datas/indicadores_adapta_brasil.xlsx
+> ```
+
 ### Ano de referência
 
 O ano impresso nos folhetos vem de `ANO_REF` no `.env` — **nunca** de um literal
