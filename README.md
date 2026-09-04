@@ -5,6 +5,9 @@ Cada folheto compartilha a mesma identidade visual — só os **dados** e o **co
 
 > **Primeira vez aqui?** Vá direto para [`docs/PASSO_A_PASSO.md`](docs/PASSO_A_PASSO.md) —
 > guia completo do zero até o PDF na mão, incluindo o acesso ao banco.
+>
+> **Vai mexer no folheto?** [`docs/COMO_ALTERAR_O_FOLHETO.md`](docs/COMO_ALTERAR_O_FOLHETO.md) —
+> onde fica cada página, como mudar texto, cor, tabela, e o que quebra em silêncio.
 
 ## O caminho completo, do zero ao ar
 
@@ -250,7 +253,16 @@ python tools/verificar_arte.py output/
 Mede, no PDF gerado, se a arte decorativa do rodapé cobre texto ou gráfico —
 defeito que não gera erro nenhum (o arquivo abre, o texto continua extraível) e
 só aparece para quem olha a página. Sai com código 1 se achar qualquer colisão.
-Rodar **sempre** antes do `gh release create`.
+
+```powershell
+python tools/verificar_texto.py output/
+```
+
+Checa a convenção tipográfica da publicação: nenhum travessão (—) em texto
+impresso. A meia-risca (–) de intervalo, como em "2000–2025", é permitida e não
+é acusada.
+
+Rodar os dois **sempre** antes do `gh release create`.
 
 ---
 

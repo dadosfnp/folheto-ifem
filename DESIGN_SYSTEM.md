@@ -246,7 +246,7 @@ Existem duas variantes (ver [`inspiration/`](inspiration/)):
 
 ## 9. Checklist antes de exportar PDF
 
-- [ ] Nenhum travessão (—) no texto do PDF (`page.get_text()` de todas as páginas).
+- [ ] Nenhum travessão (—) no texto do PDF: `python tools/verificar_texto.py output/` sai com 0 falhas.
 - [ ] Nenhuma arte de rodapé cobrindo conteúdo: `python tools/verificar_arte.py output/` sai com 0 falhas.
 - [ ] Stripes alternam corretamente entre páginas pares e ímpares.
 - [ ] Numeração de página em branco aparece em todas as páginas (exceto se o tema pedir capa "limpa").

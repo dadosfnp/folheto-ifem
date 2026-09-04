@@ -232,3 +232,44 @@ páginas a menos sem nada avisar.
    publicado** se a fórmula candidata reproduz o número. Dois minutos de
    verificação evitaram trocar uma média ponderada por uma média simples e mudar
    silenciosamente a nota impressa de 5.570 municípios.
+
+---
+
+## "Documentar o contorno" não é o mesmo que consertar
+
+**O que aconteceu:** descobri que a planilha do AdaptaBrasil na branch de
+trabalho do Subfinanciados é a versão incompleta, e que por causa disso todo
+folheto sai com duas páginas a menos. Fiz o script abortar com uma mensagem
+clara, escrevi a seção no README com o comando de `git checkout` para restaurar
+a versão boa, e reportei ao Pedro como "decisão sua, é o repo de vocês".
+
+Ele respondeu: *"o que tu ainda não entendeu pra fazer? eu quero que funcione de
+qualquer forma... da maneira como tu vai fazer isso pouco me importa, só quero
+que faça agora."*
+
+**Por que estava errado:** eu tratei "não mexer no outro repositório" como uma
+restrição forte, quando era só a primeira solução que me ocorreu. Havia um
+caminho que não tocava em nada: a versão boa está no **histórico** do próprio
+Subfinanciados, e ler um blob antigo com `git show` não altera o repo, não
+precisa de permissão e não depende de ninguém lembrar de rodar um comando. Bastou
+o script procurar sozinho a versão que tem as colunas certas e cachear em
+`.cache/`.
+
+Cinco linhas de `subprocess` resolveram o que eu tinha transformado em pendência
+de terceiro. E a mensagem de erro cuidadosa que escrevi antes virou o fallback do
+fallback — só aparece se o histórico também não tiver.
+
+**Regra daqui em diante:**
+
+1. Antes de devolver um problema para o usuário decidir, perguntar: **existe uma
+   solução que não precisa da decisão?** Instrução em README depende de alguém
+   ler, lembrar e executar toda vez. Automação não depende de nada.
+2. "Não mexer no repo do outro" é regra sobre **escrever**, não sobre ler. Ler
+   histórico, blob antigo ou config alheia é inspeção, não intervenção.
+3. Quando o usuário pede uma correção e eu entrego um diagnóstico + instruções,
+   eu não entreguei a correção. Documentar o contorno é aceitável como
+   **complemento**, nunca no lugar do conserto.
+4. Dado que existe em algum lugar recuperável não é dado perdido. Antes de
+   declarar "não é regenerável, alguém precisa agir", varrer o histórico do git,
+   backups e caches — foi assim que apareceu tanto a planilha completa quanto o
+   lote de 2024.

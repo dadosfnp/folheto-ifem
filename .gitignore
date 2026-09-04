@@ -42,3 +42,6 @@ Thumbs.db
 fonts/*.ttf
 fonts/*.otf
 !fonts/README.md
+
+# Planilhas recuperadas do historico do Subfinanciados (ver adapta_para_json.py)
+.cache/

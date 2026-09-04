@@ -36,6 +36,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import unicodedata
 from bisect import bisect_left
@@ -178,6 +179,75 @@ def _rank(serie_desc: dict, cod: str, total: int) -> dict | None:
 # Carga
 # --------------------------------------------------------------------------
 
+def _cache_dir() -> Path:
+    """Pasta local para planilhas recuperadas do histórico. Ignorada pelo git."""
+    d = ROOT_DIR / ".cache" / "planilhas"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def _git(repo: Path, *args: str) -> str | None:
+    """Roda git no repo e devolve stdout, ou None se falhar."""
+    try:
+        r = subprocess.run(["git", "-C", str(repo), *args],
+                           capture_output=True, text=True, timeout=30)
+        return r.stdout if r.returncode == 0 else None
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+def _planilha_serve(caminho: Path) -> bool:
+    """A planilha tem as colunas de que este script depende?"""
+    try:
+        cols = {str(c).lower() for c in pd.read_excel(caminho, nrows=1).columns}
+    except Exception:
+        return False
+    return "cod_ibge" in cols and COL_MEDIA in cols
+
+
+def _recuperar_do_historico(nome: str) -> Path | None:
+    """
+    Procura no git do Subfinanciados uma versão da planilha que sirva.
+
+    Circulam duas versões do AdaptaBrasil no repositório, com um dia de
+    diferença: a de 06/08 tem `geocod_ibge` e só os 12 indicadores; a de 07/08
+    tem `cod_ibge` mais `pontuacao_risco_norm_pond`. A branch de trabalho
+    (`refactor/ifem-2.0`) carrega só a primeira, então quem clona o repo e roda
+    o pipeline recebe a errada — e o efeito é silencioso: sem o bloco de risco,
+    todo folheto sai com duas páginas a menos.
+
+    Em vez de exigir que cada pessoa descubra isso e faça `git checkout` na mão,
+    varremos o histórico (todas as refs, mais recente primeiro), pegamos a
+    primeira versão que tem as colunas necessárias e a guardamos em `.cache/`.
+    O repositório do Subfinanciados não é tocado: só lemos blobs.
+
+    Devolve o caminho da planilha recuperada, ou None se não houver nenhuma
+    versão utilizável no histórico.
+    """
+    repo = PLANILHAS_DIR.parent
+    if not (repo / ".git").exists():
+        return None
+
+    rel = f"{PLANILHAS_DIR.name}/{nome}"
+    log = _git(repo, "log", "--all", "--format=%H %cs", "--", rel)
+    if not log:
+        return None
+
+    for linha in log.strip().splitlines():
+        commit, _, data = linha.partition(" ")
+        destino = _cache_dir() / f"{Path(nome).stem}_{data}_{commit[:8]}.xlsx"
+        if not destino.exists():
+            blob = subprocess.run(["git", "-C", str(repo), "show", f"{commit}:{rel}"],
+                                  capture_output=True, timeout=60)
+            if blob.returncode != 0 or not blob.stdout:
+                continue
+            destino.write_bytes(blob.stdout)
+        if _planilha_serve(destino):
+            return destino
+        destino.unlink(missing_ok=True)   # versão inútil não fica ocupando cache
+    return None
+
+
 def _erro_planilha_incompleta(nome: str, colunas) -> None:
     """
     Aborta explicando que a planilha do AdaptaBrasil está numa versão parcial.
@@ -227,6 +297,20 @@ def carregar() -> pd.DataFrame:
         p = PLANILHAS_DIR / nome
         if not p.exists():
             sys.exit(f"Planilha obrigatória ausente: {p}")
+
+        # A do AdaptaBrasil tem duas versões circulando e a branch de trabalho
+        # costuma trazer a incompleta. Em vez de abortar mandando o usuário
+        # fazer `git checkout` na mão, buscamos a boa no próprio histórico.
+        if nome == PLANILHA and not _planilha_serve(p):
+            recuperada = _recuperar_do_historico(nome)
+            if recuperada is None:
+                _erro_planilha_incompleta(nome, pd.read_excel(p, nrows=1).columns)
+            print(f"  [aviso] {nome} em PLANILHAS_DIR está incompleta (sem "
+                  f"`{COL_MEDIA}`).", file=sys.stderr)
+            print(f"          Usando a versão do histórico do Subfinanciados: "
+                  f"{recuperada.name}", file=sys.stderr)
+            p = recuperada
+
         df = pd.read_excel(p)
         df.columns = df.columns.str.lower()
         if "cod_ibge" not in df.columns:
