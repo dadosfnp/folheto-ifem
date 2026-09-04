@@ -154,3 +154,44 @@ erradas.
 4. Print de uma página é amostra, não escopo. Antes de responder "corrigi",
    rodar a verificação no lote inteiro — aqui, o que parecia um município virou
    1.272 páginas defeituosas em produção.
+
+---
+
+## Fallback que depende de pasta ignorada não é fallback
+
+**O que aconteceu:** o Phillip não conseguiu gerar o folheto de Almirante
+Tamandaré. O município não declarou receita de 2025, e `planilhas_para_json.py`
+descarta quem não tem receita do ano — 130 municípios, 7 deles no recorte
+publicado. Existia solução para isso desde sempre (`gerar_sem_declaracao.py`,
+que publica o dado de 2024 com tarja de ressalva), mas na máquina dele o script
+não tinha como funcionar.
+
+**Por que não funcionava:** o script lia o dado de
+`data/ifem/dados-ifem/_backup_2024/`, dentro da pasta que o `.gitignore` exclui
+por volume. A justificativa da exclusão é "regenerável a qualquer momento com
+`planilhas_para_json.py`" — e essa justificativa **é falsa para o ano anterior**:
+em `base_datas/` só existem `receitas_correntes_2000.xlsx` e
+`receitas_correntes_2025.xlsx`, e as planilhas de detalhamento e percentil não
+têm recorte por ano. Rodar com `ANO_REF=2024` morre em "Planilha obrigatória
+ausente". O dado de 2024 só existia como resíduo de uma execução antiga na
+máquina de quem gerou o lote.
+
+É a mesma lição do `_metodologia.json`, um nível acima: lá o arquivo não
+versionado era editorial; aqui é dado — mas dado que **nenhum script recria**.
+
+**Regra daqui em diante:**
+
+1. Antes de aceitar "está ignorado porque é regenerável", **rodar o
+   regenerador**. Se ele falha para algum recorte (um ano, um subconjunto, um
+   município), aquele recorte não é regenerável e tem que estar versionado.
+2. Fallback tem que funcionar num clone limpo, e a forma de saber é **testar num
+   clone limpo** — aqui bastou renomear `_backup_2024/` e rodar. Nenhuma leitura
+   de código tinha revelado isso: na máquina de quem escreveu, funcionava.
+3. Descarte silencioso em pipeline de dados precisa dizer o que fazer, não só o
+   que aconteceu. `[aviso] 130 pulados` fez concluir que aquelas cidades não têm
+   folheto. O aviso agora nomeia os que estão no recorte publicado e aponta o
+   script que os gera.
+4. Ferramenta que existe e não está no README **não existe**. O
+   `gerar_sem_declaracao.py` não era citado em lugar nenhum da documentação —
+   nem no README, nem no PASSO_A_PASSO. Quem não escreveu o script não tinha
+   como saber que o caminho existia.

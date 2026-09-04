@@ -45,6 +45,12 @@ Pular esses passos não dá erro: o gerador **degrada e continua**. Por isso os 
 scripts acima existem, e por isso o gerador avisa em `stderr` quando está usando
 fallback. Se aparecer `[aviso]` na saída, o PDF **não** está fiel ao oficial.
 
+**A exceção:** [`data/ifem/fallback_2024/`](data/ifem/fallback_2024/) é dado de
+município e mesmo assim vai para o git. São os 7 do recorte que não declararam
+receita de 2025, e o dado de 2024 deles **não é regenerável** — `base_datas/` só
+tem `receitas_correntes_2000.xlsx` e `receitas_correntes_2025.xlsx`. Vale a regra
+da casa: o que nenhum script recria tem que estar versionado.
+
 ### De onde vêm os dados
 
 `tools/planilhas_para_json.py` lê as planilhas oficiais em
@@ -100,6 +106,9 @@ python python/gerar.py --tema ifem `
 # Recorte publicado: municípios acima de 80 mil habitantes (417)
 python python/gerar.py --tema ifem `
   --lote "data/ifem/dados-ifem/export_folheto/*.json" --pop-minima 80000
+
+# Os 7 que não declararam no ano: saem com o dado de 2024 + ressalva (total 424)
+python tools/gerar_sem_declaracao.py
 
 # Um estado só (ex.: Ceará)
 python python/gerar.py --tema ifem --lote "data/ifem/dados-ifem/export_folheto/*-ce.json"
@@ -229,6 +238,8 @@ o GitHub Pages serve `docs/index.html`.
 │   │   ├── SCHEMA.md           # Contrato dos JSONs de entrada
 │   │   ├── _problema.json      # Texto editorial (versionado)
 │   │   ├── _metodologia.json   # Texto editorial (versionado)
+│   │   ├── fallback_2024/      # Dado 2024 dos que não declararam (versionado:
+│   │   │                       #   não é regenerável — ver README de lá)
 │   │   └── dados-ifem/         # JSONs do export (NÃO versionado)
 │   └── cosip/
 ├── assets/                     # Logos, capas, padrões
