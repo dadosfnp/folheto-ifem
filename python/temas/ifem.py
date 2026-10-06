@@ -20,7 +20,7 @@ from core.base_folheto import FolhetoFNP
 from core.tokens import (
     PAPER, BLUE, BLUE_DARK, BLUE_MID, BLUE_LIGHT, YELLOW, YELLOW_DARK,
     CREAM, CREAM_DARK, RULE, MUTED, INK, WHITE, GREEN, RED_BURNT,
-    STRIPE_W, MARGIN, CONTENT_W, ASSETS_DIR, ROOT_DIR, CARD_RADIUS,
+    STRIPE_W, MARGIN, CONTENT_W, PAGE_W, PAGE_H, ASSETS_DIR, ROOT_DIR, CARD_RADIUS,
     FS_EYEBROW, FS_TITLE_SECAO, FS_BODY, FS_BODY_SMALL,
     QR_SIZE, QR_FILL_COLOR,
     FNP_Q1, FNP_Q2, FNP_Q3, FNP_Q4, FNP_Q5, FNP_QUINTIS,
@@ -46,11 +46,11 @@ from core.asset_cache import cached_image
 
 
 # ─── SAFE ZONE: limites verticais do conteúdo de qualquer página ────────────
-# Header (label do tema) ocupa Y 530-560; footer (label do município) ocupa
+# Header (label do tema) ocupa os ~30pt do topo; footer (label do município) ocupa
 # Y 18-44. Reservamos uma SAFE BOTTOM acima do footer para evitar sobreposição
 # com a faixa do número de página e a decoração. Tudo no miolo deve ficar
 # entre SAFE_TOP e SAFE_BOTTOM.
-SAFE_TOP    = 512   # = H - 55 (Y inicial após header)
+SAFE_TOP    = PAGE_H - 55   # Y inicial após o header
 SAFE_BOTTOM = 56    # margem mínima acima do footer label
 SAFE_HEIGHT = SAFE_TOP - SAFE_BOTTOM
 
@@ -94,13 +94,22 @@ def _nota_risco(v) -> str:
 # As tres tabelas do folheto usam as MESMAS larguras de coluna de proposito:
 # e o que faz as paginas lerem como um sistema so, e nao como tres tabelas.
 
-HEAD_H = 19                 # cabecalho em duas linhas: escopo + unidade
-CAIXA_W = 46                # caixa de media (R$ nao cabe num quadrado)
-PCT_W, GAP_BARRA, VAL_W = 26, 6, 56   # slots dentro da coluna do municipio
-BANDA_H = 56                # faixa de destaque no topo das paginas de tabela
+#
+# Larguras dimensionadas para a coluna de 340pt do A5. O rótulo perdeu 50pt em
+# relação ao formato quadrado e passou a quebrar em 2 linhas (`_rotulo_rubrica`)
+# em vez de encolher até ficar ilegível; a barra ficou curta (~44pt), mas o
+# número do percentil ao lado dela continua dando a leitura exata.
 
-COL_ROTULO = 168
-COL_CAIXA = 50
+HEAD_H = 19                 # cabecalho em duas linhas: escopo + unidade
+CAIXA_W = 40                # caixa de media (R$ nao cabe num quadrado)
+PCT_W, GAP_BARRA, VAL_W = 22, 4, 48   # slots dentro da coluna do municipio
+# Faixa de destaque no topo das paginas de tabela, em duas camadas: valor +
+# rankings em cima, frase + regua embaixo. Lado a lado (como no 20x20) a metade
+# direita nao cabia nos 340pt e a frase passava por cima da ressalva.
+BANDA_H = 84
+
+COL_ROTULO = 118
+COL_CAIXA = 44
 COL_MUNI = CONTENT_W - COL_ROTULO - COL_CAIXA * 2
 
 
@@ -441,8 +450,9 @@ class FolhetoIFEM(FolhetoFNP):
             self._pag_estrutura,        # 6  pizza: composição em %, outra pergunta
             self._pag_receita_n12,      # 7  tabela: níveis 1 e 2
         ]
-        # O nível 3 ocupa quantas páginas precisar. Dos 424 do recorte, 355
-        # cabem em uma e 62 pedem duas — medido, não estimado.
+        # O nível 3 ocupa quantas páginas precisar. No A5, dos 417 do recorte,
+        # 416 cabem em uma e 1 pede duas (no 20x20 eram 355 e 62) — medido,
+        # não estimado.
         for i, blocos in enumerate(self._paginas_n3()):
             antes.append(lambda c, n, b=blocos, pr=(i == 0):
                          self._pag_receita_n3(c, n, b, pr))
@@ -512,8 +522,9 @@ class FolhetoIFEM(FolhetoFNP):
         y -= title_fs + 6
         c.drawString(x, y, "da população.")
         # Mais respiro entre o título principal e o parágrafo descritivo
-        # (pedido: a página tava muito comprimida no topo).
-        y -= 40
+        # (pedido: a página tava muito comprimida no topo). No A5 o respiro
+        # cai de 40 para 30: a altura extra vai para o gráfico, que é a prova.
+        y -= 30
 
         # Frase narrativa (fonte 12pt, line-height generoso → 2-3 linhas)
         resumo = prob.get("resumo") or (
@@ -521,17 +532,19 @@ class FolhetoIFEM(FolhetoFNP):
             "em regras da década de 60. O Brasil mudou, o contexto das cidades "
             "mudou, mas as regras de financiamento não acompanharam essas mudanças."
         )
-        y = draw_body(c, resumo, x, y, CONTENT_W, size=12) - 22
+        # 11pt (e não FS_BODY): no A5 esta é a página mais densa de texto, e
+        # cada linha poupada aqui vira altura de gráfico — que é a prova da tese.
+        y = draw_body(c, resumo, x, y, CONTENT_W, size=11) - 16
 
         # Card "O DESCOMPASSO" — maior, com fonte legível
         descompasso = prob.get("descompasso", "")
         if descompasso:
             from reportlab.lib.utils import simpleSplit as _sp
             font = F(FONT_TEXTO)
-            fs = 10
+            fs = 9.5
             inner_w = CONTENT_W - 32
             linhas = _sp(descompasso, font, fs, inner_w)
-            line_h = fs * 1.50
+            line_h = fs * 1.42
             card_h = 38 + len(linhas) * line_h
             cy = y - card_h
             c.setFillColor(BLUE_DARK)
@@ -548,27 +561,27 @@ class FolhetoIFEM(FolhetoFNP):
             c.setFont(font, fs)
             for i, linha in enumerate(linhas):
                 c.drawString(x + 16, cy + card_h - 36 - i * line_h, linha)
-            y = cy - 22
+            y = cy - 16
 
         # Gráfico cruzado (X invertido) ajusta altura ao espaço restante.
         pop_q = prob.get("populacao_por_quintil_de_receita") or {}
         menor = pop_q.get("menor_renda_1q")
         maior = pop_q.get("maior_renda_5q")
         if menor and maior:
-            # Espaço para o gráfico + legenda quintil (h≈32) + folga acima do
-            # footer. Reserva mínima: 32 (legenda) + 32 (folga) = 64.
-            graf_h = max(150, y - SAFE_BOTTOM - 64)
-            graf_h = min(graf_h, 190)
-            self._draw_grafico_cruzado(c, x, y, CONTENT_W, graf_h, menor, maior)
-            y -= graf_h + 8
-
-            # Legenda combinada embaixo
             legenda = (
                 "1º Quintil = 20% dos municípios com a menor receita corrente por "
                 "habitante.   5º Quintil = 20% com a maior."
             )
+            # O gráfico fica com o que sobra depois de reservar a legenda
+            # (medida, não estimada: no A5 ela quebra em 2 linhas) — antes a
+            # reserva fixa deixava a legenda cobrir o rótulo do rodapé.
+            leg_h = self._altura_legenda_quintil(c, CONTENT_W, legenda)
+            graf_h = min(220, max(170, y - SAFE_BOTTOM - leg_h - 8))
+            self._draw_grafico_cruzado(c, x, y, CONTENT_W, graf_h, menor, maior)
+            y -= graf_h + 8
+
             self._draw_legenda_quintil_combinada(c, x, y, CONTENT_W, legenda)
-            y -= 26
+            y -= leg_h + 4
 
         # Decoração no rodapé com arte1. Quem mede o espaço é o
         # `_decorar_rodape`: aqui só informamos onde o conteúdo terminou.
@@ -595,11 +608,20 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFont(F(FONT_NUM_BOLD), 13)
         c.drawString(x + 14, y_top - 32, "O dinheiro foi na direção oposta da população")
 
+        # Legenda: numa linha só quando cabe; no A5 (coluna de 340pt) os dois
+        # rótulos não cabem lado a lado e passam a empilhar.
+        leg_fs = 8.5
+        leg_text_1 = "Pop. em municípios de menor renda (1º quintil)"
+        leg_text_2 = "Pop. em municípios de maior renda (5º quintil)"
+        w_1 = c.stringWidth(leg_text_1, F(FONT_TEXTO), leg_fs)
+        w_2 = c.stringWidth(leg_text_2, F(FONT_TEXTO), leg_fs)
+        leg_uma_linha = 16 + w_1 + 14 + 16 + w_2 <= w - 28
+
         # Área de plot (deixa espaço inferior para legenda)
         plot_x = x + 56
-        plot_y = y_bot + 50
+        plot_y = y_bot + (50 if leg_uma_linha else 62)
         plot_w = w - 72
-        plot_h = h - 96
+        plot_h = h - (104 if leg_uma_linha else 116)
 
         # Y representa milhões de pessoas
         max_val = max(menor["ano_2000_milhoes"], menor["ano_2024_milhoes"],
@@ -620,8 +642,11 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFont(F(FONT_TEXTO), 7)
         c.drawString(plot_x - 18, plot_y + plot_h + 8, "mi hab.")
 
-        x_2000 = plot_x + plot_w * 0.10
-        x_2024 = plot_x + plot_w * 0.90
+        # Recuo em pt, não em fração da largura: os rótulos "42,8 mi" ficam à
+        # esquerda do ponto de 2000 e à direita do de ANO_REF, e numa coluna
+        # estreita 10% da largura não bastava — o rótulo invadia o eixo Y.
+        x_2000 = plot_x + max(plot_w * 0.10, 48)
+        x_2024 = plot_x + plot_w - max(plot_w * 0.10, 44)
 
         def _yp(v):
             return plot_y + (v / max_val) * plot_h
@@ -671,28 +696,26 @@ class FolhetoIFEM(FolhetoFNP):
         c.drawCentredString(x_2024, plot_y - 12, str(ANO_REF))
 
         # Legenda na parte inferior do card (não no topo, evita sobrepor título)
-        leg_y = y_bot + 14
-        leg_text_1 = "Pop. em municípios de menor renda (1º quintil)"
-        leg_text_2 = "Pop. em municípios de maior renda (5º quintil)"
-        c.setFont(F(FONT_TEXTO), 8.5)
-        w_1 = c.stringWidth(leg_text_1, F(FONT_TEXTO), 8.5)
-        w_2 = c.stringWidth(leg_text_2, F(FONT_TEXTO), 8.5)
-        gap_mid = 30
-        total = 14 + w_1 + 26 + w_2
-        start = x + (w - total) / 2
-        # Marcador 1
-        c.setFillColor(FNP_Q1)
-        c.rect(start, leg_y, 12, 3, fill=1, stroke=0)
-        c.circle(start + 6, leg_y + 1.5, 3, fill=1, stroke=0)
-        c.setFillColor(INK)
-        c.drawString(start + 16, leg_y - 1, leg_text_1)
-        # Marcador 2
-        x2 = start + 16 + w_1 + 14
-        c.setFillColor(FNP_Q5)
-        c.rect(x2, leg_y, 12, 3, fill=1, stroke=0)
-        c.circle(x2 + 6, leg_y + 1.5, 3, fill=1, stroke=0)
-        c.setFillColor(INK)
-        c.drawString(x2 + 16, leg_y - 1, leg_text_2)
+        c.setFont(F(FONT_TEXTO), leg_fs)
+        if leg_uma_linha:
+            start = x + (w - (16 + w_1 + 14 + 16 + w_2)) / 2
+            itens = [(start, y_bot + 14, FNP_Q1, leg_text_1),
+                     (start + 16 + w_1 + 14, y_bot + 14, FNP_Q5, leg_text_2)]
+        else:
+            itens = [(x + 14, y_bot + 26, FNP_Q1, leg_text_1),
+                     (x + 14, y_bot + 12, FNP_Q5, leg_text_2)]
+        for lx, ly, cor, texto in itens:
+            c.setFillColor(cor)
+            c.rect(lx, ly, 12, 3, fill=1, stroke=0)
+            c.circle(lx + 6, ly + 1.5, 3, fill=1, stroke=0)
+            c.setFillColor(INK)
+            c.drawString(lx + 16, ly - 1, texto)
+
+    @staticmethod
+    def _altura_legenda_quintil(c, w, texto):
+        """Altura que `_draw_legenda_quintil_combinada` vai ocupar."""
+        from reportlab.lib.utils import simpleSplit as _sp
+        return 12 + len(_sp(texto, F(FONT_TEXTO), 8.5, w - 16)) * 8.5 * 1.30
 
     def _draw_legenda_quintil_combinada(self, c, x, y, w, texto):
         from reportlab.lib.utils import simpleSplit as _sp
@@ -847,14 +870,15 @@ class FolhetoIFEM(FolhetoFNP):
             draw_kpi_box(c, lbl, val, uni,
                          x + i*(kpi_w+8), y - kpi_h,
                          w=kpi_w, h=kpi_h, icone=ico, upper=False)
-        # Linha 2 (2 KPIs): centralizados
-        off2 = (CONTENT_W - (2 * kpi_w + 8)) / 2
+        # Linha 2 (2 KPIs): meia largura cada. Com 1/3 da coluna do A5 o
+        # rótulo "Pop. SUS Dependente" não cabia e era cortado pelo card vizinho.
+        kpi_w2 = (CONTENT_W - 8) / 2
         for i in range(2):
             lbl, val, uni, ico = kpis[3 + i]
             draw_kpi_box(c, lbl, val, uni,
-                         x + off2 + i*(kpi_w+8),
+                         x + i*(kpi_w2+8),
                          y - kpi_h*2 - 8,
-                         w=kpi_w, h=kpi_h, icone=ico, upper=False)
+                         w=kpi_w2, h=kpi_h, icone=ico, upper=False)
         y -= kpi_h*2 + 8 + 14
 
         # Divisória sutil entre KPIs e rankings (régua de quintil agora fica
@@ -1014,55 +1038,46 @@ class FolhetoIFEM(FolhetoFNP):
 
     def _draw_card_status_municipio(self, c, x, y_top, w, frase, cor,
                                      quintil_str: str, decil_str: str) -> float:
-        """Card creme: frase à esquerda (2 linhas, quebra antes de 'dos')
-        + régua mini de quintil à direita com quadrado destacado."""
-        h = 56
+        """Card creme: frase em cima (com "superior/inferior a X%" na cor do
+        quintil) e régua mini de quintil embaixo, centralizada.
+
+        No formato quadrado a frase e a régua ficavam lado a lado; na coluna do
+        A5 não cabem as duas, e a régua passava por cima da frase. Retorna a
+        altura do card.
+        """
+        import re
+        font_reg, font_bold = F(FONT_TEXTO), F(FONT_TEXTO_BOLD)
+        fs, line_h = 10, 13
+        REGUA_H = 46     # régua mini: seta + quadrados + rótulos das pontas
+
+        m = re.search(r"(superior|inferior) a (\d+)%", frase)
+        if m:
+            parts = [(frase[:m.start()], font_reg, fs, INK),
+                     (m.group(0), font_bold, fs, cor),
+                     (frase[m.end():], font_reg, fs, INK)]
+        else:
+            parts = [(frase, font_reg, fs, INK)]
+        parts = [p for p in parts if p[0].strip()]
+
+        # Mede numa passada "seca" (fora da página) para saber quantas linhas
+        # a frase ocupa antes de desenhar o fundo do card.
+        c.saveState()
+        n_linhas = 1 + round((0 - self._draw_frase_rica(
+            c, -10_000, 0, w - 28, parts, line_h)) / line_h)
+        c.restoreState()
+
+        h = 16 + n_linhas * line_h + 8 + REGUA_H
         c.setFillColor(CREAM)
         c.roundRect(x, y_top - h, w, h, 6, fill=1, stroke=0)
         c.setFillColor(cor)
         c.rect(x, y_top - h, 4, h, fill=1, stroke=0)
 
-        frase_area_w = w * 0.52
-        font_reg = F(FONT_TEXTO)
-        font_bold = F(FONT_TEXTO_BOLD)
-        import re
+        self._draw_frase_rica(c, x + 14, y_top - 20, w - 28, parts, line_h)
 
-        # Quebra explícita: força "dos municípios do país" para a 2ª linha.
-        # Linha 1: "Possui uma receita por habitante inferior a 78%"
-        # Linha 2: "dos municípios do país."
-        m = re.search(r"(superior|inferior) a (\d+)%", frase)
-        if m:
-            linha1 = frase[:m.end()]          # tudo até "inferior a 78%"
-            linha2 = frase[m.end():].strip()  # "dos municípios do país..."
-        else:
-            linha1, linha2 = frase, ""
-
-        # Linha 1 — com destaque colorido em "inferior a X%"
-        ty1 = y_top - 22
-        if m:
-            antes = linha1[:m.start()]
-            destaque = m.group(0)
-            cur_x = x + 14
-            c.setFillColor(INK); c.setFont(font_reg, 10)
-            c.drawString(cur_x, ty1, antes)
-            cur_x += c.stringWidth(antes, font_reg, 10)
-            c.setFillColor(cor); c.setFont(font_bold, 10)
-            c.drawString(cur_x, ty1, destaque)
-        else:
-            c.setFillColor(INK); c.setFont(font_reg, 10)
-            c.drawString(x + 14, ty1, linha1)
-
-        # Linha 2 — "dos municípios do país."
-        if linha2:
-            c.setFillColor(INK); c.setFont(font_reg, 10)
-            c.drawString(x + 14, ty1 - 13, linha2)
-
-        # Régua mini de quintil à direita (com quadrado do município
-        # AUMENTADO para destacar visualmente)
+        regua_w = 200
         self._draw_regua_quintil_mini(
-            c, x_right=x + w - 14, y_top=y_top - 4,
-            w=w - frase_area_w - 16,
-            quintil_str=quintil_str, decil_str=decil_str,
+            c, x_right=x + (w + regua_w) / 2, y_top=y_top - h + REGUA_H + 2,
+            w=regua_w, quintil_str=quintil_str, decil_str=decil_str,
         )
         return h
 
@@ -1950,6 +1965,7 @@ class FolhetoIFEM(FolhetoFNP):
         pill_fs = 10.5
         icone_sz = 26       # diâmetro do círculo do ícone
         text_x   = x + icone_sz + 12
+        text_w   = CONTENT_W - (text_x - x)
 
         # Pílula cinza pra valores indisponíveis (município sem dado em 2000).
         PILL_ND_BG   = colors.HexColor("#ECEAE0")
@@ -1964,59 +1980,34 @@ class FolhetoIFEM(FolhetoFNP):
             # Ícone circular azul à esquerda (centro alinhado à 1ª linha)
             bl["icone"](c, x + icone_sz/2, y + 2, size=icone_sz)
 
-            # Frase principal: "A <destaque> <verbo>  [pílula]  <tail>"
-            cur = text_x
-            c.setFillColor(INK)
-            c.setFont(F(FONT_TEXTO), body_fs)
-            c.drawString(cur, y, "A ")
-            cur += c.stringWidth("A ", F(FONT_TEXTO), body_fs)
-            c.setFillColor(BLUE_DARK)
-            c.setFont(F(FONT_TEXTO_BOLD), body_fs)
-            c.drawString(cur, y, bl["destaque"])
-            cur += c.stringWidth(bl["destaque"], F(FONT_TEXTO_BOLD), body_fs)
-            c.setFillColor(INK)
-            c.setFont(F(FONT_TEXTO), body_fs)
-            verbo_str = f" {bl['verbo']} "
-            c.drawString(cur, y, verbo_str)
-            cur += c.stringWidth(verbo_str, F(FONT_TEXTO), body_fs)
-
-            # Pílula município — cinza com "n/d" se não houver dado de 2000.
+            # Frase principal: "A <destaque> <verbo>  [pílula]  <tail>".
+            # Quebra por palavra (com a pílula como bloco indivisível): no A5 a
+            # frase inteira não cabe numa linha e estourava a margem direita.
             if var_mun_ok:
                 var_str   = f"{sinal_m}{_br(bl['var_mun'])}%"
                 pill_bg   = bl["pill_bg"]
                 pill_text = bl["pill_text"]
             else:
+                # Pílula cinza "n/d": município sem dado de 2000.
                 var_str   = "n/d"
                 pill_bg   = PILL_ND_BG
                 pill_text = PILL_ND_TEXT
-            pill_w = c.stringWidth(var_str, F(FONT_TEXTO_BOLD), pill_fs) + 16
-            pill_h = 18
-            c.setFillColor(pill_bg)
-            c.roundRect(cur, y - 4, pill_w, pill_h, pill_h/2, fill=1, stroke=0)
-            c.setFillColor(pill_text)
-            c.setFont(F(FONT_TEXTO_BOLD), pill_fs)
-            c.drawCentredString(cur + pill_w/2, y + 1, var_str)
-            cur += pill_w + 6
-
-            c.setFillColor(INK)
-            c.setFont(F(FONT_TEXTO), body_fs)
-            c.drawString(cur, y, bl["tail"])
-
+            pill = {"texto": var_str, "bg": pill_bg, "fg": pill_text, "fs": pill_fs}
+            y = self._draw_frase_rica(c, text_x, y, text_w, [
+                ("A", F(FONT_TEXTO), body_fs, INK),
+                (bl["destaque"], F(FONT_TEXTO_BOLD), body_fs, BLUE_DARK),
+                (bl["verbo"], F(FONT_TEXTO), body_fs, INK),
+                pill,
+                (bl["tail"], F(FONT_TEXTO), body_fs, INK),
+            ], line_h=19)
             y -= 18
 
             # Comparativo (média nacional em negrito)
-            c.setFillColor(MUTED)
-            c.setFont(F(FONT_TEXTO), comp_fs)
-            c.drawString(text_x, y, bl["comp_tpl"])
-            wp = c.stringWidth(bl["comp_tpl"], F(FONT_TEXTO), comp_fs)
             media_str = f"{sinal_n}{_br(bl['var_nac'])}%" if var_nac_ok else "n/d"
-            c.setFillColor(BLUE_DARK)
-            c.setFont(F(FONT_TEXTO_BOLD), comp_fs + 0.5)
-            c.drawString(text_x + wp, y, media_str)
-            wm = c.stringWidth(media_str, F(FONT_TEXTO_BOLD), comp_fs + 0.5)
-            c.setFillColor(MUTED)
-            c.setFont(F(FONT_TEXTO), comp_fs)
-            c.drawString(text_x + wp + wm, y, ".")
+            y = self._draw_frase_rica(c, text_x, y, text_w, [
+                (bl["comp_tpl"].strip(), F(FONT_TEXTO), comp_fs, MUTED),
+                (media_str + ".", F(FONT_TEXTO_BOLD), comp_fs + 0.5, BLUE_DARK),
+            ], line_h=13)
             y -= 14
 
             # Gap explícito (sugestão 2): "Município cresceu X× menos/mais"
@@ -2027,9 +2018,9 @@ class FolhetoIFEM(FolhetoFNP):
                     direcao = "menos" if abs(fator) > 1 else "mais"
                     fator_disp = fator if abs(fator) > 1 else 1 / fator
                     gap_str = f"({self.nome} cresceu {_br(abs(fator_disp), 1)}× {direcao} que a média.)"
-                    c.setFillColor(cor_verbo_gap(fator))
-                    c.setFont(F(FONT_TEXTO_SEMIBOLD), comp_fs)
-                    c.drawString(text_x, y, gap_str)
+                    y = self._draw_frase_rica(c, text_x, y, text_w, [
+                        (gap_str, F(FONT_TEXTO_SEMIBOLD), comp_fs, cor_verbo_gap(fator)),
+                    ], line_h=13)
                     y -= 14
 
             y -= 10   # respiro entre blocos
@@ -2314,6 +2305,49 @@ class FolhetoIFEM(FolhetoFNP):
             p.close()
             c.drawPath(p, fill=1, stroke=0)
 
+    def _draw_frase_rica(self, c, x, y, max_w, parts, line_h) -> float:
+        """Desenha uma frase com trechos de estilos diferentes, quebrando linha.
+
+        `parts` mistura tuplas (texto, fonte, tamanho, cor) — quebráveis por
+        palavra — e dicts de pílula {texto, bg, fg, fs}, que são indivisíveis.
+        Entre um trecho e outro entra sempre um espaço. Retorna o Y da última
+        linha desenhada (o chamador decide o respiro até o próximo bloco).
+        """
+        PILL_PAD, PILL_H = 8, 18
+        tokens = []   # (largura, desenhar(cx, cy), largura_do_espaco_antes)
+        for part in parts:
+            if isinstance(part, dict):
+                pw = c.stringWidth(part["texto"], F(FONT_TEXTO_BOLD), part["fs"]) + 2 * PILL_PAD
+
+                def _pill(cx, cy, p=part, pw=pw):
+                    c.setFillColor(p["bg"])
+                    c.roundRect(cx, cy - 4, pw, PILL_H, PILL_H / 2, fill=1, stroke=0)
+                    c.setFillColor(p["fg"])
+                    c.setFont(F(FONT_TEXTO_BOLD), p["fs"])
+                    c.drawCentredString(cx + pw / 2, cy + 1, p["texto"])
+                tokens.append((pw, _pill, c.stringWidth(" ", F(FONT_TEXTO), part["fs"]) + 3))
+                continue
+            texto, fnt, fs, cor = part
+            esp = c.stringWidth(" ", fnt, fs)
+            for pal in texto.split():
+                def _txt(cx, cy, pal=pal, fnt=fnt, fs=fs, cor=cor):
+                    c.setFillColor(cor)
+                    c.setFont(fnt, fs)
+                    c.drawString(cx, cy, pal)
+                tokens.append((c.stringWidth(pal, fnt, fs), _txt, esp))
+
+        cur = x
+        for i, (tw, desenhar, esp) in enumerate(tokens):
+            if i and cur > x:
+                if cur + esp + tw > x + max_w:
+                    y -= line_h
+                    cur = x
+                else:
+                    cur += esp
+            desenhar(cur, y)
+            cur += tw
+        return y
+
     def _quebrar_parts(self, c, parts, max_w):
         """Quebra uma lista de segmentos (txt, cor, fonte, size) em múltiplas
         linhas, sem cortar palavras. Cada elemento de `parts` é tratado como
@@ -2510,63 +2544,60 @@ class FolhetoIFEM(FolhetoFNP):
         y = self._draw_cabecalho(c, x, SAFE_TOP,
                                   secao="Metodologia do IFEM")
 
-        # Layout em 2 colunas: texto à ESQUERDA (45%), infográfico à DIREITA (52%).
-        # A imagem cresce o quanto puder verticalmente; o texto usa fontes
-        # maiores (resumo 9pt, tópicos 8.5pt) para legibilidade.
-        col_text_w = CONTENT_W * 0.45
-        col_img_w  = CONTENT_W * 0.52
-        gap_x      = CONTENT_W * 0.03
+        # Layout A5 em duas faixas:
+        #   1) resumo à esquerda + infográfico à direita;
+        #   2) os tópicos numerados em largura total.
+        # No 20x20 eram duas colunas de alto a baixo; na coluna de 340pt o texto
+        # ficava com 150pt de largura e o 3º tópico era cortado pelo rodapé.
+        # Os tópicos são medidos primeiro: o infográfico fica com a altura que
+        # sobrar (até IMG_W_MAX de largura), nunca o contrário.
+        from reportlab.lib.utils import simpleSplit as _sp
+        IMG_W_MAX, GAP = 175, 14
+        RESP_FS, RESP_LH = 8.5, 8.5 * 1.5
+        RATIO_HW = 498 / 351          # metodologia.png é retrato (351×498 px)
+        topicos = m.get("topicos") or []
 
-        # ── Coluna esquerda: resumo + tópicos numerados ─────────────────
-        text_x = x
+        def _alt_topico(t):
+            return 18 + len(_sp(t.get("resposta", ""), F(FONT_TEXTO), RESP_FS,
+                                CONTENT_W - 30)) * RESP_LH + 8 + 10
+        alt_topicos = sum(_alt_topico(t) for t in topicos)
+
+        img_path = ROOT_DIR / "data" / "ifem" / "metodologia.png"
+        img_w = img_h = 0
+        if img_path.exists():
+            img_h = min(IMG_W_MAX * RATIO_HW, y - SAFE_BOTTOM - alt_topicos - GAP)
+            img_w = max(img_h, 0) / RATIO_HW
+            if img_w < 80:            # menor que isso o infográfico vira borrão
+                img_w = img_h = 0
+
+        # ── Faixa 1: resumo + infográfico ────────────────────────────────
+        col_text_w = CONTENT_W - (img_w + GAP if img_w else 0)
         ty = y
         if m.get("resumo"):
-            ty = draw_body(c, m["resumo"], text_x, ty, col_text_w, size=9)
-            ty -= 14
+            ty = draw_body(c, m["resumo"], x, ty, col_text_w, size=9)
+        if img_w:
+            c.drawImage(cached_image(img_path), x + CONTENT_W - img_w, y - img_h + 9,
+                        width=img_w, height=img_h,
+                        preserveAspectRatio=True, mask="auto")
+            ty = min(ty, y - img_h + 9)
+        ty -= GAP
 
-        topicos = m.get("topicos") or []
+        # ── Faixa 2: tópicos numerados ───────────────────────────────────
         for i, t in enumerate(topicos):
-            if ty < 80:
-                break
             c.setFillColor(YELLOW_DARK)
             c.setFont(F(FONT_NUM_BOLD), 22)
-            c.drawString(text_x, ty - 6, f"{i+1:02d}")
+            c.drawString(x, ty - 6, f"{i+1:02d}")
             c.setFillColor(BLUE_DARK)
             c.setFont(F(FONT_NUM_BOLD), 11)
-            c.drawString(text_x + 30, ty - 4, t.get("pergunta", "").upper())
+            c.drawString(x + 30, ty - 4, t.get("pergunta", "").upper())
             ty -= 18
-            ty_after = draw_body(c, t.get("resposta", ""),
-                                 text_x + 30, ty, col_text_w - 30, size=8.5)
-            ty = ty_after - 8
-            c.setStrokeColor(RULE)
-            c.setLineWidth(0.4)
-            c.line(text_x, ty, text_x + col_text_w, ty)
+            ty = draw_body(c, t.get("resposta", ""),
+                           x + 30, ty, CONTENT_W - 30, size=RESP_FS) - 8
+            if i < len(topicos) - 1:
+                c.setStrokeColor(RULE)
+                c.setLineWidth(0.4)
+                c.line(x, ty, x + CONTENT_W, ty)
             ty -= 10
-
-        # ── Coluna direita: infográfico GRANDE da metodologia ────────────
-        img_path = ROOT_DIR / "data" / "ifem" / "metodologia.png"
-        if img_path.exists():
-            img_x_left = x + col_text_w + gap_x
-            img_top    = self.H - 90
-            img_bottom = 56
-            avail_h    = img_top - img_bottom
-
-            # metodologia.png é retrato (ratio h/w = 498/351 ≈ 1.42).
-            ratio_hw = 498 / 351
-            img_w_fit = col_img_w
-            img_h_fit = col_img_w * ratio_hw
-            if img_h_fit > avail_h:
-                img_h_fit = avail_h
-                img_w_fit = avail_h / ratio_hw
-
-            # Alinha ao topo da coluna (não centraliza), para o título não ficar
-            # solto e a imagem usar todo o espaço disponível.
-            draw_x = img_x_left + (col_img_w - img_w_fit) / 2
-            draw_y = img_top - img_h_fit
-
-            c.drawImage(cached_image(img_path), draw_x, draw_y,
-                        width=img_w_fit, height=img_h_fit,
-                        preserveAspectRatio=True, mask="auto")
 
     # ─── 8. Página de convite (QR para ifem.onrender.com) ───────────────────
 
@@ -2637,12 +2668,9 @@ class FolhetoIFEM(FolhetoFNP):
         c.drawString(x, SAFE_TOP, "Os Municípios no IFEM")
         y = SAFE_TOP - 22
 
-        c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 10)
-        c.drawString(x, y,
-                     "Cada ponto colorido representa um município brasileiro "
-                     "e sua posição no IFEM.")
-        y -= 18
+        y = draw_body(c, "Cada ponto colorido representa um município brasileiro "
+                         "e sua posição no IFEM.", x, y, CONTENT_W, size=10, color=MUTED)
+        y -= 3
 
         # Área disponível para conteúdo gráfico.
         area_top    = y - 6
@@ -2774,14 +2802,19 @@ class FolhetoIFEM(FolhetoFNP):
         y -= 15
         y = self._draw_legenda_risco(c, x, y, w)
 
+        # O gráfico fica com a altura que sobrar depois da fonte e da caixa de
+        # conclusão (medida: no A5 o texto dela quebra em 3 linhas), com 164pt
+        # de piso — a altura que tinha no formato quadrado.
         y -= 10
-        y = self._draw_grafico_risco_quintis(c, x, y, w, 164, pan)
+        h_conc = self._altura_conclusao_risco(c, w, pan)
+        graf_h = min(230, max(164, y - 14 - 18 - h_conc - SAFE_BOTTOM - 6))
+        y = self._draw_grafico_risco_quintis(c, x, y, w, graf_h, pan)
 
         y -= 14
         draw_caption(c, "Fonte: AdaptaBrasil (MCTI) e IFEM/FNP.", x, y)
 
         # ─ A leitura que o gráfico permite ─
-        self._draw_conclusao_risco(c, x, y - 18, w, 52, pan)
+        self._draw_conclusao_risco(c, x, y - 18, w, h_conc, pan)
 
     def _draw_kpis_risco(self, c, x, y_top, w, h: float = 50) -> float:
         """Três números do panorama em uma faixa creme. Retorna y abaixo."""
@@ -2921,18 +2954,39 @@ class FolhetoIFEM(FolhetoFNP):
 
         return y_top - h
 
-    def _draw_conclusao_risco(self, c, x, y_top, w, h, pan) -> float:
-        """Caixa azul com a leitura do gráfico. O número é calculado, nunca
-        escrito à mão: se a base mudar, o texto acompanha."""
+    @staticmethod
+    def _texto_conclusao_risco(pan) -> str | None:
+        """Frase da caixa de conclusão, ou None sem o panorama por quintil."""
         grupos = {g["quintil"]: g for g in pan.get("por_quintil_ifem", [])}
         if not grupos:
-            return y_top - h
+            return None
 
         def _pct_expostos(q):
             g = grupos.get(q, {})
             tot = g.get("total") or 1
             alto = g["classes"].get("Muito alto", 0) + g["classes"].get("Alto", 0)
             return alto / tot * 100
+
+        return (
+            f"No 1º quintil do IFEM, que reúne os municípios com menos receita "
+            f"por habitante, {_br(_pct_expostos(1), 1)}% estão em risco climático "
+            f"alto ou muito alto. "
+            f"No 5º quintil, {_br(_pct_expostos(5), 1)}%."
+        )
+
+    def _altura_conclusao_risco(self, c, w, pan) -> float:
+        texto = self._texto_conclusao_risco(pan)
+        if not texto:
+            return 0
+        n = len(simpleSplit(texto, F(FONT_TEXTO), 8.5, w - 28))
+        return max(52, 27 + (n - 1) * 11 + 12)
+
+    def _draw_conclusao_risco(self, c, x, y_top, w, h, pan) -> float:
+        """Caixa azul com a leitura do gráfico. O número é calculado, nunca
+        escrito à mão: se a base mudar, o texto acompanha."""
+        texto = self._texto_conclusao_risco(pan)
+        if not texto:
+            return y_top - h
 
         y_bot = y_top - h
         c.setFillColor(BLUE)
@@ -2944,12 +2998,6 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
         c.drawString(x + 14, y_top - 14, "MENOS RECEITA, MAIS RISCO")
 
-        texto = (
-            f"No 1º quintil do IFEM, que reúne os municípios com menos receita "
-            f"por habitante, {_br(_pct_expostos(1), 1)}% estão em risco climático "
-            f"alto ou muito alto. "
-            f"No 5º quintil, {_br(_pct_expostos(5), 1)}%."
-        )
         c.setFillColor(WHITE)
         c.setFont(F(FONT_TEXTO), 8.5)
         for i, linha in enumerate(simpleSplit(texto, F(FONT_TEXTO), 8.5, w - 28)):
@@ -3000,10 +3048,12 @@ class FolhetoIFEM(FolhetoFNP):
             c.setFont(F(FONT_TEXTO), 5.6)
             c.drawRightString(x + COL_ROTULO + COL_MUNI - 8, y_top - 16, unidade)
         else:
-            c.drawString(x + COL_ROTULO + 8, y_top - 8.5, "MUNICÍPIO")
+            # Sem coluna de percentil o rótulo avança 28pt (ver `_linha_risco`),
+            # e o título da coluna do município acompanha.
+            c.drawString(x + COL_ROTULO + 30, y_top - 8.5, "MUNICÍPIO")
             c.setFillColor(BLUE_LIGHT)
             c.setFont(F(FONT_TEXTO), 5.6)
-            c.drawString(x + COL_ROTULO + 8, y_top - 16, unidade)
+            c.drawString(x + COL_ROTULO + 30, y_top - 16, unidade)
 
         # Rotulo unico cobrindo as duas colunas de media, com fio de amarracao.
         centro = x_uf + COL_CAIXA
@@ -3048,6 +3098,42 @@ class FolhetoIFEM(FolhetoFNP):
             c.drawCentredString(qx + CAIXA_W / 2, qy + altura / 2 - 2.5,
                                 _reais(val, em_mil, cifrao))
 
+    def _nota_tabela(self, c, x, y, texto) -> float:
+        """Nota miúda sob o eyebrow das tabelas, quebrando na largura útil.
+        Retorna o Y da última linha."""
+        c.setFillColor(MUTED)
+        c.setFont(F(FONT_TEXTO), 6.5)
+        linhas = simpleSplit(texto, F(FONT_TEXTO), 6.5, CONTENT_W)
+        for i, linha in enumerate(linhas):
+            c.drawString(x, y - i * 8, linha)
+        return y - (len(linhas) - 1) * 8
+
+    def _rotulo_rubrica(self, c, texto, x, y_meio, max_w, fonte, fs, fs_min, cor):
+        """Rótulo de linha de tabela centrado verticalmente em `y_meio`.
+
+        Ordem de preferência: 1 linha em `fs`; 2 linhas em `fs` (ou um pouco
+        menor); por último encolhe em 2 linhas até `fs_min`. Quebrar antes de
+        encolher é o que mantém "Transferência Estado - Exploração de Recursos"
+        legível na coluna estreita do A5.
+        """
+        fnt = F(fonte)
+        if c.stringWidth(texto, fnt, fs) <= max_w:
+            linhas = [texto]
+        else:
+            linhas = simpleSplit(texto, fnt, fs, max_w)
+            while len(linhas) > 2 and fs > fs_min:
+                fs -= 0.25
+                linhas = simpleSplit(texto, fnt, fs, max_w)
+            if len(linhas) > 2:                 # nem em fs_min: corta com reticências
+                linhas = linhas[:2]
+                linhas[1] = linhas[1].rstrip() + "…"
+        c.setFillColor(cor)
+        c.setFont(fnt, fs)
+        lh = fs * 1.12
+        y0 = y_meio + (len(linhas) - 1) * lh / 2 - fs * 0.35
+        for i, linha in enumerate(linhas):
+            c.drawString(x, y0 - i * lh, linha)
+
     # ─── 7. Receita: niveis 1 e 2 ───────────────────────────────────────────
 
     def _linhas_n12(self):
@@ -3087,23 +3173,22 @@ class FolhetoIFEM(FolhetoFNP):
 
         y -= 12
         draw_eyebrow(c, "De onde vem a receita", x, y)
-        y -= 11
-        c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 6.5)
-        c.drawString(x, y, "A barra e o % mostram quanto dos municípios do país este "
-                           "supera naquela rubrica: vermelho supera poucos, verde supera muitos.")
-
+        y = self._nota_tabela(c, x, y - 11,
+                              "A barra e o % mostram quanto dos municípios do país este "
+                              "supera naquela rubrica: vermelho supera poucos, verde supera muitos.")
         y -= 10
         y = self._head_tabela(c, x, y, "RUBRICA", "por habitante")
         for i, linha in enumerate(self._linhas_n12()):
             if linha[0] == 0 and i > 0:
-                y -= 4          # respiro entre as 4 rubricas principais
+                y -= 3          # respiro entre as 4 rubricas principais
             y = self._linha_receita(c, x, y, linha)
         self._fechar_tabela(c, x, y, lado)
 
     def _linha_receita(self, c, x, y_top, linha) -> float:
         nivel, rubrica, per_capita, pct, m_uf, m_nac = linha
-        row_h = 21.5 if nivel == 0 else 19.5
+        # 20.5/18.5: medido no pior caso do recorte (4 rubricas + 13 sub —
+        # SP, Ijuí, Brasília), que precisa fechar acima de SAFE_BOTTOM no A5.
+        row_h = 20.5 if nivel == 0 else 18.5
         y_bot = y_top - row_h
         cor = _cor_supera(pct)
 
@@ -3123,19 +3208,17 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(cor)
         c.rect(x, y_bot, 4 if nivel == 0 else 2, row_h, fill=1, stroke=0)
 
-        tx = x + 10 + nivel * 12
-        fonte = FONT_TEXTO_SEMIBOLD if nivel == 0 else FONT_TEXTO
-        fs = 8.5 if nivel == 0 else 7.5
-        while c.stringWidth(rubrica, F(fonte), fs) > COL_ROTULO - (tx - x) - 8 and fs > 6.0:
-            fs -= 0.25
-        c.setFillColor(BLUE_DARK if nivel == 0 else INK)
-        c.setFont(F(fonte), fs)
-        c.drawString(tx, y_top - 14, rubrica)
+        tx = x + 10 + nivel * 10
+        self._rotulo_rubrica(
+            c, rubrica, tx, y_top - row_h / 2, COL_ROTULO - (tx - x) - 6,
+            FONT_TEXTO_SEMIBOLD if nivel == 0 else FONT_TEXTO,
+            8 if nivel == 0 else 7.2, 6.2,
+            BLUE_DARK if nivel == 0 else INK)
 
         em_mil = max(v for v in (per_capita, m_nac, m_uf) if v is not None) >= 1000
         self._barra_valor(c, x, y_top, row_h, pct, cor,
                           _reais(per_capita, em_mil),
-                          12 if nivel == 0 else 10, 7 if nivel == 0 else 5)
+                          11 if nivel == 0 else 9.5, 7 if nivel == 0 else 5)
         self._caixas(c, x, y_top, row_h, m_uf, m_nac, em_mil,
                      7.5 if nivel == 0 else 7, 17)
         return y_bot
@@ -3236,11 +3319,10 @@ class FolhetoIFEM(FolhetoFNP):
         if primeira:
             y = self._cabecalho(c, x, "Receita em detalhe")
             draw_eyebrow(c, "Cada rubrica por dentro", x, y)
-            y -= 11
-            c.setFillColor(MUTED)
-            c.setFont(F(FONT_TEXTO), 6.5)
-            c.drawString(x, y, "O terceiro nível da receita, agrupado pela rubrica de "
-                               "origem. Mesma leitura da página anterior.")
+            # Uma linha só no A5 — `_paginas_n3` conta com essa altura fixa.
+            y = self._nota_tabela(c, x, y - 11,
+                                  "O terceiro nível da receita, agrupado pela rubrica de "
+                                  "origem. Mesma leitura da página anterior.")
             y -= 10
         else:
             y = SAFE_TOP
@@ -3276,16 +3358,12 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(cor)
         c.rect(x, y_bot, 2, row_h, fill=1, stroke=0)
 
-        fs = 7.5
-        while c.stringWidth(rubrica, F(FONT_TEXTO), fs) > COL_ROTULO - 30 and fs > 5.8:
-            fs -= 0.25
-        c.setFillColor(INK)
-        c.setFont(F(FONT_TEXTO), fs)
-        c.drawString(x + 22, y_top - 11, rubrica)
+        self._rotulo_rubrica(c, rubrica, x + 16, y_top - row_h / 2,
+                             COL_ROTULO - 22, FONT_TEXTO, 7, 5.8, INK)
 
         em_mil = max(v for v in (per_capita, m_nac, m_uf) if v is not None) >= 1000
         self._barra_valor(c, x, y_top, row_h, pct, cor,
-                          _reais(per_capita, em_mil), 9, 4.5)
+                          _reais(per_capita, em_mil), 8.5, 4.5)
         self._caixas(c, x, y_top, row_h, m_uf, m_nac, em_mil, 6.5, 13)
         return y_bot
 
@@ -3299,12 +3377,9 @@ class FolhetoIFEM(FolhetoFNP):
 
         y -= 12
         draw_eyebrow(c, "As 12 notas do município", x, y)
-        y -= 11
-        c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 6.5)
-        c.drawString(x, y, "Do maior para o menor risco. Todas as notas vão de 0 a 1: "
-                           "quanto mais alto, maior o risco.")
-
+        y = self._nota_tabela(c, x, y - 11,
+                              "Do maior para o menor risco. Todas as notas vão de 0 a 1: "
+                              "quanto mais alto, maior o risco.")
         y -= 10
         y = self._head_tabela(c, x, y, "RISCO CLIMÁTICO", "nota de 0 a 1", col_pct=False)
 
@@ -3324,20 +3399,27 @@ class FolhetoIFEM(FolhetoFNP):
         c.setFillColor(cor)
         c.rect(x, y_bot, 3, row_h, fill=1, stroke=0)
 
+        # Setor (caixa alta, miúdo) em cima e subsetor embaixo. Sem barra de
+        # percentil nesta tabela, o rótulo pode avançar 28pt sobre a coluna do
+        # município — é o que faz "Leishmaniose tegumentar americana" caber.
+        rot_w = COL_ROTULO + 28 - 16
+        setor, fs_set = str(ind["setor"]).upper(), 5.5
+        while c.stringWidth(setor, F(FONT_TEXTO), fs_set) > rot_w and fs_set > 4.6:
+            fs_set -= 0.2
         c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 5.5)
-        c.drawString(x + 10, y_top - 9, str(ind["setor"]).upper())
+        c.setFont(F(FONT_TEXTO), fs_set)
+        c.drawString(x + 10, y_top - 9, setor)
         sub, fs = str(ind["subsetor"]), 8.0
-        while c.stringWidth(sub, F(FONT_TEXTO_SEMIBOLD), fs) > COL_ROTULO - 18 and fs > 6.2:
+        while c.stringWidth(sub, F(FONT_TEXTO_SEMIBOLD), fs) > rot_w and fs > 6.2:
             fs -= 0.25
         c.setFillColor(INK)
         c.setFont(F(FONT_TEXTO_SEMIBOLD), fs)
         c.drawString(x + 10, y_top - 19, sub)
 
         valor = ind.get("valor")
-        val_w = 40
-        bar_x = x + COL_ROTULO + 8
-        bar_w = COL_MUNI - 16 - val_w
+        val_w = 34
+        bar_x = x + COL_ROTULO + 28 + 2
+        bar_w = COL_MUNI - 28 - 10 - val_w
         bar_y = y_top - 16
         c.setFillColor(CREAM_DARK if i % 2 == 0 else WHITE)
         c.rect(bar_x, bar_y, bar_w, 7, fill=1, stroke=0)
@@ -3371,82 +3453,34 @@ class FolhetoIFEM(FolhetoFNP):
         rc = self.d["receita_corrente"]
         perc = self.d.get("percentil") or {}
         pct = perc.get("percentil_numero")
-        cor = _cor_supera(pct)
-        y_bot = y_top - BANDA_H
-
-        c.setFillColor(BLUE_DARK)
-        c.roundRect(x, y_bot, w, BANDA_H, CARD_RADIUS, fill=1, stroke=0)
-        c.setFillColor(cor)
-        c.rect(x, y_top - 4, w, 4, fill=1, stroke=0)
-
-        pad = 14
-        c.setFillColor(YELLOW)
-        c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
-        c.drawString(x + pad, y_top - 18, "RECEITA CORRENTE POR HABITANTE")
-        valor = "R$ " + _fmt_int(rc["per_capita"])
-        c.setFillColor(WHITE)
-        c.setFont(F(FONT_NUM_BOLD), 34)
-        c.drawString(x + pad, y_top - 47, valor)
-        vw = c.stringWidth(valor, F(FONT_NUM_BOLD), 34)
-
         quintil = perc.get("quintil")
+        selo = None
         if quintil:
-            txt = quintil.upper()
-            tw = c.stringWidth(txt, F(FONT_NUM_SEMIBOLD), 8.5)
-            cx = x + pad + vw + 14
-            c.setFillColor(cor)
-            c.roundRect(cx, y_top - 46, tw + 16, 15, 2, fill=1, stroke=0)
-            c.setFillColor(BLUE_DARK if quintil.startswith("3") else WHITE)
-            c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
-            c.drawString(cx + 8, y_top - 41.5, txt)
-
-        self._lado_direito(
-            c, x, y_top, w,
+            selo = (quintil.upper(), _cor_supera(pct),
+                    BLUE_DARK if quintil.startswith("3") else WHITE)
+        return self._faixa_destaque(
+            c, x, y_top, w, cor=_cor_supera(pct),
+            eyebrow="RECEITA CORRENTE POR HABITANTE",
+            valor="R$ " + _fmt_int(rc["per_capita"]), sufixo=None, selo=selo,
             frase=f"Supera {pct}% dos municípios do país" if pct is not None else "",
             ressalva="1º = maior receita/hab.",
             faixas=FNP_QUINTIS, marcador=(pct / 100) if pct is not None else None,
             rankings=((rc["ranking_por_per_capita"]["nacional"], "no país"),
                       (rc["ranking_por_per_capita"].get("estadual"), "no estado")))
-        return y_bot
 
     def _faixa_risco(self, c, x, y_top, w):
         m = self.risco_climatico.get("media_geral") or {}
         classe = m.get("classe")
         cor = _cor_risco(classe)
-        y_bot = y_top - BANDA_H
-
-        c.setFillColor(BLUE_DARK)
-        c.roundRect(x, y_bot, w, BANDA_H, CARD_RADIUS, fill=1, stroke=0)
-        c.setFillColor(cor)
-        c.rect(x, y_top - 4, w, 4, fill=1, stroke=0)
-
-        pad = 14
-        c.setFillColor(YELLOW)
-        c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
-        c.drawString(x + pad, y_top - 18, "MÉDIA GERAL DE RISCO")
-        valor = _nota_risco(m.get("valor"))
-        c.setFillColor(WHITE)
-        c.setFont(F(FONT_NUM_BOLD), 34)
-        c.drawString(x + pad, y_top - 47, valor)
-        vw = c.stringWidth(valor, F(FONT_NUM_BOLD), 34)
-        c.setFillColor(BLUE_LIGHT)
-        c.setFont(F(FONT_TEXTO), 8.5)
-        c.drawString(x + pad + vw + 5, y_top - 47, "de 1,00")
-        vw += 5 + c.stringWidth("de 1,00", F(FONT_TEXTO), 8.5)
-
+        selo = None
         if classe:
-            txt = f"RISCO {classe.upper()}"
-            tw = c.stringWidth(txt, F(FONT_NUM_SEMIBOLD), 8.5)
-            cx = x + pad + vw + 14
-            c.setFillColor(cor)
-            c.roundRect(cx, y_top - 46, tw + 16, 15, 2, fill=1, stroke=0)
-            c.setFillColor(WHITE if classe in ("Muito alto", "Muito baixo") else BLUE_DARK)
-            c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
-            c.drawString(cx + 8, y_top - 41.5, txt)
-
+            selo = (f"RISCO {classe.upper()}", cor,
+                    WHITE if classe in ("Muito alto", "Muito baixo") else BLUE_DARK)
         pct = m.get("supera_pct_nacional")
-        self._lado_direito(
-            c, x, y_top, w,
+        return self._faixa_destaque(
+            c, x, y_top, w, cor=cor,
+            eyebrow="MÉDIA GERAL DE RISCO",
+            valor=_nota_risco(m.get("valor")), sufixo="de 1,00", selo=selo,
             frase=f"Risco maior que {pct}% dos municípios" if pct is not None else "",
             ressalva="1º = mais exposto",
             # Regua invertida: no risco, verde e a ponta boa e fica a ESQUERDA.
@@ -3454,52 +3488,115 @@ class FolhetoIFEM(FolhetoFNP):
             marcador=m.get("valor"),
             rankings=((m.get("ranking_nacional"), "no país"),
                       (m.get("ranking_estadual"), "no estado")))
+
+    def _faixa_destaque(self, c, x, y_top, w, *, cor, eyebrow, valor, sufixo, selo,
+                        frase, ressalva, faixas, marcador, rankings):
+        """Faixa azul do topo das páginas de tabela (receita e risco).
+
+        Duas camadas, para caber nos 340pt do A5 — lado a lado (como no 20x20)
+        a metade direita não cabia e a frase passava por cima da ressalva:
+
+            EYEBROW                              1.845º de 5.440 no país
+            R$ 9.085  [4º QUINTIL]                 227º de 641 no estado
+            Supera 66% dos municípios do país     1º = maior receita/hab.
+            [========== régua de 5 faixas, largura total ==========]
+
+        `selo` é (texto, cor_fundo, cor_texto) ou None. Retorna o Y da base.
+        """
+        pad = 14
+        y_bot = y_top - BANDA_H
+        c.setFillColor(BLUE_DARK)
+        c.roundRect(x, y_bot, w, BANDA_H, CARD_RADIUS, fill=1, stroke=0)
+        c.setFillColor(cor)
+        c.rect(x, y_top - 4, w, 4, fill=1, stroke=0)
+
+        # Rankings empilhados à direita, alinhados pela borda. Medidos antes do
+        # valor porque é o espaço entre os dois que limita a fonte do valor.
+        rk_linhas = []
+        for rk, escopo in rankings:
+            if rk:
+                pos = f"{_fmt_int(rk['posicao'])}º"
+                resto = f"de {_fmt_int(rk['total'])} {escopo}"
+                larg = (c.stringWidth(pos, F(FONT_NUM_BOLD), 11) + 4
+                        + c.stringWidth(resto, F(FONT_TEXTO), 7.5))
+                rk_linhas.append((pos, resto, larg))
+        rk_w = max((larg for *_, larg in rk_linhas), default=0)
+        for i, (pos, resto, larg) in enumerate(rk_linhas):
+            ry = y_top - 22 - i * 17
+            rx = x + w - pad - larg
+            c.setFillColor(WHITE)
+            c.setFont(F(FONT_NUM_BOLD), 11)
+            c.drawString(rx, ry, pos)
+            c.setFillColor(BLUE_LIGHT)
+            c.setFont(F(FONT_TEXTO), 7.5)
+            c.drawString(rx + c.stringWidth(pos, F(FONT_NUM_BOLD), 11) + 4, ry + 1, resto)
+
+        c.setFillColor(YELLOW)
+        c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+        c.drawString(x + pad, y_top - 18, eyebrow)
+
+        # Valor grande + sufixo + selo; a fonte do valor cede antes de invadir
+        # os rankings (um "R$ 12.345" com selo de quintil não cabe a 34pt).
+        suf_w = (5 + c.stringWidth(sufixo, F(FONT_TEXTO), 8.5)) if sufixo else 0
+        selo_w = (14 + c.stringWidth(selo[0], F(FONT_NUM_SEMIBOLD), 8.5) + 16) if selo else 0
+        limite = w - 2 * pad - rk_w - 10
+        vfs = 34
+        while (c.stringWidth(valor, F(FONT_NUM_BOLD), vfs) + suf_w + selo_w > limite
+               and vfs > 22):
+            vfs -= 1
+        vy = y_top - 46
+        c.setFillColor(WHITE)
+        c.setFont(F(FONT_NUM_BOLD), vfs)
+        c.drawString(x + pad, vy, valor)
+        cx = x + pad + c.stringWidth(valor, F(FONT_NUM_BOLD), vfs)
+        if sufixo:
+            c.setFillColor(BLUE_LIGHT)
+            c.setFont(F(FONT_TEXTO), 8.5)
+            c.drawString(cx + 5, vy, sufixo)
+            cx += suf_w
+        if selo:
+            texto, fundo, frente = selo
+            tw = c.stringWidth(texto, F(FONT_NUM_SEMIBOLD), 8.5)
+            c.setFillColor(fundo)
+            c.roundRect(cx + 14, vy + 1, tw + 16, 15, 2, fill=1, stroke=0)
+            c.setFillColor(frente)
+            c.setFont(F(FONT_NUM_SEMIBOLD), 8.5)
+            c.drawString(cx + 22, vy + 5.5, texto)
+
+        self._regua_faixa(c, x + pad, y_top - 58, w - 2 * pad,
+                          frase, ressalva, faixas, marcador)
         return y_bot
 
-    def _lado_direito(self, c, x, y_top, w, frase, ressalva, faixas, marcador, rankings):
-        """Metade direita das faixas: frase, regua de 5 faixas e rankings."""
-        pad = 14
-        rx = x + w * 0.52
+    def _regua_faixa(self, c, x, y_frase, w, frase, ressalva, faixas, marcador):
+        """Camada de baixo da faixa: frase + ressalva numa linha e a régua de 5
+        faixas embaixo, com a seta branca marcando o município."""
         fs_res = 6.3
         while (c.stringWidth(frase, F(FONT_TEXTO), 8) + 10
-               + c.stringWidth(ressalva, F(FONT_TEXTO), fs_res) > (x + w - pad) - rx
+               + c.stringWidth(ressalva, F(FONT_TEXTO), fs_res) > w
                and fs_res > 5.0):
             fs_res -= 0.25
         if frase:
             c.setFillColor(BLUE_LIGHT)
             c.setFont(F(FONT_TEXTO), 8)
-            c.drawString(rx, y_top - 16, frase)
+            c.drawString(x, y_frase, frase)
         # BLUE_LIGHT, nunca MUTED: cinza medio sobre azul escuro tem contraste
         # de 1.8:1 e some no impresso. Mesmo erro ja corrigido na faixa de risco.
         c.setFillColor(BLUE_LIGHT)
         c.setFont(F(FONT_TEXTO), fs_res)
-        c.drawRightString(x + w - pad, y_top - 16, ressalva)
+        c.drawRightString(x + w, y_frase, ressalva)
 
-        gx, gw, gh, gy = rx, w - (rx - x) - pad, 7, y_top - 36
+        gh, gy = 6, y_frase - 16
         for i, q in enumerate(faixas):
             c.setFillColor(q)
-            c.rect(gx + i * gw / 5, gy, gw / 5, gh, fill=1, stroke=0)
+            c.rect(x + i * w / 5, gy, w / 5, gh, fill=1, stroke=0)
         if marcador is not None:
-            mx = min(max(gx + gw * min(max(marcador, 0.0), 1.0), gx + 4), gx + gw - 4)
+            # Seta por BAIXO da régua, apontando para cima: acima dela não há
+            # folga — a linha da frase está logo ali.
+            mx = min(max(x + w * min(max(marcador, 0.0), 1.0), x + 4), x + w - 4)
             p = c.beginPath()
-            p.moveTo(mx, gy + gh + 1)
-            p.lineTo(mx - 4, gy + gh + 7)
-            p.lineTo(mx + 4, gy + gh + 7)
+            p.moveTo(mx, gy - 1)
+            p.lineTo(mx - 4, gy - 7)
+            p.lineTo(mx + 4, gy - 7)
             p.close()
             c.setFillColor(WHITE)
             c.drawPath(p, fill=1, stroke=0)
-
-        cx = rx
-        for rk, escopo in rankings:
-            if not rk:
-                continue
-            pos = f"{_fmt_int(rk['posicao'])}º"
-            c.setFillColor(WHITE)
-            c.setFont(F(FONT_NUM_BOLD), 11)
-            c.drawString(cx, y_top - 51, pos)
-            cx += c.stringWidth(pos, F(FONT_NUM_BOLD), 11) + 4
-            resto = f"de {_fmt_int(rk['total'])} {escopo}"
-            c.setFillColor(BLUE_LIGHT)
-            c.setFont(F(FONT_TEXTO), 7.5)
-            c.drawString(cx, y_top - 50, resto)
-            cx += c.stringWidth(resto, F(FONT_TEXTO), 7.5) + 12
