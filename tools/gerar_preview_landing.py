@@ -86,8 +86,8 @@ def main() -> int:
             print(f"  [aviso] página {num} fora do intervalo (1-{len(doc)})", file=sys.stderr)
             continue
         pagina = doc[num - 1]
-        # Escala derivada da largura alvo, não fixa: o formato é 20x20 cm, mas
-        # deixar isso implícito quebraria se o tamanho da página mudar.
+        # Escala derivada da largura alvo, não fixa: o formato já foi 20x20 cm
+        # e hoje é A5 retrato — fixar a escala quebraria a cada troca.
         escala = LARGURA_ALVO / pagina.get_width()
         img = pagina.render(scale=escala).to_pil().convert("RGB")
 

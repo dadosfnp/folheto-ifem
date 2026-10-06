@@ -84,10 +84,12 @@ curtos, o separador da casa é o ponto médio (`·`), como no cabeçalho e no ro
 
 ## 4. Formato e grid
 
-- **Página:** 20 cm × 20 cm (quadrado).
+- **Página:** A5 retrato — 14,8 cm × 21 cm (420 × 595 pt). Até a release v6 o formato era 20 × 20 cm.
 - **Stripe lateral:** 20pt de azul (`BLUE`) numa das laterais — alterna esquerda/direita por página, com numeração branca centralizada no rodapé do stripe (`01`, `02`...).
-- **Margem útil:** 36pt (≈ 1,3 cm) no lado oposto ao stripe e nas margens superior/inferior.
-- **Largura de conteúdo:** 20cm − stripe − 2×margem ≈ 16,7 cm.
+- **Margem útil:** 30pt (≈ 1,06 cm) no lado oposto ao stripe e nas margens superior/inferior.
+- **Largura de conteúdo:** 14,8 cm − stripe − 2×margem = 340pt (≈ 12 cm).
+- **Tudo deriva de `PAGE_W`/`PAGE_H`/`CONTENT_W`** (`python/core/tokens.py`). Coordenada absoluta em pt dentro de um tema é bug esperando a próxima troca de formato.
+- **Artes quadradas** (capa, verso) não são esticadas: entram por recorte (`draw_recorte`) ou, no caso da grade do verso, redesenhadas em vetor com o alfabeto modular.
 - **Cabeçalho:** texto pequeno em `MUTED`, 7pt, caixa alta — ex.: `"COSIP · O FUTURO NO RIO DE JANEIRO/RJ"`.
 - **Rodapé:** label da seção à esquerda + mini-logo FNP à direita.
 
@@ -237,7 +239,7 @@ Existem duas variantes (ver [`inspiration/`](inspiration/)):
    - texto dos eyebrows e títulos
 3. **Manter inalteráveis:**
    - Paleta (tokens do `DESIGN_SYSTEM.md`)
-   - Grid e dimensões da página (20×20cm, stripe 20pt, margens 36pt)
+   - Grid e dimensões da página (A5 retrato, stripe 20pt, margens 30pt)
    - Tipografia (Barlow Condensed + Inter)
    - Componentes (KPI box, ranking item, citação, tabela)
 4. **Validar contra o COSIP** antes de fechar: abrir lado a lado e checar consistência (cores, alinhamentos, hierarquia tipográfica).

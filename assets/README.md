@@ -20,7 +20,10 @@ assets/
 
 ## Especificações
 
-- **Capas:** 760×800px (proporção ≈ 1:1, ocupam 20×20cm da página).
+- **Capas e fundos de página inteira:** proporção do A5 retrato (≈ 1:1,42 — ex.:
+  1240×1754px a 300 dpi). O código desenha esses PNGs na página inteira; uma arte
+  quadrada sai esticada. As artes quadradas antigas do IFEM entram por recorte
+  (`core/components.py::draw_recorte`).
 - **Logos:** PNG com fundo transparente, alta resolução (mínimo 2× do tamanho final).
 - **Padrões:** PNG ou vetor SVG; podem ser usados como fundo translúcido.
 
