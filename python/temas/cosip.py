@@ -21,6 +21,11 @@ from core.components import (
 )
 
 
+# Distância da baseline do eyebrow à do título. Com os 8-10pt de antes o título
+# era desenhado por cima do eyebrow.
+EYEBROW_GAP = 30
+
+
 class FolhetoCOSIP(FolhetoFNP):
     titulo_publicacao = "COSIP · O FUTURO DA CONTRIBUIÇÃO MUNICIPAL"
 
@@ -84,8 +89,8 @@ class FolhetoCOSIP(FolhetoFNP):
         draw_footer(c, self.W, "O Novo Papel da COSIP")
 
         x, y = MARGIN, self.H - 55
-        draw_eyebrow(c, "Capítulo 01", x, y); y -= 10
-        draw_titulo(c, "O novo papel\nda COSIP", x, y, size=38, color=YELLOW_DARK); y -= 80
+        draw_eyebrow(c, "Capítulo 01", x, y); y -= EYEBROW_GAP + 8
+        draw_titulo(c, "O novo papel\nda COSIP", x, y, size=38, color=YELLOW_DARK); y -= 70
 
         draw_destaque_box(
             c, "A CONTRIBUIÇÃO QUE FINANCIA…",
@@ -105,20 +110,23 @@ class FolhetoCOSIP(FolhetoFNP):
 
         x = STRIPE_W + MARGIN
         y = self.H - 55
-        draw_eyebrow(c, "Reforma Tributária · Art. 149-A", x, y); y -= 8
+        draw_eyebrow(c, "Reforma Tributária · Art. 149-A", x, y); y -= EYEBROW_GAP
         draw_titulo(c, "O que mudou?", x, y, size=FS_TITLE_SECAO); y -= 34
 
+        # 170pt: na meia coluna do A5 o texto do "DEPOIS" quebra em 7 linhas
+        # e vazava pela base do card de 138pt.
         half = (CONTENT_W - 12) / 2
+        card_h = 170
         draw_card_topbar(
             c, "ANTES",
             "Tributo com destinação exclusiva ao custeio da iluminação pública.",
-            x, y - 140, half, 138, top_color=YELLOW_DARK,
+            x, y - card_h - 2, half, card_h, top_color=YELLOW_DARK,
         )
         draw_card_topbar(
             c, "DEPOIS",
             "Custeio, expansão e melhoria da iluminação pública E de sistemas de "
             "monitoramento para segurança e preservação de logradouros.",
-            x + half + 12, y - 140, half, 138, top_color=BLUE,
+            x + half + 12, y - card_h - 2, half, card_h, top_color=BLUE,
         )
 
     def _pag_protagonismo_fnp(self, c, n):
@@ -142,7 +150,7 @@ class FolhetoCOSIP(FolhetoFNP):
 
         x = STRIPE_W + MARGIN
         y = self.H - 55
-        draw_eyebrow(c, "Capítulo 03", x, y); y -= 8
+        draw_eyebrow(c, "Capítulo 03", x, y); y -= EYEBROW_GAP
         draw_titulo(c, "Por que a Nova COSIP\né essencial?", x, y, size=FS_TITLE_SECAO); y -= 60
 
         draw_body(
@@ -163,7 +171,7 @@ class FolhetoCOSIP(FolhetoFNP):
         draw_footer(c, self.W, "Arrecadação COSIP")
 
         x, y = MARGIN, self.H - 55
-        draw_eyebrow(c, f"COSIP · {d.get('nome','Município')}/{d.get('uf','')}", x, y); y -= 8
+        draw_eyebrow(c, f"COSIP · {d.get('nome','Município')}/{d.get('uf','')}", x, y); y -= EYEBROW_GAP
         draw_titulo(c, "Arrecadação histórica", x, y, size=FS_TITLE_SECAO); y -= 34
 
         # Tabela: ano × arrecadação total × per capita.
@@ -198,30 +206,30 @@ class FolhetoCOSIP(FolhetoFNP):
 
         x = STRIPE_W + MARGIN
         y = self.H - 55
-        draw_eyebrow(c, "Capítulo 04", x, y); y -= 8
+        draw_eyebrow(c, "Capítulo 04", x, y); y -= EYEBROW_GAP
         draw_titulo(c, "Ranking e oportunidades", x, y, size=FS_TITLE_SECAO); y -= 40
 
-        # Mostra oportunidades de arrecadação como destaque + cards.
+        # Oportunidades de arrecadação: um card por linha, em largura total.
+        # Três lado a lado não cabem no A5 — "+ R$ 114,6 mi/ano" a 22pt passa
+        # de um terço da coluna.
         cards = [
             ("Comparado à média nacional", opp.get("vs_nacional", "—")),
             ("Comparado ao mesmo porte",   opp.get("vs_porte",    "—")),
             ("Comparado à UF",             opp.get("vs_uf",       "—")),
         ]
-        cw = (CONTENT_W - 16) / 3
-        ch = 100
+        ch, gap = 64, 10
         for i, (titulo, valor) in enumerate(cards):
-            cx = x + i * (cw + 8)
-            cy = y - ch
+            cy = y - ch - i * (ch + gap)
             c.setFillColor(WHITE)
-            c.roundRect(cx, cy, cw, ch, 3, fill=1, stroke=0)
+            c.roundRect(x, cy, CONTENT_W, ch, 3, fill=1, stroke=0)
             c.setFillColor(BLUE_MID)
-            c.rect(cx, cy + ch - 4, cw, 4, fill=1, stroke=0)
+            c.rect(x, cy + ch - 4, CONTENT_W, 4, fill=1, stroke=0)
             c.setFillColor(MUTED)
-            c.setFont(F("Inter-Regular"), 7)
-            c.drawString(cx + 10, cy + ch - 22, titulo.upper())
+            c.setFont(F("Inter-Regular"), 7.5)
+            c.drawString(x + 12, cy + ch - 20, titulo.upper())
             c.setFillColor(BLUE_DARK)
-            c.setFont(F("BarlowCondensed-Bold"), 22)
-            c.drawString(cx + 10, cy + 30, str(valor))
+            c.setFont(F("BarlowCondensed-Bold"), 24)
+            c.drawString(x + 12, cy + 14, str(valor))
 
     def _pag_qr(self, c, n):
         ultima = ASSETS_DIR / "ultima-cosip.png"
