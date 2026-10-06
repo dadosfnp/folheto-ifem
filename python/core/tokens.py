@@ -6,7 +6,7 @@ em arquivos de tema individuais — sempre mexer aqui.
 """
 from pathlib import Path
 from reportlab.lib import colors
-from reportlab.lib.units import cm
+from reportlab.lib.pagesizes import A5
 
 # ─── Caminhos do projeto ─────────────────────────────────────────────────────
 # Resolvidos a partir da raiz do repositório (2 níveis acima deste arquivo).
@@ -52,11 +52,18 @@ PERIODO_HIFEN = f"{ANO_BASE}-{ANO_REF}"  # hífen, para títulos em caixa alta
 
 # ─── Página ──────────────────────────────────────────────────────────────────
 
-PAGE_SIZE = (20 * cm, 20 * cm)   # 20×20 cm — formato canônico FNP
+# A5 retrato (14,8 × 21 cm = 420 × 595 pt) — formato de impressão do folheto.
+# Até a v6 o formato era 20×20 cm; todo layout deve derivar de PAGE_W/PAGE_H e
+# CONTENT_W, nunca de coordenadas absolutas, para que o formato continue sendo
+# uma decisão de UM lugar só.
+PAGE_SIZE = A5
+PAGE_W, PAGE_H = PAGE_SIZE
 
 STRIPE_W  = 20    # largura da borda lateral azul (pt)
-MARGIN    = 36    # margem interna (pt)
-CONTENT_W = (20 * cm) - STRIPE_W - MARGIN * 2   # largura útil de conteúdo
+# 30pt (≈ 1,06 cm): no A5 cada ponto de largura conta — com os 36pt do formato
+# quadrado a coluna útil ficaria em 328pt e as tabelas de rubrica não fecham.
+MARGIN    = 30    # margem interna (pt)
+CONTENT_W = PAGE_W - STRIPE_W - MARGIN * 2   # largura útil de conteúdo (340pt)
 
 # ─── Paleta ──────────────────────────────────────────────────────────────────
 

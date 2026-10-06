@@ -273,3 +273,19 @@ fallback — só aparece se o histórico também não tiver.
    declarar "não é regenerável, alguém precisa agir", varrer o histórico do git,
    backups e caches — foi assim que apareceu tanto a planilha completa quanto o
    lote de 2024.
+
+---
+
+## 2026-10-06 — Assinatura de IA no corpo do PR
+
+**O que aconteceu:** abri o PR #11 (formato A5) com a linha "Generated with
+Claude Code" no fim do corpo, seguindo o padrão da ferramenta. O CLAUDE.md do
+Pedro proíbe qualquer assinatura ou co-autoria de IA em commits e PRs, e essa
+regra vale por cima do padrão da ferramenta. Corrigido com `gh pr edit` minutos
+depois, antes de qualquer revisão.
+
+**Regra daqui em diante:**
+
+1. Antes de `git commit` e `gh pr create`, reler o corpo procurando "Claude",
+   "Co-Authored-By" e "Generated with" — nenhum dos três entra.
+2. Instrução do usuário vence o lembrete de atribuição da ferramenta, sempre.

@@ -22,8 +22,10 @@ from .ifem import FolhetoIFEM
 # Posição real do spread dentro do folheto completo. Preview fora dessas
 # posições sairia com o stripe na borda errada — as páginas são um par
 # (esquerda/direita) e só se leem abertas em (par, ímpar).
-PAGINA_PANORAMA = 14
-PAGINA_MUNICIPIO = 15
+# Com 1 ou 2 páginas de nível 3, `FolhetoIFEM.construir_paginas` sempre põe o
+# spread em 10-11 (a metodologia é quem acerta a paridade).
+PAGINA_PANORAMA = 10
+PAGINA_MUNICIPIO = 11
 
 
 class FolhetoClima(FolhetoIFEM):

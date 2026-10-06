@@ -188,6 +188,13 @@ HEAD_H       # altura do cabeçalho azul
 
 Mudou uma? Confira as **três** tabelas, não só a que você estava olhando.
 
+Os valores atuais foram dimensionados para a coluna de 340pt do A5: o nome da
+rubrica quebra em até 2 linhas (`_rotulo_rubrica`) em vez de encolher, e a
+tabela de risco, que não tem coluna de percentil, avança o rótulo 28pt sobre a
+coluna do município. A altura das linhas de níveis 1-2 foi medida no pior caso
+do recorte (SP, Ijuí e Brasília: 4 rubricas + 13 subrubricas) — se aumentar
+`row_h`, gere esses três e confira se a tabela ainda fecha acima do rodapé.
+
 Cada linha é desenhada por um método `_linha_*` (`_linha_risco`, por exemplo).
 A altura da linha é a variável `row_h` no topo do método.
 
@@ -232,9 +239,13 @@ ressalva (quando o município não declarou no ano).
 ### O espaço vertical tem limites
 
 ```python
-SAFE_TOP    = 512   # abaixo do header
-SAFE_BOTTOM = 56    # acima do footer
+SAFE_TOP    = PAGE_H - 55   # abaixo do header (540pt no A5)
+SAFE_BOTTOM = 56            # acima do footer
 ```
+
+O formato da página (A5 retrato) é decidido num lugar só, `PAGE_SIZE` em
+`python/core/tokens.py`. Use sempre `PAGE_W`, `PAGE_H`, `CONTENT_W` e
+`SAFE_TOP` — nunca um número de pt escrito à mão para posição de página.
 
 Tudo tem que caber entre os dois. Se sobrar espaço no rodapé, chame a decoração —
 **passando onde o conteúdo terminou**, que ela mede sozinha se cabe:
