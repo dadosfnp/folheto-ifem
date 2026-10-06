@@ -696,3 +696,36 @@ def draw_categoria_bloco(c, *, x: float, y_top: float, w: float,
             size="compact",
         )
     return y_cur - rows * (SUB_H + gap) - 4
+
+
+# ─── Recorte de arte raster ──────────────────────────────────────────────────
+
+def draw_recorte(c, img_path, img_px: tuple[int, int], caixa_px: tuple[int, int, int, int],
+                 x: float, y: float, w: float) -> float:
+    """Desenha só um pedaço de um PNG, sem gerar arquivo recortado.
+
+    `caixa_px` = (x0, y0, x1, y1) em pixels, origem no canto SUPERIOR esquerdo
+    (a convenção do PIL e de qualquer editor de imagem). O pedaço vai para
+    (x, y) — canto inferior esquerdo, em pt — com largura `w`, preservando a
+    proporção. Retorna a altura desenhada.
+
+    Por que clip em vez de recortar com PIL: a imagem inteira entra no PDF uma
+    vez só e o ReportLab a reaproveita entre os recortes (a capa usa dois do
+    mesmo PNG). É assim que as artes quadradas do formato 20×20 viram páginas
+    A5 retrato sem serem esticadas.
+    """
+    from .asset_cache import cached_image
+
+    iw, ih = img_px
+    x0, y0, x1, y1 = caixa_px
+    escala = w / (x1 - x0)
+    h = (y1 - y0) * escala
+    c.saveState()
+    caminho = c.beginPath()
+    caminho.rect(x, y, w, h)
+    c.clipPath(caminho, stroke=0, fill=0)
+    c.drawImage(cached_image(img_path),
+                x - x0 * escala, y + h - (ih - y0) * escala,
+                width=iw * escala, height=ih * escala, mask="auto")
+    c.restoreState()
+    return h

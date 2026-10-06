@@ -1,29 +1,41 @@
 """
-Capa do folheto IFEM — minimalista.
+Capa do folheto IFEM — minimalista, em A5 retrato.
 
-Usa o PNG ORIGINAL `indicadores_fnp_mapa_vivo.png` como fundo full bleed.
-Esse PNG já traz:
-  - Mapa do Brasil em mosaico
-  - Título "Indicadores de Financiamento e Equidade Municipal" (esquerda)
-  - Logo FNP (centro-rodapé)
-  - Texto de município baked-in (à direita) — MASCARADO pelo script
-    `tools/regerar_capa.py` (versão `_clean`).
+A arte de origem é quadrada: `indicadores_fnp_mapa_vivo_clean.png` (versão de
+`indicadores_fnp_mapa_vivo.png` com a banda do município mascarada por
+`tools/regerar_capa.py`). Ela traz o mosaico de fotos em cima e o logo FNP no
+pé. No A5 ela não é desenhada inteira — esticada, os quartos de círculo virariam
+ovais —, mas em dois recortes (`draw_recorte`) remontados na vertical:
 
-Aqui apenas:
-  1. Desenha o PNG _clean como fundo.
-  2. Sobrepõe a logo IFEM nova à direita do título IFEM (cantinho).
-  3. Escreve a frase do município no lugar do texto baked-in mascarado.
+    ┌──────────────┐
+    │   mosaico    │  recorte 1, largura total menos margem
+    │              │
+    │  logo IFEM   │  `IFEM - MARCA-03.png`
+    │ ──────────── │
+    │  Município   │  nome + 2 rankings coloridos pelo percentil
+    │  rk    rk    │
+    │   logo FNP   │  recorte 2
+    └──────────────┘
 """
-from reportlab.lib import colors
-
 from .tokens import (
-    BLUE_DARK, INK, MUTED, WHITE, PAPER, RULE,
-    STRIPE_W, ASSETS_DIR, ROOT_DIR,
-    FONT_NUM_BOLD, FONT_TEXTO, FONT_TEXTO_BOLD, FONT_TEXTO_SEMIBOLD,
+    BLUE_DARK, MUTED, PAPER, WHITE, ROOT_DIR,
+    FONT_NUM_BOLD, FONT_TEXTO, FONT_TEXTO_SEMIBOLD,
 )
 from .fonts import F
 from .paleta_ranking import cor_por_percentil
 from .asset_cache import cached_image
+from .components import draw_recorte
+
+
+# Geometria da arte de origem, em pixels (origem no canto superior esquerdo).
+# Medida no PNG — se a arte mudar, medir de novo (o --preview do
+# tools/regerar_capa.py ajuda a ver as bandas).
+CAPA_PX = (1018, 1024)
+MOSAICO_PX = (44, 49, 974, 731)       # mosaico + o contorno dos tiles da borda
+LOGO_FNP_PX = (395, 945, 625, 1005)   # logo FNP do rodapé da arte
+
+_IFEM_MARCA = ROOT_DIR / "data" / "ifem" / "IFEM - MARCA-03.png"
+_IFEM_MARCA_RATIO = 4459 / 1891       # w/h do PNG
 
 
 def _br_int(v) -> str:
@@ -39,88 +51,86 @@ def draw_capa_padrao(c, page_w: float, page_h: float, n_pagina: int,
                      mapa_path = None,
                      seed: int = 13,
                      **_unused):
-    # 1) Fundo: PNG original mascarado (full bleed). Já contém mapa, título
-    #    "Indicadores de Financiamento e Equidade Municipal" e logo FNP.
-    if mapa_path and mapa_path.exists():
-        c.drawImage(cached_image(mapa_path), 0, 0,
-                    width=page_w, height=page_h,
-                    preserveAspectRatio=False, mask="auto")
-    else:
-        c.setFillColor(PAPER)
-        c.rect(0, 0, page_w, page_h, fill=1, stroke=0)
+    # Branco sob a arte (o fundo do PNG é branco); PAPER só no fallback sem arte.
+    c.setFillColor(WHITE if (mapa_path and mapa_path.exists()) else PAPER)
+    c.rect(0, 0, page_w, page_h, fill=1, stroke=0)
 
-    # 2) Logo IFEM AUMENTADA, centralizada na metade esquerda da banda.
-    ifem_path = ROOT_DIR / "data" / "ifem" / "IFEM - MARCA-03.png"
-    if ifem_path.exists():
-        ifem_h = 84
-        ifem_w = ifem_h * (200 / 80)
-        ifem_cx = page_w * 0.24
-        ifem_cy = page_h * 0.18
-        c.drawImage(cached_image(ifem_path),
-                    ifem_cx - ifem_w / 2, ifem_cy - ifem_h / 2,
+    margem = 24
+    cx = page_w / 2
+
+    # 1) Mosaico no topo, na largura da página menos a margem.
+    y = page_h - margem
+    if mapa_path and mapa_path.exists():
+        mos_w = page_w - 2 * margem
+        x0, y0, x1, y1 = MOSAICO_PX
+        mos_h = mos_w * (y1 - y0) / (x1 - x0)
+        y -= mos_h
+        draw_recorte(c, mapa_path, CAPA_PX, MOSAICO_PX, margem, y, mos_w)
+
+    # 2) Logo FNP no pé — desenhado antes do bloco de texto para que o bloco
+    #    saiba até onde pode descer.
+    fnp_w = 118
+    fnp_y = 26
+    if mapa_path and mapa_path.exists():
+        fnp_h = draw_recorte(c, mapa_path, CAPA_PX, LOGO_FNP_PX,
+                             cx - fnp_w / 2, fnp_y, fnp_w)
+    else:
+        fnp_h = 0
+
+    # 3) Logo IFEM centralizada logo abaixo do mosaico.
+    y -= 22
+    if _IFEM_MARCA.exists():
+        ifem_h = 70
+        ifem_w = ifem_h * _IFEM_MARCA_RATIO
+        y -= ifem_h
+        c.drawImage(cached_image(_IFEM_MARCA), cx - ifem_w / 2, y,
                     width=ifem_w, height=ifem_h,
                     preserveAspectRatio=True, mask="auto")
 
-    # Separador vertical fino entre logo IFEM (esquerda) e frase (direita).
-    # Mantido dentro da banda branca mascarada (0.102H–0.277H).
+    # Fio separador entre a marca da publicação e o bloco do município.
+    y -= 14
     c.setStrokeColor(BLUE_DARK)
     c.setLineWidth(0.6)
-    c.line(page_w * 0.48, page_h * 0.13, page_w * 0.48, page_h * 0.27)
+    c.line(cx - 90, y, cx + 90, y)
 
-    # 3) Frase do município na área direita da banda inferior, onde antes
-    #    havia o texto baked-in (mascarado em branco pelo regerar_capa.py).
-    if ranking_pop and ranking_rec_pc:
-        pos_pop, _ = ranking_pop
-        pos_rec, _ = ranking_rec_pc
-        cor_pop = cor_por_percentil(pos_pop, ranking_pop[1])
-        cor_rec = cor_por_percentil(pos_rec, ranking_rec_pc[1])
+    if not (ranking_pop and ranking_rec_pc):
+        return
 
-        # Layout direita: nome do município em DESTAQUE GRANDE no topo,
-        # seguido de 2 linhas de "Ranking" com posição/escopo em cada.
-        text_x_start = page_w * 0.52
-        text_w = page_w - text_x_start - page_w * 0.04
+    # 4) Nome do município em destaque, centralizado.
+    texto_w = page_w - 2 * (margem + 16)
+    nome_fs = 24
+    while c.stringWidth(municipio_nome, F(FONT_NUM_BOLD), nome_fs) > texto_w and nome_fs > 14:
+        nome_fs -= 1
+    y -= 12 + nome_fs
+    c.setFillColor(BLUE_DARK)
+    c.setFont(F(FONT_NUM_BOLD), nome_fs)
+    c.drawCentredString(cx, y, municipio_nome)
 
-        # Nome do município em Barlow Bold grande
-        nome_fs = 18
-        while c.stringWidth(municipio_nome, F(FONT_NUM_BOLD), nome_fs) > text_w and nome_fs > 12:
-            nome_fs -= 1
-        c.setFillColor(BLUE_DARK)
-        c.setFont(F(FONT_NUM_BOLD), nome_fs)
-        # nome_y subido de 0.22 → 0.245 e gaps internos reduzidos para o bloco
-        # caber inteiro DENTRO da banda branca (0.102H–0.277H) e a última linha
-        # ficar bem afastada da logo FNP do rodapé.
-        nome_y = page_h * 0.245
-        c.drawString(text_x_start, nome_y, municipio_nome)
-
-        # Linha 1: "Ranking em população"
-        rk_y = nome_y - 18
+    # 5) Os dois rankings lado a lado, cada um centrado na sua metade.
+    y -= 26
+    col_w = texto_w / 2
+    for i, (rotulo, (pos, tot)) in enumerate((
+            ("RANKING POR POPULAÇÃO", ranking_pop),
+            ("RANKING POR RECEITA POR HABITANTE", ranking_rec_pc))):
+        ccx = margem + 16 + col_w * (i + 0.5)
+        rot_fs = 7.5
+        while c.stringWidth(rotulo, F(FONT_TEXTO_SEMIBOLD), rot_fs) > col_w - 8 and rot_fs > 6:
+            rot_fs -= 0.25
         c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO_SEMIBOLD), 8.5)
-        c.drawString(text_x_start, rk_y, "RANKING POR POPULAÇÃO")
-        c.setFillColor(cor_pop)
+        c.setFont(F(FONT_TEXTO_SEMIBOLD), rot_fs)
+        c.drawCentredString(ccx, y, rotulo)
+
+        pos_str = f"{_br_int(pos)}ª"
+        resto = f"de {_br_int(tot)} municípios"
+        w_pos = c.stringWidth(pos_str, F(FONT_NUM_BOLD), 16)
+        w_resto = c.stringWidth(resto, F(FONT_TEXTO), 8.5)
+        lx = ccx - (w_pos + 5 + w_resto) / 2
+        c.setFillColor(cor_por_percentil(pos, tot))
         c.setFont(F(FONT_NUM_BOLD), 16)
-        pos_str_pop = f"{_br_int(pos_pop)}ª"
-        c.drawString(text_x_start, rk_y - 14, pos_str_pop)
-        wp = c.stringWidth(pos_str_pop, F(FONT_NUM_BOLD), 16)
+        c.drawString(lx, y - 18, pos_str)
         c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 9.5)
-        c.drawString(text_x_start + wp + 6, rk_y - 10,
-                     f"de {_br_int(ranking_pop[1])} municípios")
-
-        # Linha 2: "Ranking em receita por habitante"
-        rk_y -= 32
-        c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO_SEMIBOLD), 8.5)
-        c.drawString(text_x_start, rk_y, "RANKING POR RECEITA POR HABITANTE")
-        c.setFillColor(cor_rec)
-        c.setFont(F(FONT_NUM_BOLD), 16)
-        pos_str_rec = f"{_br_int(pos_rec)}ª"
-        c.drawString(text_x_start, rk_y - 14, pos_str_rec)
-        wr = c.stringWidth(pos_str_rec, F(FONT_NUM_BOLD), 16)
-        c.setFillColor(MUTED)
-        c.setFont(F(FONT_TEXTO), 9.5)
-        c.drawString(text_x_start + wr + 6, rk_y - 10,
-                     f"de {_br_int(ranking_rec_pc[1])} municípios")
+        c.setFont(F(FONT_TEXTO), 8.5)
+        c.drawString(lx + w_pos + 5, y - 15, resto)
 
 
 def _quebrar_parts_capa(c, parts, max_w):
