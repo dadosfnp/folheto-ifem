@@ -61,9 +61,10 @@ def _draw_tile_fechado(c, kind: str, x: float, y: float, s: float, cor, lw: floa
         c.wedge(cx - s, cy - s, cx + s, cy + s, ang, 90, stroke=1, fill=0)
 
 
-def _draw_grade_verso(c, x: float, y: float, w: float, h: float) -> None:
+def _draw_grade_verso(c, x: float, y: float, w: float, h: float,
+                      semente: int = _SEMENTE) -> None:
     """Grade do alfabeto preenchendo (x, y, w, h), com respiro entre tiles."""
-    rng = random.Random(_SEMENTE)
+    rng = random.Random(semente)
     cell = w / _COLUNAS
     linhas = int(h // cell)
     off_y = y + (h - linhas * cell)          # encosta a grade no topo da área
@@ -74,6 +75,29 @@ def _draw_grade_verso(c, x: float, y: float, w: float, h: float) -> None:
             cor = PALETA_VERSO[rng.randrange(len(PALETA_VERSO))]
             _draw_tile_fechado(c, kind, x + col * cell + g / 2,
                                off_y + r * cell + g / 2, cell - g, cor, lw=1.1)
+
+
+# Semente da página de arte: diferente da do verso para as duas grades, que
+# ficam lado a lado no fim do folheto, não lerem como a mesma página repetida.
+_SEMENTE_ARTE = 11
+
+
+def draw_arte_complemento(c, page_w: float, page_h: float) -> None:
+    """Página só de arte, que completa o folheto quando o total de páginas é ímpar.
+
+    O folheto é impresso frente e verso, então um total ímpar deixava a última
+    folha com um lado em branco, e o verso deixava de ser a última página. Esta
+    página entra logo antes do verso e fecha a conta par.
+
+    É a grade do verso em página inteira, sem logo, texto, stripe ou numeração:
+    não é conteúdo, e por isso não pode parecer uma página que faltou preencher.
+    A semente é fixa, então a página é a mesma em todos os folhetos.
+    """
+    c.setFillColor(WHITE)
+    c.rect(0, 0, page_w, page_h, fill=1, stroke=0)
+    margem = page_w * 0.085         # mesma margem lateral do verso
+    _draw_grade_verso(c, margem, margem, page_w - 2 * margem,
+                      page_h - 2 * margem, semente=_SEMENTE_ARTE)
 
 
 def draw_ultima_padrao(c, page_w: float, page_h: float, n_pagina: int,

@@ -39,7 +39,7 @@ from core.components import (
     draw_icon_cadunico, draw_icon_grafico,
 )
 from core.capa import draw_capa_padrao
-from core.ultima import draw_ultima_padrao
+from core.ultima import draw_ultima_padrao, draw_arte_complemento
 from core.paleta_ranking import cor_por_percentil, cor_por_quintil
 from core.padrao import draw_alfabeto_decoracao
 from core.asset_cache import cached_image
@@ -473,11 +473,18 @@ class FolhetoIFEM(FolhetoFNP):
             miolo = antes + [self._pag_metodologia,
                              self._pag_risco_panorama, self._pag_risco_municipio]
 
-        return miolo + [
+        paginas = miolo + [
             self._pag_mapa_brasil,      # mapa IFEM dos 5.479 municípios
             self._pag_convite,          # QR code
-            self._pag_ultima,           # verso do folheto — padrão FNP
         ]
+        # O folheto é impresso frente e verso: com total ímpar, a última folha
+        # sai com um lado em branco e o verso deixa de ser a última página. A
+        # página de arte entra antes do verso e fecha a conta par. Ela fica no
+        # fim, e não no miolo, para não deslocar o spread de risco, que precisa
+        # começar em página par.
+        if (len(paginas) + 1) % 2:
+            paginas.append(self._pag_arte)
+        return paginas + [self._pag_ultima]   # verso: sempre a última
 
     # ─── 1. Capa ────────────────────────────────────────────────────────────
 
@@ -2765,6 +2772,10 @@ class FolhetoIFEM(FolhetoFNP):
         draw_ultima_padrao(c, self.W, self.H, n,
                            url=url, seed=self._seed(),
                            lado=self._lado_pagina(n))
+
+    def _pag_arte(self, c, n):
+        """Página de arte que completa o total par (ver construir_paginas)."""
+        draw_arte_complemento(c, self.W, self.H)
 
     # ─── 14. Risco climático: o tema e o panorama nacional ──────────────────
 
