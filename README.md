@@ -29,7 +29,7 @@ marcadas com ⚠️ — são silenciosas: o PDF sai, só sai **errado**.
 de degradação silenciosa — fonte faltando, companheiro faltando, risco faltando,
 município faltando. Nenhum deles derruba o gerador. Rode
 `python tools/verificar_arte.py output/`, confira se `output/` tem 424 PDFs e se
-um folheto qualquer tem 14 ou 15 páginas (12 significa que o risco climático não
+um folheto qualquer tem 14 ou 16 páginas, sempre par (12 significa que o risco climático não
 entrou).
 
 ---

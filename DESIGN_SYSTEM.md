@@ -250,6 +250,7 @@ Existem duas variantes (ver [`inspiration/`](inspiration/)):
 
 - [ ] Nenhum travessão (—) no texto do PDF: `python tools/verificar_texto.py output/` sai com 0 falhas.
 - [ ] Nenhuma arte de rodapé cobrindo conteúdo: `python tools/verificar_arte.py output/` sai com 0 falhas.
+- [ ] Total de páginas par e verso (`_pag_ultima`) como última página; ímpar ganha `_pag_arte` antes do verso.
 - [ ] Stripes alternam corretamente entre páginas pares e ímpares.
 - [ ] Numeração de página em branco aparece em todas as páginas (exceto se o tema pedir capa "limpa").
 - [ ] Toda página interna tem cabeçalho (`IFEM · …` ou `COSIP · …`) e rodapé (label + logo FNP).

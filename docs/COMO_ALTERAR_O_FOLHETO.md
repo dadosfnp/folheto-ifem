@@ -63,14 +63,20 @@ das páginas é montada em `construir_paginas()`.
 | — | `_pag_metodologia` | metodologia (peça móvel: acerta a paridade) |
 | — | `_pag_risco_panorama` | Risco Climático: panorama nacional |
 | — | `_pag_risco_municipio` | Risco Climático: as 12 notas do município |
-| −3 | `_pag_mapa_brasil` | mapa IFEM do país |
-| −2 | `_pag_convite` | QR code |
+| — | `_pag_mapa_brasil` | mapa IFEM do país |
+| — | `_pag_convite` | QR code |
+| −2 | `_pag_arte` | só arte; entra apenas quando o total daria ímpar |
 | −1 | `_pag_ultima` | verso padrão FNP |
 
 > **Por que a metodologia se move:** o spread de Risco Climático só se lê aberto
 > se começar em página par. A metodologia é a única peça que pode trocar de lugar
 > sem prejuízo, então é ela quem acerta a paridade. Não tente resolver isso
 > encolhendo conteúdo.
+>
+> **Por que existe a página de arte:** o folheto é impresso frente e verso, então
+> o total tem que ser par e o verso tem que ser a última página. Quando a conta
+> dá ímpar (hoje, quem tem 2 páginas de nível 3), `_pag_arte` entra logo antes
+> do verso. Ela fica no fim, e não no miolo, para não deslocar o spread de risco.
 
 ---
 
@@ -270,7 +276,7 @@ python tools/verificar_arte.py output/
 # 3. Nenhum travessão no texto impresso
 python tools/verificar_texto.py output/
 
-# 4. Contagem de páginas plausível (14 ou 15; 12 = risco climático não entrou)
+# 4. Contagem de páginas plausível (14 ou 16, sempre par; 12 = risco climático não entrou)
 python -c "import fitz,glob; p=glob.glob('output/*.pdf')[0]; print(len(fitz.open(p)),'paginas')"
 ```
 
